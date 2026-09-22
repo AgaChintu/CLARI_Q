@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+body{
+    font-family: 'Poppins',sans-serif;
+}
+h1,h2,h3{
+    font-family: 'Inter',sans-serif;
+}
+
+
+.sidebar{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 270px;
+    background-color: white;
+    box-shadow: 2px 4px 30px 4px rgba(0, 0, 0, 0.05);  
+      
+}
+
+.logo{
+    margin-top: 30px;
+    margin-left: 40px;
+}
+
+.sidebar a{
+    text-decoration: none;
+    color: #66656C;
+   
+
+    display:flex;
+    align-items: center;
+    gap:10px;
+    
+}
+
+.sidebar ul{
+    list-style: none;
+    padding:25px;
+
+}
+
+
+.sidebar li{
+    padding:13px;
+}
+
+.sidebar ul a span{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    line-height: 19px;
+}
+
+.anonymous-box{
+    position: absolute;
+    bottom: 60px;
+    left:18.5px;
+   
+    display:flex;
+    align-items:center;
+    gap:14px;
+    color:white;
+    background-color: #204BD2;
+    border-radius: 18px;
+    width: 235px;
+    height: 100px;
+    padding: 10px;
+
+    box-sizing: border-box;
+
+    
+}
+.anonymous-text h3{
+    font-size: 11.5px;
+    font-weight: 600;
+
+    
+}
+.anonymous-text p{
+    font-size: 10.6px;
+    font-weight: 300;
+    color: #d2d1da;
+}
+
+.anonymous-icon{
+    height: 36px;
+    width:36px
+
+}
+
+main{
+    margin-left: 270px;
+}
+.top-right{
+    display: flex;
+    align-items: center;
+    gap:20px;
+
+    position:fixed;
+    top:20px;
+    right:15px;
+
+}
+.profile-btn{
+    display: flex;
+    align-items: center;
+    gap:15px;
+    font-size: 16px;
+}
+
+.profile-btn svg{
+    width:15px;
+    height:15px;
+}
+.avatar{
+    height:30px;
+    width:30px;
+    background-color:#F48A9C;
+    color:white;
+    border-radius: 50%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button {
+    background: none;
+    border: none;
+    padding: 0;
+}
