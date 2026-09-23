@@ -1,0 +1,89 @@
+
+
+h1{
+    font-size: 26px;
+   
+    color:#0f2f72;
+    margin-bottom: 5px;;
+}
+h2{
+    font-size: 17px;
+    color: #70788A;
+    font-weight: 300;
+    margin-top: 0;
+    margin-bottom: 30px;
+
+}
+p{
+    font-size: 14px;
+    color:#6B7A99;
+
+}
+
+.fulldoubt-box{
+    box-sizing: border-box;
+    background-color: white;
+    box-shadow: 2px 4px 30px 4px rgba(0, 0, 0, 0.05);  
+    border-radius: 20px;
+    padding: 20px 30px;
+
+}
+.doubt-title{
+    display: flex;
+    align-items: center;
+    gap:10px;
+
+}
+.doubt-icon{
+    background-color: #EEF2FF;
+    border-radius: 50%;
+    height:40px;
+    width:40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.doubt-icon svg{
+    
+    color:#0f2f72;
+}
+
+textarea{
+    width:100%;
+    min-height: 140px;
+}
+.subject-title, .topic-title, .attach-title{
+    display: flex;
+    align-items: center;
+    gap:10px;
+}
+.select-subj{
+    width:100%;
+    min-height: 40px;
+}
+.tag-input input{
+    width:100%;
+    min-height: 35px;
+}
+
+.upload-box{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border:1px dashed #cccc;
+    cursor: pointer;
+}
+.submit-section{
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.submit-button{
+    display: flex;
+    align-items: center;
+    
+}
+
