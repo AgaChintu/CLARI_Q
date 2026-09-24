@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ask-doubt</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/ask-doubt.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+</head>
+
+<body>
+
+
+    <nav class="sidebar">
+        <img src="../assets/images/clariq-logo.svg" alt="ClariQ Logo" class="logo">
+        <ul>
+            <li>
+                <a href="dashboard.html">
+                    <i data-lucide="house"></i>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="ask-doubt.html" class="nav-item-active">
+                    <i data-lucide="circle-help"></i>
+                    <span>Ask Doubt</span>
+                </a>
+            </li>
+            <li>
+                <a href="my-doubts.html">
+                    <i data-lucide="message-circle"></i>
+                    <span>My Doubts</span>
+                </a>
+            </li>
+            <li>
+                <a href="library.html">
+                    <i data-lucide="book-open"></i>
+                    <span>Library</span>
+                </a>
+            </li>
+            <li>
+                <a href="doubt-sessions.html">
+                    <i data-lucide="messages-square"></i>
+                    <span>Doubt Sessions</span>
+                </a>
+            </li>
+            <li>
+                <a href="exam-support.html">
+                    <i data-lucide="calendar"></i>
+                    <span>Exam Support</span>
+                </a>
+            </li>
+            <li>
+                <a href="saves.html">
+                    <i data-lucide="bookmark"></i>
+                    <span>Saves</span>
+                </a>
+
+            </li>
+        </ul>
+
+
+        <div class="anonymous-box">
+
+            <img src="../assets/icons/anonymous-icon.svg" alt="Anonymous Icon" class="anonymous-icon">
+
+            <div class="anonymous-text">
+                <h3>Ask Freely, Stay Anonymous</h3>
+                <p>Your identity stays protected when you ask a doubt.</p>
+            </div>
+
+        </div>
+
+
+
+
+
+    </nav>
+
+    <div class="top-right">
+
+        <button class="notification-btn">
+            <i data-lucide="bell"></i>
+        </button>
+
+        <button class="profile-btn">
+            <span class="avatar">A</span>
+            <span>Anushka</span>
+            <i data-lucide="chevron-down"></i>
+
+
+        </button>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <main>
+        <div class="page-title">
+            <h1>Ask a Doubt</h1>
+        <img src="../assets/icons/ask-doubt-accent.svg" alt="" class="title-accent">
+
+        </div>
+        
+        <h2>Ask freely. We'll get it to your teacher anonymously.</h2>
+
+        <div class="fulldoubt-box">
+
+
+            <div class="doubt-section">
+
+                <div class="doubt-title">
+                    <div class="doubt-icon">
+                         <i data-lucide="message-circle-more"></i>
+                    </div>
+
+
+                <div class="doubt-heading">
+                    <h4>What are you stuck on?</h4>
+                    <p>Share your question clearly so your teacher can help you better.</p>
+
+                </div>
+
+            </div>
+                
+
+                <div class="type-doubt">
+                    <textarea placeholder="Type your doubt here..." maxlength="1000"></textarea>
+                    <span class="character-count">0/1000</span>
+
+                </div>
+                
+            </div>
+        
+
+
+        
+            <div class="subj-section">
+
+                <div class="subject-title">
+                    <i data-lucide="graduation-cap"></i>
+                    <h4>Subject</h4>
+                </div>
+
+                <div class="select-wrapper">
+                    <select class="select-subj">
+                    <option value="" disabled selected>Select subject</option>
+                    <option>Data Structure (DS)</option>
+                    <option>Computer Organization and Architecture (COA)</option>
+                    <option>Discrete Structure & Theory of Logic (DSTL)</option>
+                    <option>Python</option>
+                    <option>Technical Communication(TC)</option>
+                
+                </select>
+                <i data-lucide="chevron-down"></i>
+                </div>
+                
+            </div>
+
+
+
+
+            <div class="tag-section">
+
+                <div class="topic-title">
+                    <i data-lucide="hash"></i>
+                    <h4>Topic</h4>
+                    <p class="optional-text">(optional)</p>
+                </div>
+                <div class="tag-input">
+                    <input type="text" placeholder="Add topic or keywords to help categorize your doubt...">
+                </div>
+                <div class="selected-tags">
+                    <div class="tag">
+                        <span>Functions</span>
+                        <i data-lucide="x"></i>
+                    </div>
+
+                    <div class="tag">
+                        <span>Recursion</span>
+                        <i data-lucide="x"></i>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="attachment-section">
+                <div class="attach-title">
+                    <i data-lucide="paperclip"></i>
+                    <h4>Attach</h4>
+                    <p class="optional-text">(opitonal)</p>
+                </div>
+
+                <input type="file" id="attachment" hidden>
+
+                <label for="attachment" class="upload-box">
+                    <i data-lucide="upload"></i>
+                    <span>Add an image or file</span>
+                    <small>PNG, JPG, PDF up to 10 MB</small>    
+                </label>
+
+            </div>
+
+
+            <div class="submit-section">
+                <p>Your doubt will be submitted anonymously. Your name and identity are never shared.</p>
+                
+                
+                
+                <button type="submit" class="submit-button">
+                    Submit Doubt
+                    <i data-lucide="arrow-right"></i>
+                </button>
+               
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+
+
+
+    </main>
+
+
+
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>
