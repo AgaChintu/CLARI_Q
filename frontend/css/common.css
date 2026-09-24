@@ -99,6 +99,8 @@ main{
     margin-left:270px;
     padding:60px 30px 60px;
     background-color:#F8FBFD;
+    min-height:100vh;
+    box-sizing:border-box;
 }
 .top-right{
     display: flex;
