@@ -1,10 +1,14 @@
-
+* {
+    box-sizing: border-box;
+}
 
 h1{
-    font-size: 26px;
+    font-size: 28px;
    
-    color:#0f2f72;
-    margin-bottom: 5px;;
+    color:#0f2658;
+    margin-bottom: 5px;
+    font-family: 'Poppins', sans-serif;
+    font-weight:600;
 }
 h2{
     font-size: 17px;
@@ -14,10 +18,12 @@ h2{
     margin-bottom: 30px;
 
 }
-p{
-    font-size: 14px;
-    color:#6B7A99;
+h4{
+    color:#0f2658;
+}
 
+.subject-title svg, .topic-title svg, .attach-title svg{
+    color:#4965E8;
 }
 
 .fulldoubt-box{
@@ -28,12 +34,39 @@ p{
     padding: 20px 30px;
 
 }
-.doubt-title{
+.page-title {
     display: flex;
     align-items: center;
-    gap:10px;
+    gap: 10px;
+}
+
+.title-accent{
+    position: relative;
+    top: -10px;
+    height:26px;
+    width:28px;
+}
+
+
+.doubt-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.doubt-heading h4 {
+    font-weight: 600;
+    font-size: 17px;
+}
+
+.doubt-heading p {
+    margin: 4px 0 0;
+    color:#8493AE;
+    font-family: 'Poppins',sans-serif;
+    font-size: 14px;
 
 }
+
 .doubt-icon{
     background-color: #EEF2FF;
     border-radius: 50%;
@@ -47,25 +80,108 @@ p{
 }
 .doubt-icon svg{
     
-    color:#0f2f72;
+    color:#4965E8;
 }
-
+.type-doubt{
+    margin-top: 15px;
+    position:relative;
+    
+}
+.character-count{
+    position:absolute;
+    bottom: 14px;
+    right: 14px;
+    color:#8493AE;
+    font-size:12px;
+    font-family: 'Poppins',sans-serif;
+}
 textarea{
     width:100%;
-    min-height: 140px;
+    min-height: 160px;
+    background-color: #FAFCFE;
+    border-radius: 12px;
+    border: 1px solid #DCE6F7;    
+    padding:12px;
+    font-family: 'Poppins',sans-serif;
+    resize: none;
 }
+
 .subject-title, .topic-title, .attach-title{
     display: flex;
     align-items: center;
     gap:10px;
+    margin-bottom: 10px;
 }
+
 .select-subj{
     width:100%;
-    min-height: 40px;
+    height: 40px;
+    border-color:#c9d0df ;
+    border-radius: 5px;
+    font-family: 'Poppins',sans-serif;
+    color:#8493AE;
+    font-size: 14px;
+    appearance: none;
+    padding:12px;
 }
-.tag-input input{
-    width:100%;
-    min-height: 35px;
+.select-wrapper{
+    position:relative;
+}
+.select-wrapper svg {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    height:16px;
+    width:14px;
+    color:#8493AE;
+}
+.tag-input input {
+    width: 100%;
+    height: 40px;
+    border: 1px solid #c9d0df;
+    border-radius: 5px;
+    padding:12px;
+    background-color: #FAFCFE;
+}
+
+.tag-input input::placeholder, textarea::placeholder {
+    color:#8493AE;
+    font-family: 'Poppins',sans-serif;
+    font-size: 14px;
+}
+.selected-tags{
+    display: flex;
+    align-items: center;
+    gap:10px;
+    margin-top: 14px;;
+}
+.tag{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:10px;
+    background-color: #EEF2FF;
+    color:#4965E8;
+    padding: 8px 12px;
+    border-radius: 14px;
+    margin-right: 8px;
+    font-size: 12px;
+    width:fit-content;
+}
+.tag svg{
+    color: #4965E8;
+    width: 18px;
+    height:16px;
+    
+}
+input,
+textarea,
+select,
+button {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
 }
 
 .upload-box{
@@ -75,15 +191,54 @@ textarea{
     justify-content: center;
     border:1px dashed #cccc;
     cursor: pointer;
+    font-family: 'Poppins',sans-serif;
+    font-size:14px;
+    color:#6B7A99;
+    padding:14px;
+}
+.upload-box svg{
+    height:16px;
+    width:14px;
 }
 .submit-section{
     display:flex;
     align-items: center;
     justify-content: space-between;
+    background-color: #F8FAFF;
+    border-radius: 8px;
+    padding:6px;
+}
+.submit-section p{
+    font-size:14px;
+    color:#6B7A99;
+    padding:12px;
+
 }
 .submit-button{
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    background-color: #4965E8;
+    color:white;
+    border-radius: 12px;
+    padding:10px 8px 10px 14px;
+    width: 165px;
     
+
+   
 }
+.submit-button svg{
+    width:28px;
+    height:22px;
+    font-weight: 200;
+}
+.optional-text{
+    color:#A0A8B8;
+    font-size: 12.5px;
+}
+
+.doubt-section,.subj-section,.tag-section,.attachment-section,.submit-section{
+    margin-bottom: 25px;
+}
+
 

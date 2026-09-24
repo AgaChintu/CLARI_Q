@@ -64,7 +64,7 @@
 
         <div class="anonymous-box">
 
-            <img src="../assets/images/anonymous-icon.svg" alt="Anonymous Icon" class="anonymous-icon">
+            <img src="../assets/icons/anonymous-icon.svg" alt="Anonymous Icon" class="anonymous-icon">
 
             <div class="anonymous-text">
                 <h3>Ask Freely, Stay Anonymous</h3>
@@ -105,7 +105,12 @@
 
 
     <main>
-        <h1>Ask a Doubt</h1>
+        <div class="page-title">
+            <h1>Ask a Doubt</h1>
+        <img src="../assets/icons/ask-doubt-accent.svg" alt="" class="title-accent">
+
+        </div>
+        
         <h2>Ask freely. We'll get it to your teacher anonymously.</h2>
 
         <div class="fulldoubt-box">
@@ -116,25 +121,29 @@
                 <div class="doubt-title">
                     <div class="doubt-icon">
                          <i data-lucide="message-circle-more"></i>
-                </div>
-                   
+                    </div>
+
+
+                <div class="doubt-heading">
                     <h4>What are you stuck on?</h4>
+                    <p>Share your question clearly so your teacher can help you better.</p>
 
                 </div>
 
-                <p>Share your question clearly so your teacher can help you better.</p>
+            </div>
+                
 
                 <div class="type-doubt">
                     <textarea placeholder="Type your doubt here..." maxlength="1000"></textarea>
                     <span class="character-count">0/1000</span>
 
                 </div>
-                <hr>
+                
             </div>
+        
 
 
-
-
+        
             <div class="subj-section">
 
                 <div class="subject-title">
@@ -142,15 +151,19 @@
                     <h4>Subject</h4>
                 </div>
 
-                <select class="select-subj">
-                    <option>Select subject</option>
+                <div class="select-wrapper">
+                    <select class="select-subj">
+                    <option value="" disabled selected>Select subject</option>
                     <option>Data Structure (DS)</option>
                     <option>Computer Organization and Architecture (COA)</option>
                     <option>Discrete Structure & Theory of Logic (DSTL)</option>
                     <option>Python</option>
                     <option>Technical Communication(TC)</option>
-                    <option></option>
+                
                 </select>
+                <i data-lucide="chevron-down"></i>
+                </div>
+                
             </div>
 
 
@@ -161,15 +174,22 @@
                 <div class="topic-title">
                     <i data-lucide="hash"></i>
                     <h4>Topic</h4>
-                    <p>(optional)</p>
+                    <p class="optional-text">(optional)</p>
                 </div>
                 <div class="tag-input">
                     <input type="text" placeholder="Add topic or keywords to help categorize your doubt...">
-                    <i data-lucide="chevron-down"></i>
                 </div>
                 <div class="selected-tags">
-                    <span class="tag">Functions</span>
-                    <span class="tag">Recursion</span>
+                    <div class="tag">
+                        <span>Functions</span>
+                        <i data-lucide="x"></i>
+                    </div>
+
+                    <div class="tag">
+                        <span>Recursion</span>
+                        <i data-lucide="x"></i>
+
+                    </div>
                 </div>
             </div>
 
@@ -178,7 +198,7 @@
                 <div class="attach-title">
                     <i data-lucide="paperclip"></i>
                     <h4>Attach</h4>
-                    <p>(opitonal)</p>
+                    <p class="optional-text">(opitonal)</p>
                 </div>
 
                 <input type="file" id="attachment" hidden>
