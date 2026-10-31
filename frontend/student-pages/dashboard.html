@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="../student-css/common.css">
+    <link rel="stylesheet" href="../student-css/dashboard.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+</head>
+
+<body>
+
+
+    <nav class="sidebar">
+        <img src="../assets/images/clariq-logo.svg" alt="ClariQ Logo" class="logo">
+        <ul>
+            <li>
+                <a href="dashboard.html" class="nav-item-active">
+                    <i data-lucide="house"></i>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="ask-doubt.html">
+                    <i data-lucide="circle-help"></i>
+                    <span>Ask Doubt</span>
+                </a>
+            </li>
+            <li>
+                <a href="my-doubts.html">
+                    <i data-lucide="message-circle"></i>
+                    <span>My Doubts</span>
+                </a>
+            </li>
+            <li>
+                <a href="library.html">
+                    <i data-lucide="book-open"></i>
+                    <span>Library</span>
+                </a>
+            </li>
+            <li>
+                <a href="doubt-sessions.html">
+                    <i data-lucide="messages-square"></i>
+                    <span>Doubt Sessions</span>
+                </a>
+            </li>
+            <li>
+                <a href="exam-support.html">
+                    <i data-lucide="calendar"></i>
+                    <span>Exam Support</span>
+                </a>
+            </li>
+            <li>
+                <a href="saves.html">
+                    <i data-lucide="bookmark"></i>
+                    <span>Saves</span>
+                </a>
+
+            </li>
+        </ul>
+
+
+        <div class="anonymous-box">
+
+            <img src="../assets/icons/anonymous-icon.svg" alt="Anonymous Icon" class="anonymous-icon">
+
+            <div class="anonymous-text">
+                <h3>Ask Freely, Stay Anonymous</h3>
+                <p>Your identity stays protected when you ask a doubt.</p>
+            </div>
+
+
+
+
+
+        </div>
+
+
+
+
+
+    </nav>
+
+    <div class="top-right">
+
+        <button class="notification-btn">
+            <i data-lucide="bell"></i>
+        </button>
+
+        <button class="profile-btn">
+            <span class="avatar">A</span>
+            <span>Anushka</span>
+            <i data-lucide="chevron-down"></i>
+
+
+        </button>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <main>
+        <header class="page-title">
+            <h1>Good Evening, Anushka</h1>
+            <h2>Here's what happening with your doubts.</h2>
+
+        </header>
+
+        <!-- Ask a Doubt banner -->
+
+        <section class="ask-doubt-banner">
+            <div class="doubt-icon">
+                <i data-lucide="message-circle-more"></i>
+
+            </div>
+            <div class="doubt-content">
+                <h3>What are you stuck on?</h3>
+                <p>Ask freely, get help from your teacher anonymously.</p>
+
+            </div>
+            <a href="ask-doubt.html" class="doubt-btn">
+                Ask a Doubt
+                <i data-lucide="arrow-right"></i>
+            </a>
+
+        </section>
+
+
+        <!-- Three-column dashboard area -->
+
+        <div class="dashboard-grid">
+
+            <section class="upcoming-sessions">
+                <div class="section-header">
+                    <h2>Upcoming Sessions</h2>
+                    <a href="doubt-sessions.html">View All <i data-lucide="arrow-right"></i></a>
+                </div>
+
+                <div class="session-list">
+
+                    <div class="session-card">
+
+                        <div class="subj-icon">
+                            <img src="../assets/icons/dsa-icon.svg" alt="DSA">
+
+                        </div>
+
+                        <div class="subj-info">
+                            <h3>DSA — Tress & Graphs</h3>
+                            <p>Tomorrow — 2:00 PM</p>
+                            <p>Dr. Dhaka</p>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+
+
+            <section class="my-doubts">
+
+                <div class="section-header">
+                    <h2>My Doubts</h2>
+                    <a href="doubt-sessions.html">View All <i data-lucide="arrow-right"></i></a>
+                </div>
+
+                <div class="my-doubts-list">
+
+                    <div class="my-doubts-card">
+
+                        <div class="subj-icon">
+                            <img src="../assets/icons/coa-icon.svg" alt="DSA">
+
+                        </div>
+
+                        <div class="subj-info">
+                            <h3 class="doubt-title">Pipelining</h3>
+
+                            <div class="doubt-meta">
+                                <span class="subject">COA</span>
+                                <span class="separator">•</span>
+                                <span class="subject-teacher">Prof.Kamran</span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="doubt-status-meta">
+
+                            <div class="status">
+
+                                <p>Resolved</p>
+                            </div>
+
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+
+
+            <section class="doubt-statistics">
+
+                <div class="learning-overview">
+                    <h3>Learning Overview</h3>
+                    <p>A quick look at your progress</p>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i data-lucide="message-circle-question"></i>
+                        </div>
+
+                        <div class="stat-info">
+                            <p>Doubts submitted</p>
+                            <h3 id="doubts-submitted">12</h3>
+                            <span>↑ +3 this week</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i data-lucide="user-round"></i>
+                        </div>
+
+                        <div class="stat-info">
+                            <p>Teacher responses</p>
+                            <h3 id="teacher-responses">08</h3>
+                            <span>↑ +2 this week</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i data-lucide="star"></i>
+                        </div>
+
+                        <div class="stat-info">
+                            <p>Shared with class</p>
+                            <h3 id="shared-doubts">03</h3>
+                            <span>↑ +1 this week</span>
+                        </div>
+                    </div>
+                </div>
+
+
+            </section>
+
+
+
+        </div>
+
+
+
+
+        <section class="exam-support">
+
+            <!-- LEFT SIDE -->
+            <div class="exam-info">
+
+                <div class="exam-icon">
+                    <i data-lucide="graduation-cap"></i>
+                </div>
+
+                <div class="exam-details">
+
+                    <div class="exam-heading">
+                        <h3>Exam Support</h3>
+                        <span class="exam-status">Active</span>
+                    </div>
+
+                    <p class="exam-name">Mid-Sem Examination</p>
+
+                    <p class="exam-subjects">DBMS • CN • DSA</p>
+
+                </div>
+
+            </div>
+
+            <!-- DIVIDER -->
+            <div class="exam-divider"></div>
+
+            <!-- RIGHT SIDE -->
+            <div class="exam-actions">
+
+                <div class="exam-deadline">
+
+                    <div class="deadline-icon">
+                        <i data-lucide="calendar-days"></i>
+                    </div>
+
+                    <div class="deadline-details">
+                        <p class="deadline-label">Doubts accepted until</p>
+                        <p class="deadline-time">25 Aug · 11:59 PM</p>
+                    </div>
+
+                </div>
+
+                <a href="exam-support.html" class="exam-button">
+                    View Details
+                    <i data-lucide="arrow-right"></i>
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <section class="shared-doubts">
+
+            <div class="shared-doubts-header">
+
+                <i data-lucide="star"></i>
+
+                <div class="shared-doubts-heading">
+                    <h3>Shared Doubts</h3>
+                    <p>Useful doubts shared with the class</p>
+                </div>
+
+            </div>
+
+            <div class="shared-doubts-list">
+
+                <div class="shared-doubt-card">
+
+                    <div class="shared-doubt-icon">
+                        <img src="../assets/icons/dstl-icon.svg" alt="">
+                    </div>
+
+                    <div class="shared-doubt-info">
+                        <p class="shared-doubt-question">
+                            How can we determine whether a partially ordered set (poset) forms a lattice?
+                        </p>
+
+                        <div class="shared-doubt-meta">
+                            <span class="doubt-subject">DSTL</span>
+                            <span class="meta-separator">•</span>
+                            <span class="doubt-teacher">Prof. Kamlendra</span>
+                        </div>
+                    </div>
+
+                    <a href="#" class="shared-doubt-link">
+                        View Doubt
+                        <i data-lucide="arrow-right"></i>
+                    </a>
+
+                </div>
+
+                </div>
+        </section>
+
+
+    </main>
+
+
+
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>

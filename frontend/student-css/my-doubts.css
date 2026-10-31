@@ -1,0 +1,287 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.page-title {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.page-title h1 {
+    font-size: 28px;
+
+    color: #0f2658;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+}
+
+.page-title h2 {
+    font-size: 16px;
+    color: #70788A;
+    font-weight: 300;
+    margin-bottom: 30px;
+
+}
+
+.search-card {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    background-color: white;
+    border-radius: 12px;
+    height: 60px;
+    padding: 6px 14px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+    margin-bottom: 18px;
+
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid #c9d0df;
+    border-radius: 6px;
+    padding: 4px 8px;
+    flex: 1;
+    min-width: 0;
+}
+
+.search-box svg {
+    width: 18px;
+    height: 18px;
+    color: #8493AE;
+
+}
+.search-box input::placeholder{
+    color:#667085;
+    font-size: 14px;
+    font-family: 'Poppins',sans-serif;
+}
+.search-card input {
+    flex: 1;
+    min-width: 0;
+    height: 30px;
+    border: none;
+}
+
+.select-wrapper {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    border: 1px solid #c9d0df;
+    border-radius: 8px;
+    padding: 4px 14px;
+    width: 160px;
+    cursor: pointer;
+
+
+}
+
+.select-subj {
+    height: 30px;
+    border: none;
+    appearance: none;
+    width: 100%;
+    flex: 1;
+    outline: none;
+    cursor: pointer;
+    font-size: 14px;
+     color: #667085;
+      font-family: 'Poppins', sans-serif;
+
+
+}
+.select-subj option{
+    font-size: 14px;
+     color: #667085;
+      font-family: 'Poppins', sans-serif;
+}
+
+.select-wrapper svg {
+    width: 18px;
+    height: 18px;
+    color: #8493AE;
+}
+
+
+.ask-doubt-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: #4965E8;
+    color: white;
+    border-radius: 6px;
+    height: 36px;
+    width: 160px;
+    padding: 4px 8px;
+
+
+}
+
+.ask-doubt-btn svg {
+    width: 18px;
+    height: 18px;
+
+}
+
+
+.doubt-controls {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 10px;
+    height: 40px;
+    padding: 6px 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+    margin-bottom: 14px;
+}
+
+.status-tabs {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+
+}
+
+.status-tab {
+    padding: 10px 2px;
+    border: none;
+    background: none;
+    color: #667085;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.status-tab-active {
+    padding: 10px 2px;
+    border: none;
+    background: none;
+    color: #4965E8;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border-bottom: 2px solid #4965E8;
+}
+
+.sort-controls {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-left: 180px;
+    padding: 4px 6px;
+    width: auto;
+    margin-left: auto;
+}
+
+.sort-controls select {
+    appearance: none;
+    border: none;
+    color:#667085;
+}
+
+.sort-controls svg {
+    height: 18px;
+    width: 18px;
+    color: #8493AE;
+
+}
+
+.doubt-card {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+    padding: 12px 16px;
+    min-height: 90px;
+    margin-bottom: 12px;
+
+}
+
+.doubt-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #E5ECFF;
+    border-radius: 50%;
+    height: 42px;
+    width: 42px;
+
+
+}
+
+.doubt-icon svg {
+    height: 32px;
+    width: 32px;
+
+}
+
+.doubt-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.doubt-info{
+    width:65%;
+}
+.doubt-title {
+    font-family: 'Inter', sans-serif;
+}
+
+.separator {
+    color: #667085;
+
+}
+
+.doubt-subject {
+    color: #667085;
+    font-family: 'Inter', sans-serif;
+}
+
+.doubt-ques {
+    color: #667085;
+    font-size: 14px;
+    margin-top: 8px;
+
+}
+
+.doubt-status-meta {
+   width:fit-content;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding:6px 14px;
+
+}
+
+.status {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    padding: 4px;
+    background-color: #E5ECFF;
+    border-radius: 8px;
+    color: #5471D8;
+    font-size: 14px;
+}
+
+.status svg {
+    height: 18px;
+    width: 18px;
+
+}
+
+.asked-time {
+    font-size: 12px;
+    color: #667085;
+}
