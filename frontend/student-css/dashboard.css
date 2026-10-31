@@ -1,0 +1,826 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.page-title {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.page-title h1 {
+    font-size: 28px;
+
+    color: #0f2658;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+}
+
+.page-title h2 {
+    font-size: 16px;
+    color: #70788A;
+    font-weight: 300;
+    margin-bottom: 30px;
+
+}
+
+/* =========================
+   ASK A DOUBT BANNER
+========================= */
+
+.ask-doubt-banner {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+    min-height: 104px;
+    padding: 20px 28px;
+    margin-bottom: 20px;
+
+    background: linear-gradient(110deg, #f1f4ff, #e5eaff);
+    border: 2px solid #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 4px 18px rgba(71, 105, 210, 0.08);
+}
+
+.doubt-icon {
+    width: 72px;
+    height: 72px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #dce4ff;
+    border-radius: 50%;
+}
+
+.doubt-icon i {
+    width: 36px;
+    height: 36px;
+    color: #4165ff;
+    stroke-width: 2;
+}
+.doubt-icon svg {
+    width: 36px;
+    height: 36px;
+    stroke: #4165ff;
+}
+
+.doubt-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.doubt-content h3 {
+    margin: 0 0 6px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #102f91;
+}
+
+.doubt-content p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #6680c1;
+}
+
+.doubt-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    min-width: 178px;
+    min-height: 46px;
+    padding: 12px 22px;
+
+    color: #ffffff;
+    background: #4965E8;
+    border-radius: 28px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+
+    transition: background-color 0.2s ease,
+                transform 0.2s ease;
+}
+
+.doubt-btn:hover {
+    background: #3456ed;
+    transform: translateY(-1px);
+}
+
+.doubt-btn i {
+    width: 17px;
+    height: 17px;
+}
+
+/* =========================
+   DASHBOARD GRID
+========================= */
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1.12fr 1.12fr 0.88fr;
+    align-items: stretch;
+    gap: 16px;
+
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.upcoming-sessions,
+.my-doubts,
+.doubt-statistics {
+    min-width: 0;
+    padding: 16px;
+    border: 1px solid #e2eaff;
+    border-radius: 17px;
+
+    background: #ffffff;
+    box-shadow: 0 3px 12px rgba(61, 100, 200, 0.06);
+}
+
+.upcoming-sessions,
+.my-doubts {
+    display: flex;
+    flex-direction: column;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    margin-bottom: 16px;
+}
+
+.section-header h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #102f91;
+}
+
+.section-header > a {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+
+    color: #4165ff;
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.section-header > a:hover {
+    color: #193fcf;
+}
+
+.section-header > a svg {
+    width: 14px;
+    height: 14px;
+}
+
+
+/* =========================
+   UPCOMING SESSIONS
+========================= */
+
+.session-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    width: 100%;
+}
+
+.session-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 80px;
+    padding: 12px;
+
+    background: linear-gradient(110deg, #ffffff, #f9fbff);
+    border: 1px solid #e3ebff;
+    border-radius: 15px;
+
+    transition: border-color 0.2s ease,
+                background-color 0.2s ease;
+}
+
+.session-card:hover {
+    border-color: #b9ccff;
+    background: #f8faff;
+}
+
+
+.subj-icon img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+.subj-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.subj-info h3 {
+    margin: 0;
+
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #123582;
+}
+
+.subj-info p {
+    margin: 0;
+
+    font-size: 11px;
+    line-height: 1.4;
+    color: #7188c2;
+}
+
+.session-card > i {
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
+    color: #4165ff;
+}
+
+.session-list .session-card {
+    cursor: pointer;
+}
+
+/* View All Sessions link */
+
+.view-all-sessions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+
+    min-height: 36px;
+    padding: 9px 14px;
+    margin-top: 10px;
+
+    color: #3158e9;
+    background: #eef2ff;
+    border-radius: 12px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.view-all-sessions:hover {
+    background: #e3eaff;
+}
+
+.view-all-sessions i {
+    width: 16px;
+    height: 16px;
+}
+
+
+/* =========================
+   MY DOUBTS
+========================= */
+
+.my-doubts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.my-doubts-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 76px;
+    padding: 12px;
+
+    background: linear-gradient(110deg, #ffffff, #fafbff);
+    border: 1px solid #e3ebff;
+    border-radius: 15px;
+
+    cursor: pointer;
+    transition: border-color 0.2s ease,
+                background-color 0.2s ease;
+}
+
+.my-doubts-card:hover {
+    background: #f8faff;
+    border-color: #bdceff;
+}
+
+.my-doubts-card .subj-icon {
+    width: 48px;
+    height: 48px;
+}
+
+.my-doubts-card .subj-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.doubt-title {
+    margin: 0;
+
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #123582;
+}
+
+.doubt-meta {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    min-width: 0;
+    margin-top: 6px;
+
+    font-size: 10px;
+    color: #7c90c4;
+}
+
+.subject,
+.subject-teacher,
+.separator {
+    min-width: 0;
+}
+
+.subject,
+.subject-teacher {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.subject {
+    flex-shrink: 0;
+}
+
+.separator {
+    flex-shrink: 0;
+}
+
+.doubt-status-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.status {
+    padding: 7px 11px;
+    border-radius: 20px;
+    background: #e5f8ef;
+    color: #15976c;
+}
+
+.status p {
+    margin: 0;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.doubt-status-meta > i {
+    width: 16px;
+    height: 16px;
+    color: #4165ff;
+    flex-shrink: 0;
+}
+
+
+
+/* =========================
+   LEARNING OVERVIEW
+========================= */
+
+.doubt-statistics {
+    background: linear-gradient(145deg, #edf1ff, #e3e9ff);
+    border-color: #e4eaff;
+}
+
+.learning-overview {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    height: 100%;
+}
+
+.learning-overview > h3 {
+    margin: 0;
+
+    font-size: 16px;
+    font-weight: 600;
+    color: #102f91;
+}
+
+.learning-overview > p {
+    margin: 0 0 8px;
+
+    font-size: 12px;
+    line-height: 1.5;
+    color: #7188c2;
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 76px;
+    padding: 12px;
+
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 18px;
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    background: #dfe8ff;
+}
+
+.stat-icon svg {
+    width: 25px;
+    height: 25px;
+    color: #3970ff;
+    stroke-width: 2;
+}
+
+.stat-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.stat-info p {
+    margin: 0 0 5px;
+
+    font-size: 12px;
+    line-height: 1.4;
+    color: #4162b4;
+}
+
+.stat-info h3 {
+    margin: 0 0 3px;
+
+    font-size: 16px;
+    font-weight: 700;
+    color: #123582;
+}
+
+.stat-info span {
+    font-size: 11px;
+    color: #57d29b;
+}
+
+
+
+/* =========================
+   EXAM SUPPORT
+========================= */
+
+.exam-support {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+
+    width: 100%;
+    min-height: 94px;
+    padding: 16px 22px;
+    margin-bottom: 18px;
+
+    background: linear-gradient(110deg, #edf1ff, #e4eaff);
+    border: 1px solid #e5ebff;
+    border-radius: 20px;
+}
+
+.exam-info {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+
+    flex: 1;
+    min-width: 0;
+}
+
+.exam-icon {
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background-color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.exam-icon svg {
+    width: 38px;
+    height: 38px;
+    color: #4165ff;
+
+    stroke-width: 1.8;
+}
+
+.exam-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.exam-heading {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+
+    margin-bottom: 9px;
+}
+
+.exam-heading h3 {
+    margin: 0;
+
+    font-size: 14px;
+    font-weight: 600;
+    color: #123582;
+}
+
+.exam-status {
+    padding: 5px 11px;
+
+    background: #dce7ff;
+    color: #4165d9;
+    border-radius: 20px;
+
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.exam-name {
+    margin: 0 0 6px;
+
+    font-size: 12px;
+    font-weight: 500;
+    color: #23459f;
+}
+
+.exam-subjects {
+    margin: 0;
+
+    font-size: 11px;
+    color: #7188c2;
+}
+
+.exam-divider {
+    width: 1px;
+    align-self: stretch;
+    flex-shrink: 0;
+    background: #c9d6ff;
+}
+
+.exam-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 22px;
+
+    flex: 1.15;
+    min-width: 0;
+}
+
+.exam-deadline {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    min-width: 0;
+    padding-top: 25px;
+}
+
+.deadline-icon {
+    margin-top: 0;
+}
+
+.deadline-icon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.deadline-icon svg {
+    width: 20px;
+    height: 20px;
+    color: #4165ff;
+}
+
+.deadline-details {
+    min-width: 0;
+}
+
+.deadline-label {
+    margin: 0 0 6px;
+
+    font-size: 11px;
+    color: #8297ce;
+}
+
+.deadline-time {
+    margin: 0;
+
+    font-size: 12px;
+    font-weight: 600;
+    color: #23459f;
+    white-space: nowrap;
+}
+
+.exam-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    min-width: 150px;
+    min-height: 40px;
+    padding: 10px 18px;
+    flex-shrink: 0;
+
+    background: #ffffff;
+    border: 1px solid #d9e3ff;
+    border-radius: 24px;
+
+    color: #3158ed;
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
+
+    transition: background-color 0.2s ease,
+                border-color 0.2s ease;
+}
+
+.exam-button:hover {
+    background: #f6f8ff;
+    border-color: #aebfff;
+}
+
+.exam-button i {
+    width: 16px;
+    height: 16px;
+}
+
+
+
+/* =========================
+   SHARED DOUBTS
+========================= */
+
+.shared-doubts-header{
+    display: flex;
+    gap:12px;
+    margin-bottom: 12px;
+    align-items: center;
+}
+.shared-doubts-heading{
+    display: flex;
+    flex-direction: column;
+    gap:6px;
+    
+}
+.shared-doubts-header > svg {
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+    color: #ffbf47;
+    fill: #ffdf93;
+    stroke-width: 2;
+}
+
+.shared-doubts-heading h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #102f91;
+}
+
+.shared-doubts-heading p {
+    margin: 0;
+    font-size: 13px;
+    color: #7189c4;
+}
+
+.shared-doubts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+.shared-doubt-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    width: 100%;
+    min-height: 90px;
+    padding: 16px;
+    border-radius: 18px;
+
+    background: #ffffff;
+    border: 1px solid #e3ebff;
+    transition: background-color 0.25s ease,
+                border-color 0.25s ease,
+                box-shadow 0.25s ease;
+}
+
+.shared-doubt-card:hover {
+    background: #edf2ff;
+    border-color: #b7c9ff;
+    box-shadow: 0 4px 12px rgba(65, 101, 255, 0.10);
+}
+
+
+
+.shared-doubt-icon img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+}
+
+.shared-doubt-info {
+    flex: 1;
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.shared-doubt-question {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #173783;
+}
+
+.shared-doubt-meta {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    font-size: 11px;
+    color: #8295c6;
+}
+
+.shared-doubt-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    flex-shrink: 0;
+
+    color: #4165ff;
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.shared-doubt-link svg {
+    width: 15px;
+    height: 15px;
+}
