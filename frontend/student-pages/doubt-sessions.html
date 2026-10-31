@@ -1,2 +1,196 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doubt Sessions | ClariQ</title>
 
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/doubt-sessions.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+<nav class="sidebar">
+    <img src="../assets/images/clariq-logo.svg" alt="ClariQ Logo" class="logo">
+
+    <ul>
+        <li><a href="dashboard.html"><i data-lucide="house"></i><span>Home</span></a></li>
+        <li><a href="ask-doubt.html"><i data-lucide="circle-help"></i><span>Ask Doubt</span></a></li>
+        <li><a href="my-doubts.html"><i data-lucide="message-circle"></i><span>My Doubts</span></a></li>
+        <li><a href="library.html"><i data-lucide="book-open"></i><span>Library</span></a></li>
+        <li><a href="doubt-sessions.html" class="nav-item-active"><i data-lucide="messages-square"></i><span>Doubt Sessions</span></a></li>
+        <li><a href="exam-support.html"><i data-lucide="calendar"></i><span>Exam Support</span></a></li>
+        <li><a href="saves.html"><i data-lucide="bookmark"></i><span>Saves</span></a></li>
+    </ul>
+
+    <div class="anonymous-box">
+        <img src="../assets/icons/anonymous-icon.svg" class="anonymous-icon" alt="">
+        <div class="anonymous-text">
+            <h3>Ask Freely, Stay Anonymous</h3>
+            <p>Your identity stays protected when you ask a doubt.</p>
+        </div>
+    </div>
+</nav>
+
+<div class="top-right">
+    <button class="notification-btn"><i data-lucide="bell"></i></button>
+    <button class="profile-btn">
+        <span class="avatar">A</span>
+        <span>Anushka</span>
+        <i data-lucide="chevron-down"></i>
+    </button>
+</div>
+
+<main>
+
+    <div class="page-heading">
+        <div>
+            <h1>Doubt Sessions</h1>
+            <p>Learn together, clear doubts and grow with every session.</p>
+        </div>
+        <div class="heading-icon">
+            <i data-lucide="messages-square"></i>
+        </div>
+    </div>
+
+    <section class="next-session">
+        <div class="section-label">
+            <span class="live-dot"></span>
+            YOUR NEXT SESSION
+        </div>
+
+        <div class="next-content">
+            <div>
+                <span class="session-tag">UPCOMING</span>
+                <h2>Data Structures Doubt Session</h2>
+                <p>Clear your concepts and get your questions answered by an expert.</p>
+
+                <div class="session-meta">
+                    <span><i data-lucide="calendar-days"></i> 05 November 2026</span>
+                    <span><i data-lucide="clock"></i> 04:00 PM – 05:00 PM</span>
+                    <span><i data-lucide="user-round"></i> Faculty Mentor</span>
+                </div>
+            </div>
+
+            <div class="next-art">
+                <i data-lucide="video"></i>
+                <span>Live Learning</span>
+            </div>
+        </div>
+
+        <button class="join-btn" onclick="alert('Session link will be available soon!')">
+            View Session Details
+            <i data-lucide="arrow-up-right"></i>
+        </button>
+    </section>
+
+    <div class="content-grid">
+
+        <section class="sessions-section">
+            <div class="section-heading">
+                <div>
+                    <h2>Upcoming Sessions</h2>
+                    <p>Don't miss your chance to learn and interact.</p>
+                </div>
+                <span class="count-badge">03 Sessions</span>
+            </div>
+
+            <div class="session-card">
+                <div class="date-box">
+                    <span>NOV</span>
+                    <strong>07</strong>
+                </div>
+
+                <div class="session-info">
+                    <span class="subject blue">PROGRAMMING</span>
+                    <h3>Python Programming</h3>
+                    <p><i data-lucide="clock"></i> 11:00 AM – 12:00 PM</p>
+                    <p><i data-lucide="user-round"></i> Faculty Mentor</p>
+                </div>
+
+                <button class="details-btn" onclick="alert('Session details coming soon!')">Details</button>
+            </div>
+
+            <div class="session-card">
+                <div class="date-box pink-date">
+                    <span>NOV</span>
+                    <strong>09</strong>
+                </div>
+
+                <div class="session-info">
+                    <span class="subject pink">MATHEMATICS</span>
+                    <h3>Engineering Mathematics</h3>
+                    <p><i data-lucide="clock"></i> 02:00 PM – 03:00 PM</p>
+                    <p><i data-lucide="user-round"></i> Faculty Mentor</p>
+                </div>
+
+                <button class="details-btn" onclick="alert('Session details coming soon!')">Details</button>
+            </div>
+
+            <div class="session-card">
+                <div class="date-box purple-date">
+                    <span>NOV</span>
+                    <strong>12</strong>
+                </div>
+
+                <div class="session-info">
+                    <span class="subject purple">COMPUTER SCIENCE</span>
+                    <h3>Database Management</h3>
+                    <p><i data-lucide="clock"></i> 03:00 PM – 04:00 PM</p>
+                    <p><i data-lucide="user-round"></i> Faculty Mentor</p>
+                </div>
+
+                <button class="details-btn" onclick="alert('Session details coming soon!')">Details</button>
+            </div>
+        </section>
+
+        <aside class="right-panel">
+
+            <div class="calendar-card">
+                <h3>Session Calendar</h3>
+                <p class="calendar-subtitle">November 2026</p>
+
+                <div class="calendar">
+                    <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+
+                    <span class="muted">26</span><span class="muted">27</span><span class="muted">28</span><span class="muted">29</span><span class="muted">30</span><span class="muted">31</span><span>1</span>
+
+                    <span>2</span><span>3</span><span>4</span><span class="selected">5</span><span>6</span><span class="has-session">7</span><span>8</span>
+
+                    <span class="has-session">9</span><span>10</span><span>11</span><span class="has-session">12</span><span>13</span><span>14</span><span>15</span>
+
+                    <span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span>
+
+                    <span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span>28</span><span>29</span>
+
+                    <span>30</span>
+                </div>
+
+                <div class="calendar-legend">
+                    <span><i class="legend-dot selected-dot"></i> Selected</span>
+                    <span><i class="legend-dot session-dot"></i> Session</span>
+                </div>
+            </div>
+
+            <div class="help-card">
+                <div class="help-icon">
+                    <i data-lucide="lightbulb"></i>
+                </div>
+                <h3>Make the most of it!</h3>
+                <p>Prepare your questions beforehand and make every doubt count.</p>
+            </div>
+
+        </aside>
+    </div>
+
+</main>
+
+<script>
+    lucide.createIcons();
+</script>
+<script src="../js/doubt-sessions.js"></script>
+</body>
+</html>
