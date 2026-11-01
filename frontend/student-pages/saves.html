@@ -1,0 +1,504 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClariQ | My Saves</title>
+
+    <link rel="stylesheet" href="../student-css/common.css">
+    <link rel="stylesheet" href="../student-css/saves.css">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+    <!-- SIDEBAR: SAME AS DASHBOARD -->
+    <nav class="sidebar">
+
+        <img src="../assets/images/clariq-logo.svg"
+             alt="ClariQ Logo" class="logo">
+
+        <ul>
+            <li>
+                <a href="dashboard.html">
+                    <i data-lucide="house"></i>
+                    <span>Home</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="ask-doubt.html">
+                    <i data-lucide="circle-help"></i>
+                    <span>Ask Doubt</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="my-doubts.html">
+                    <i data-lucide="message-circle"></i>
+                    <span>My Doubts</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="library.html">
+                    <i data-lucide="book-open"></i>
+                    <span>Library</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="doubt-sessions.html">
+                    <i data-lucide="messages-square"></i>
+                    <span>Doubt Sessions</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="exam-support.html">
+                    <i data-lucide="calendar"></i>
+                    <span>Exam Support</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="saves.html" class="nav-item-active">
+                    <i data-lucide="bookmark"></i>
+                    <span>Saves</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="anonymous-box">
+
+            <img src="../assets/icons/anonymous-icon.svg"
+                 alt="Anonymous Icon"
+                 class="anonymous-icon">
+
+            <div class="anonymous-text">
+                <h3>Ask Freely, Stay Anonymous</h3>
+                <p>Your identity stays protected when you ask a doubt.</p>
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- TOP RIGHT: SAME AS DASHBOARD -->
+    <div class="top-right">
+
+        <button class="notification-btn">
+            <i data-lucide="bell"></i>
+        </button>
+
+        <button class="profile-btn">
+            <span class="avatar">A</span>
+            <span>Anushka</span>
+            <i data-lucide="chevron-down"></i>
+        </button>
+
+    </div>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="saves-main">
+
+        <!-- PAGE HEADING -->
+        <header class="saves-heading">
+        
+
+            <div class="saves-heading-text">
+                <h1>My Saves</h1>
+                <p>
+                    Keep your important doubts and learning resources
+                    organised in one place.
+                </p>
+            </div>
+
+           <div class="saves-heading-art">
+              <img src="../assets/images/saves-illustration.png"
+         alt="Bookmark and folder illustration">
+           </div>
+
+        </header>
+
+
+        <!-- MY FOLDERS -->
+        <section class="folders-section">
+
+            <div class="section-heading">
+                <h2>MY FOLDERS</h2>
+
+                <button class="new-folder-btn" id="newFolderBtn">
+                    <i data-lucide="plus"></i>
+                    New Folder
+                </button>
+            </div>
+
+            <div class="folders-grid" id="foldersGrid">
+
+                <div class="folder-card">
+                    <div class="folder-icon">
+                        <i data-lucide="folder"></i>
+                    </div>
+
+                    <div class="folder-info">
+                        <h3>DSA</h3>
+                        <p>8 items</p>
+                    </div>
+
+                    <button class="folder-menu" aria-label="Folder options">
+                        <i data-lucide="more-vertical"></i>
+                    </button>
+                </div>
+
+
+                <div class="folder-card">
+                    <div class="folder-icon">
+                        <i data-lucide="folder"></i>
+                    </div>
+
+                    <div class="folder-info">
+                        <h3>Exam Prep</h3>
+                        <p>12 items</p>
+                    </div>
+
+                    <button class="folder-menu" aria-label="Folder options">
+                        <i data-lucide="more-vertical"></i>
+                    </button>
+                </div>
+
+
+                <div class="folder-card">
+                    <div class="folder-icon">
+                        <i data-lucide="folder"></i>
+                    </div>
+
+                    <div class="folder-info">
+                        <h3>Important</h3>
+                        <p>5 items</p>
+                    </div>
+
+                    <button class="folder-menu" aria-label="Folder options">
+                        <i data-lucide="more-vertical"></i>
+                    </button>
+                </div>
+
+
+                <div class="folder-card">
+                    <div class="folder-icon">
+                        <i data-lucide="folder"></i>
+                    </div>
+
+                    <div class="folder-info">
+                        <h3>Revision</h3>
+                        <p>6 items</p>
+                    </div>
+
+                    <button class="folder-menu" aria-label="Folder options">
+                        <i data-lucide="more-vertical"></i>
+                    </button>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SEARCH -->
+        <div class="saves-search">
+
+            <i data-lucide="search"></i>
+
+            <input
+                type="text"
+                id="savesSearch"
+                placeholder="Search saved doubts and resources..."
+            >
+
+        </div>
+
+
+        <!-- FILTER BUTTONS -->
+        <div class="saves-filters">
+
+            <button class="filter-btn active" data-filter="all">
+                All
+            </button>
+
+            <button class="filter-btn" data-filter="doubt">
+                Doubts
+            </button>
+
+            <button class="filter-btn" data-filter="resource">
+                Resources
+            </button>
+
+        </div>
+
+
+        <!-- SAVED DOUBTS -->
+        <section class="saved-section" id="savedDoubtsSection">
+
+            <div class="saved-section-heading">
+
+                <h2>
+                    <i data-lucide="bookmark"></i>
+                    Saved Doubts
+                </h2>
+
+                <a href="#" class="view-all-link">
+                    View All
+                    <i data-lucide="arrow-right"></i>
+                </a>
+
+            </div>
+
+
+            <div class="doubts-list">
+
+                <!-- DOUBT 1: DSA SUBJECT ICON -->
+                <article class="saved-doubt-card"
+                         data-type="doubt"
+                         data-search="recursion linked list DSA">
+
+                   <div class="doubt-subject-icon">
+                        <img src="../assets/icons/dsa-icon.svg" alt="DSA">
+                    </div>
+
+                    <div class="saved-doubt-info">
+
+                        <h3>
+                            How does recursion work in a linked list?
+                        </h3>
+
+                        <div class="doubt-tags">
+                            <span>DSA</span>
+                            <span class="tag-dot">•</span>
+                            <span>Recursion</span>
+                        </div>
+
+                        <p class="teacher-info">
+                            <i data-lucide="user-round"></i>
+                            Teacher: Prof. Sharma
+                        </p>
+
+                    </div>
+
+                    <div class="doubt-card-actions">
+
+                        <button class="save-icon saved"
+                                aria-label="Remove saved doubt">
+                            <i data-lucide="bookmark"></i>
+                        </button>
+
+                        <a href="#" class="view-doubt-btn">
+                            View Doubt
+                            <i data-lucide="arrow-right"></i>
+                        </a>
+
+                    </div>
+
+                </article>
+
+
+                <!-- DOUBT 2: DSA SUBJECT ICON -->
+                <article class="saved-doubt-card"
+                         data-type="doubt"
+                         data-search="stack queue DSA data structures">
+
+
+                    <div class="doubt-subject-icon">
+                      <img src="../assets/icons/dsa-icon.svg" alt="DSA">
+                    </div>
+
+                    <div class="saved-doubt-info">
+
+                        <h3>
+                            What is the difference between stack and queue?
+                        </h3>
+
+                        <div class="doubt-tags">
+                            <span>DSA</span>
+                            <span class="tag-dot">•</span>
+                            <span>Data Structures</span>
+                        </div>
+
+                        <p class="teacher-info">
+                            <i data-lucide="user-round"></i>
+                            Teacher: Prof. Verma
+                        </p>
+
+                    </div>
+
+                    <div class="doubt-card-actions">
+
+                        <button class="save-icon"
+                                aria-label="Save doubt">
+                            <i data-lucide="bookmark"></i>
+                        </button>
+
+                        <a href="#" class="view-doubt-btn">
+                            View Doubt
+                            <i data-lucide="arrow-right"></i>
+                        </a>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- SAVED RESOURCES -->
+        <section class="saved-section" id="savedResourcesSection">
+
+            <div class="saved-section-heading">
+
+                <h2>
+                    <i data-lucide="file-text"></i>
+                    Saved Resources
+                </h2>
+
+                <a href="#" class="view-all-link">
+                    View All
+                    <i data-lucide="arrow-right"></i>
+                </a>
+
+            </div>
+
+
+            <div class="resources-grid">
+
+                <!-- PDF: RED ICON -->
+                <article class="saved-resource-card"
+                         data-type="resource"
+                         data-search="Introduction to Recursion DSA PDF">
+
+                    <div class="file-icon pdf">
+                        <i data-lucide="file-text"></i>
+                    </div>
+
+                    <div class="resource-info">
+                        <h3>Introduction to Recursion.pdf</h3>
+                        <p>DSA <span>•</span> PDF</p>
+                    </div>
+
+                    <button class="resource-save-btn"
+                            aria-label="Save resource">
+                        <i data-lucide="bookmark"></i>
+                    </button>
+
+                    <a href="#" class="download-btn">
+                        <i data-lucide="download"></i>
+                        Download
+                    </a>
+
+                </article>
+
+
+                <!-- PDF: RED ICON -->
+                <article class="saved-resource-card"
+                         data-type="resource"
+                         data-search="COA Notes PDF">
+
+                    <div class="file-icon pdf">
+                        <i data-lucide="file-text"></i>
+                    </div>
+
+                    <div class="resource-info">
+                        <h3>COA Notes.pdf</h3>
+                        <p>COA <span>•</span> Notes</p>
+                    </div>
+
+                    <button class="resource-save-btn"
+                            aria-label="Save resource">
+                        <i data-lucide="bookmark"></i>
+                    </button>
+
+                    <a href="#" class="download-btn">
+                        <i data-lucide="download"></i>
+                        Download
+                    </a>
+
+                </article>
+
+
+                <!-- PPT: BLUE ICON -->
+                <article class="saved-resource-card"
+                         data-type="resource"
+                         data-search="DBMS Concepts PPT">
+
+                    <div class="file-icon ppt">
+                        <i data-lucide="file-text"></i>
+                    </div>
+
+                    <div class="resource-info">
+                        <h3>DBMS Concepts.ppt</h3>
+                        <p>DBMS <span>•</span> PPT</p>
+                    </div>
+
+                    <button class="resource-save-btn"
+                            aria-label="Save resource">
+                        <i data-lucide="bookmark"></i>
+                    </button>
+
+                    <a href="#" class="download-btn">
+                        <i data-lucide="download"></i>
+                        Download
+                    </a>
+
+                </article>
+
+
+                <!-- OTHER DOCUMENT: PURPLE ICON -->
+                <article class="saved-resource-card"
+                         data-type="resource"
+                         data-search="Algorithms Cheat Sheet DSA Notes">
+
+                    <div class="file-icon doc">
+                        <i data-lucide="file-text"></i>
+                    </div>
+
+                    <div class="resource-info">
+                        <h3>Algorithms Cheat Sheet</h3>
+                        <p>DSA <span>•</span> Notes</p>
+                    </div>
+
+                    <button class="resource-save-btn"
+                            aria-label="Save resource">
+                        <i data-lucide="bookmark"></i>
+                    </button>
+
+                    <a href="#" class="download-btn">
+                        <i data-lucide="download"></i>
+                        Download
+                    </a>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <p id="noSavedResults" class="no-results" hidden>
+            No saved items found.
+        </p>
+
+    </main>
+
+    <script src="../student-js/saves.js"></script>
+
+    <script>
+        lucide.createIcons();
+    </script>
+
+</body>
+</html>
