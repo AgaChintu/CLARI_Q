@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications - ClariQ</title>
+    <link rel="stylesheet" href="../student-css/common.css">
+    <link rel="stylesheet" href="../student-css/ask-doubt.css">
+    <link rel="stylesheet" href="../student-css/notification.css">
+    <!-- Lucide Icons Library -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+    
+    <nav class="sidebar">
+        <img src="../assets/images/clariq-logo.svg" alt="ClariQ Logo" class="logo">
+        <ul>
+            <li>
+                <a href="dashboard.html">
+                    <i data-lucide="house"></i>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="ask-doubt.html">
+                    <i data-lucide="circle-help"></i>
+                    <span>Ask Doubt</span>
+                </a>
+            </li>
+            <li>
+                <a href="my-doubts.html">
+                    <i data-lucide="message-circle"></i>
+                    <span>My Doubts</span>
+                </a>
+            </li>
+            <li>
+                <a href="library.html">
+                    <i data-lucide="book-open"></i>
+                    <span>Library</span>
+                </a>
+            </li>
+            <li>
+                <a href="doubt-sessions.html">
+                    <i data-lucide="messages-square"></i>
+                    <span>Doubt Sessions</span>
+                </a>
+            </li>
+            <li>
+                <a href="exam-support.html">
+                    <i data-lucide="calendar"></i>
+                    <span>Exam Support</span>
+                </a>
+            </li>
+            <li>
+                <a href="saves.html">
+                    <i data-lucide="bookmark"></i>
+                    <span>Saves</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="anonymous-box">
+            <img src="../assets/icons/anonymous-icon.svg" alt="Anonymous Icon" class="anonymous-icon">
+            <div class="anonymous-text">
+                <h3>Ask Freely, Stay Anonymous</h3>
+                <p>Your identity stays protected when you ask a doubt.</p>
+            </div>
+        </div>
+    </nav>
+
+    
+    <div class="top-right">
+        <a href="notification.html" class="notification-btn active-notif" id="notifBtn">
+            <i data-lucide="bell"></i>
+            <span class="badge-count" id="badgeCount">5</span>
+        </a>
+        <button class="profile-btn">
+            <span class="avatar">A</span>
+            <span>Anushka</span>
+            <i data-lucide="chevron-down"></i>
+        </button>
+    </div>
+
+    
+    <main class="notifications-main">
+        
+        
+        <a href="dashboard.html" class="back-link" id="backLink">
+            <i data-lucide="arrow-left"></i>
+            <span id="backText">Back to Home</span>
+        </a>
+
+        <div class="notif-header-flex">
+            <div class="notif-title-group">
+                <div class="bell-circle-icon">
+                    <i data-lucide="bell"></i>
+                </div>
+                <div>
+                    <h1>Notifications</h1>
+                    <p class="subtitle">Stay updated with your doubts, sessions and exams</p>
+                </div>
+            </div>
+
+            <button class="mark-all-btn" id="markAllBtn">
+                <i data-lucide="check"></i>
+                Mark all as read
+            </button>
+        </div>
+
+        
+        <div class="filter-chips-container">
+            <button class="chip active" data-filter="all">All (5)</button>
+            <button class="chip" data-filter="unread">Unread (3)</button>
+            <button class="chip" data-filter="doubt">Doubts</button>
+            <button class="chip" data-filter="session">Sessions</button>
+            <button class="chip" data-filter="resource">Resources</button>
+            <button class="chip" data-filter="exam">Exams</button>
+        </div>
+
+
+        <div class="notifications-wrapper">
+            
+            <div class="date-group-heading">TODAY</div>
+
+            <div class="notif-card unread" data-category="doubt">
+                <div class="blue-status-dot"></div>
+                <div class="card-icon-wrapper light-blue">
+                    <i data-lucide="message-circle-more"></i>
+                </div>
+                <div class="card-body-text">
+                    <h3>Doubt Resolved</h3>
+                    <p>Your DSA doubt has been answered by the teacher.</p>
+                </div>
+                <div class="card-right-action">
+                    <span class="time-stamp">
+                        <i data-lucide="clock"></i> 10 min ago
+                    </span>
+                    <a href="my-doubts.html" class="pill-btn">View Doubt <i data-lucide="arrow-right"></i></a>
+                </div>
+            </div>
+
+           
+            <div class="notif-card unread" data-category="session">
+                <div class="blue-status-dot"></div>
+                <div class="card-icon-wrapper soft-blue">
+                    <i data-lucide="messages-square"></i>
+                </div>
+                <div class="card-body-text">
+                    <h3>New Doubt Session</h3>
+                    <p>A new COA doubt-clearing session has been scheduled.</p>
+                </div>
+                <div class="card-right-action">
+                    <span class="time-stamp">
+                        <i data-lucide="clock"></i> 2 hours ago
+                    </span>
+                    <a href="doubt-sessions.html" class="pill-btn">View Session <i data-lucide="arrow-right"></i></a>
+                </div>
+            </div>
+
+           
+            <div class="notif-card unread" data-category="resource">
+                <div class="blue-status-dot"></div>
+                <div class="card-icon-wrapper brand-blue">
+                    <i data-lucide="book-open"></i>
+                </div>
+                <div class="card-body-text">
+                    <h3>Resource Published</h3>
+                    <p>New notes have been added to your Library.</p>
+                </div>
+                <div class="card-right-action">
+                    <span class="time-stamp">
+                        <i data-lucide="clock"></i> 4 hours ago
+                    </span>
+                    <a href="library.html" class="pill-btn">View Resource <i data-lucide="arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="date-group-heading margin-top-group">YESTERDAY</div>
+
+            <div class="notif-card read" data-category="exam">
+                <div class="blue-status-dot hidden-dot"></div>
+                <div class="card-icon-wrapper soft-blue">
+                    <i data-lucide="calendar"></i>
+                </div>
+                <div class="card-body-text">
+                    <h3>Exam Support Open</h3>
+                    <p>DSA doubt submission is now open.</p>
+                </div>
+                <div class="card-right-action">
+                    <span class="time-stamp">
+                        <i data-lucide="clock"></i> Yesterday
+                    </span>
+                    <a href="exam-support.html" class="pill-btn">View Exam <i data-lucide="arrow-right"></i></a>
+                </div>
+            </div>
+
+            
+            <div class="notif-card read" data-category="resource">
+                <div class="blue-status-dot hidden-dot"></div>
+                <div class="card-icon-wrapper light-blue">
+                    <i data-lucide="bookmark"></i>
+                </div>
+                <div class="card-body-text">
+                    <h3>Saved Content Update</h3>
+                    <p>Your saved resources are now available for quick access.</p>
+                </div>
+                <div class="card-right-action">
+                    <span class="time-stamp">
+                        <i data-lucide="clock"></i> Yesterday
+                    </span>
+                    <a href="saves.html" class="pill-btn">View Saves <i data-lucide="arrow-right"></i></a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="../student-js/notification.js"></script>
+    
+    
+    <script>
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    </script>
+</body>
+
+</html>
