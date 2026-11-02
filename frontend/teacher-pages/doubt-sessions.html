@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Doubt Sessions | ClariQ</title>
+
+    <link rel="stylesheet" href="../teacher-css/common.css">
+    <link rel="stylesheet" href="../teacher-css/doubt-sessions.css">
+
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+    <script src="../teacher-js/components.js" defer></script>
+    <script src="../teacher-js/doubt-sessions.js" defer></script>
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <div id="sidebar-container"></div>
+
+    <!-- TOPBAR -->
+    <div id="topbar-container"></div>
+
+
+    <main class="sessions-page">
+
+
+        <!-- PAGE HEADER -->
+
+        <section class="page-title">
+
+            <div>
+                <h1>Doubt Sessions</h1>
+
+                <p>
+                    Plan, organise and manage your doubt-clearing sessions.
+                </p>
+            </div>
+
+            <button class="primary-btn" id="create-session-btn">
+                <i data-lucide="plus"></i>
+                Create Session
+            </button>
+
+        </section>
+
+
+
+        <!-- STATISTICS -->
+
+        <section class="stats-grid">
+
+            <article class="stat-card">
+
+                <div class="stat-icon upcoming-icon">
+                    <i data-lucide="calendar-days"></i>
+                </div>
+
+                <div>
+                    <h2 id="upcoming-count">03</h2>
+                    <p>Upcoming Sessions</p>
+                </div>
+
+            </article>
+
+
+            <article class="stat-card">
+
+                <div class="stat-icon draft-icon">
+                    <i data-lucide="file-pen-line"></i>
+                </div>
+
+                <div>
+                    <h2 id="draft-count">02</h2>
+                    <p>Active Drafts</p>
+                </div>
+
+            </article>
+
+
+            <article class="stat-card">
+
+                <div class="stat-icon completed-icon">
+                    <i data-lucide="circle-check"></i>
+                </div>
+
+                <div>
+                    <h2 id="completed-count">08</h2>
+                    <p>Completed Sessions</p>
+                </div>
+
+            </article>
+
+
+            <article class="stat-card">
+
+                <div class="stat-icon doubts-icon">
+                    <i data-lucide="message-circle-question"></i>
+                </div>
+
+                <div>
+                    <h2 id="draft-doubts-count">14</h2>
+                    <p>Doubts in Drafts</p>
+                </div>
+
+            </article>
+
+        </section>
+
+
+
+        <!-- UPCOMING SESSIONS -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <div class="section-title">
+
+                    <i data-lucide="calendar-days"></i>
+
+                    <div>
+                        <h2>Upcoming Sessions</h2>
+                        <p>Your scheduled doubt-clearing sessions.</p>
+                    </div>
+
+                </div>
+
+                <button class="view-all-btn" data-action="view-all-upcoming">
+                    View All
+                    <i data-lucide="arrow-right"></i>
+                </button>
+
+            </div>
+
+
+            <div class="horizontal-scroll-wrapper">
+
+                <div class="upcoming-list" id="upcoming-list">
+
+                    <!-- Generated using JS -->
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- SESSION DRAFTS -->
+
+        <section class="content-section drafts-section">
+
+            <div class="section-heading">
+
+                <div class="section-title">
+
+                    <i data-lucide="file-text"></i>
+
+                    <div>
+                        <h2>Session Drafts</h2>
+                        <p>
+                            Organise doubts collected from your Doubt Inbox before scheduling a session.
+                        </p>
+                    </div>
+
+                </div>
+
+                <button class="view-all-btn" data-action="view-all-drafts">
+                    View All
+                    <i data-lucide="arrow-right"></i>
+                </button>
+
+            </div>
+
+
+            <div class="draft-list" id="draft-list">
+
+                <!-- Generated using JS -->
+
+            </div>
+
+        </section>
+
+
+
+        <!-- PAST SESSIONS -->
+
+        <section class="content-section past-section">
+
+            <div class="section-heading">
+
+                <div class="section-title">
+
+                    <i data-lucide="circle-check"></i>
+
+                    <div>
+                        <h2>Past Sessions</h2>
+                        <p>
+                            Review previously conducted doubt-clearing sessions and their summaries.
+                        </p>
+                    </div>
+
+                </div>
+
+                <button class="view-all-btn" data-action="view-all-past">
+                    View All
+                    <i data-lucide="arrow-right"></i>
+                </button>
+
+            </div>
+
+
+            <div class="past-list" id="past-list">
+
+                <!-- Generated using JS -->
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+</body>
+</html>

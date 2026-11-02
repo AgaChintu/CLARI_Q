@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" href="../teacher-css/common.css">
+    <link rel="stylesheet" href="../teacher-css/doubt-inbox.css">
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+    <script src="../teacher-js/components.js" defer></script>
+
+</head>
+
+<body>
+    <div id="sidebar-container"></div>
+    <div id="topbar-container"></div>
+
+  
+    <main class="inbox-page">
+
+
+        <!-- =====================================
+             PAGE HEADER
+        ====================================== -->
+
+        <section class="page-header">
+
+            <div class="page-title">
+
+                <h1>Doubt Inbox</h1>
+
+                <h2>
+                    Review incoming student doubts, identify common
+                    learning gaps and provide explanations.
+                </h2>
+
+            </div>
+
+
+            <!-- SINGLE ASSIGNMENT SELECTOR -->
+
+            <div class="assignment-selector">
+
+                <select id="assignment-select"
+                        aria-label="Select teaching assignment">
+
+                    <option value="ai-ml-dstl" selected>
+                        2nd Year AI & ML · DSTL
+                    </option>
+
+                    <option value="cse-dstl">
+                        2nd Year CSE · DSTL
+                    </option>
+
+                    <option value="ai-ml-maths">
+                        1st Year AI & ML · Engineering Maths I
+                    </option>
+
+                </select>
+
+                <i data-lucide="chevron-down"></i>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================
+             STATISTICS
+        ====================================== -->
+
+        <section class="stats-grid" id="assignment-stats">
+
+
+            <!-- TOTAL RECEIVED -->
+
+            <article class="stat-card">
+
+                <div class="stat-icon total-icon">
+                    <i data-lucide="message-circle-more"></i>
+                </div>
+
+                <div class="stat-details">
+
+                    <h2 id="total-received">32</h2>
+
+                    <p>Total Received</p>
+
+                </div>
+
+            </article>
+
+
+            <!-- AWAITING REVIEW -->
+
+            <article class="stat-card">
+
+                <div class="stat-icon awaiting-icon">
+                    <i data-lucide="clock"></i>
+                </div>
+
+                <div class="stat-details">
+
+                    <h2 id="awaiting-review">12</h2>
+
+                    <p>Awaiting Review</p>
+
+                </div>
+
+            </article>
+
+
+            <!-- IN PROGRESS -->
+
+            <article class="stat-card">
+
+                <div class="stat-icon progress-icon">
+                    <i data-lucide="hourglass"></i>
+                </div>
+
+                <div class="stat-details">
+
+                    <h2 id="in-progress-count">8</h2>
+
+                    <p>In Progress</p>
+
+                </div>
+
+            </article>
+
+
+            <!-- RESOLVED -->
+
+            <article class="stat-card">
+
+                <div class="stat-icon resolved-icon">
+                    <i data-lucide="circle-check"></i>
+                </div>
+
+                <div class="stat-details">
+
+                    <h2 id="resolved-count">14</h2>
+
+                    <p>Resolved</p>
+
+                </div>
+
+            </article>
+
+
+        </section>
+
+
+
+        <!-- =====================================
+             AI DOUBT INSIGHTS
+        ====================================== -->
+
+        <section class="insights-section">
+
+
+            <!-- INSIGHTS HEADER -->
+
+            <div class="insights-header">
+
+                <div class="insights-heading">
+
+                    <i data-lucide="sparkles"></i>
+
+                    <div>
+
+                        <h2>AI Doubt Insights</h2>
+
+                        <p>
+                            Get insights into student queries and
+                            focus on key topics.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <span class="ai-badge">
+                    Powered by ClariQ AI
+                    <i data-lucide="sparkles"></i>
+                </span>
+
+            </div>
+
+
+
+            <!-- INSIGHTS CONTENT -->
+
+            <div class="insights-grid">
+
+
+                <!-- FREQUENTLY ASKED TOPICS -->
+
+                <article class="insight-card">
+
+                    <h3>
+
+                        <i data-lucide="chart-no-axes-column-increasing"></i>
+
+                        Frequently Asked Topics
+
+                    </h3>
+
+
+                    <div class="frequent-topics">
+
+                        <div class="topic-row">
+
+                            <span>Equivalence Relations</span>
+
+                            <strong>12</strong>
+
+                        </div>
+
+
+                        <div class="topic-row">
+
+                            <span>Propositional Logic</span>
+
+                            <strong>9</strong>
+
+                        </div>
+
+
+                        <div class="topic-row">
+
+                            <span>Lattices</span>
+
+                            <strong>7</strong>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- SIMILAR DOUBTS -->
+
+                <article class="insight-card">
+
+                    <h3>
+
+                        <i data-lucide="link"></i>
+
+                        Similar Doubts Detected
+
+                    </h3>
+
+
+                    <div class="similar-topics">
+
+                        <div class="topic-row">
+
+                            <span>Equivalence Relations</span>
+
+                            <strong>12 similar</strong>
+
+                        </div>
+
+
+                        <div class="topic-row">
+
+                            <span>Boolean Algebra</span>
+
+                            <strong>8 similar</strong>
+
+                        </div>
+
+
+                        <div class="topic-row">
+
+                            <span>Set Operations</span>
+
+                            <strong>6 similar</strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <button class="outline-btn"
+                            type="button"
+                            data-action="view-group"
+                            data-group-id="group-101">
+
+                        View Group
+
+                        <i data-lucide="arrow-right"></i>
+
+                    </button>
+
+                </article>
+
+
+
+                <!-- TOPICS REQUIRING ATTENTION -->
+
+                <article class="insight-card attention-card">
+
+                    <h3>
+
+                        <i data-lucide="alert-triangle"></i>
+
+                        Topics Requiring Attention
+
+                    </h3>
+
+
+                    <div class="attention-content">
+
+                        <h4>Equivalence Relations</h4>
+
+                        <p>
+                            12 doubts received. Students appear to
+                            be struggling with this topic.
+                        </p>
+
+                    </div>
+
+
+                    <button class="outline-btn"
+                            type="button"
+                            data-action="add-to-session"
+                            data-topic="Equivalence Relations">
+
+                        Add to Session Draft
+
+                        <i data-lucide="arrow-right"></i>
+
+                    </button>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================
+             DOUBT QUEUE
+        ====================================== -->
+
+        <section class="queue-section">
+
+
+            <!-- QUEUE HEADER -->
+
+            <div class="queue-header">
+
+
+                <div class="queue-title">
+
+                    <div class="queue-heading-icon">
+                        <i data-lucide="message-circle-more"></i>
+                    </div>
+
+                    <div>
+
+                        <h2>Doubt Queue</h2>
+
+                        <p>
+                            Review and respond to incoming student doubts.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- FILTERS AND SEARCH -->
+
+                <div class="queue-controls">
+
+
+                    <div class="queue-filters">
+
+                        <button class="filter-btn active"
+                                type="button"
+                                data-filter="all">
+
+                            All <span>(32)</span>
+
+                        </button>
+
+
+                        <button class="filter-btn"
+                                type="button"
+                                data-filter="grouped">
+
+                            Grouped <span>(8)</span>
+
+                        </button>
+
+
+                        <button class="filter-btn"
+                                type="button"
+                                data-filter="individual">
+
+                            Individual <span>(24)</span>
+
+                        </button>
+
+                    </div>
+
+
+                    <button class="search-btn"
+                            type="button"
+                            id="queue-search-btn"
+                            aria-label="Search doubts">
+
+                        <i data-lucide="search"></i>
+
+                    </button>
+
+
+                </div>
+
+            </div>
+
+
+
+            <!-- SEARCH INPUT (HIDDEN INITIALLY) -->
+
+            <div class="queue-search" id="queue-search">
+
+                <input type="search"
+                       id="queue-search-input"
+                       placeholder="Search doubts by topic or Doubt ID...">
+
+            </div>
+
+
+
+            <!-- QUEUE CARDS -->
+
+            <div class="doubt-queue" id="doubt-queue">
+
+
+                <!-- =================================
+                     GROUPED DOUBT 1
+                ================================== -->
+
+                <article class="queue-card grouped"
+                         data-type="grouped"
+                         data-group-id="group-101">
+
+                    <div class="queue-icon">
+
+                        <i data-lucide="users-round"></i>
+
+                    </div>
+
+
+                    <div class="queue-details">
+
+                        <span class="queue-type">GROUPED DOUBTS</span>
+
+                        <h3>Equivalence Relations</h3>
+
+                        <p class="queue-meta">
+                            12 related doubts
+                        </p>
+
+                        <p class="queue-description">
+                            Students are having trouble understanding
+                            the properties of equivalence relations.
+                        </p>
+
+                        <span class="queue-time">
+                            Last received: Today, 11:24 AM
+                        </span>
+
+                    </div>
+
+
+                    <button class="queue-action"
+                            type="button"
+                            data-action="view-group"
+                            data-group-id="group-101">
+
+                        View Group
+
+                        <i data-lucide="arrow-right"></i>
+
+                    </button>
+
+
+                    <button class="expand-btn"
+                            type="button"
+                            aria-label="Expand group">
+
+                        <i data-lucide="chevron-down"></i>
+
+                    </button>
+
+                </article>
+
+
+
+                <!-- =================================
+                     INDIVIDUAL DOUBT 1
+                ================================== -->
+
+                <article class="queue-card individual"
+                         data-type="individual"
+                         data-doubt-id="doubt-201">
+
+                    <div class="queue-icon">
+
+                        <i data-lucide="file-text"></i>
+
+                    </div>
+
+
+                    <div class="queue-details">
+
+                        <span class="queue-type">INDIVIDUAL DOUBT</span>
+
+                        <h3>
+                            What is the difference between relation
+                            and equivalence relation?
+                        </h3>
+
+                        <p class="queue-meta">
+                            Doubt ID: #8421
+                        </p>
+
+                        <span class="queue-time">
+                            Last received: Today, 10:50 AM
+                        </span>
+
+                    </div>
+
+
+                    <button class="queue-action"
+                            type="button"
+                            data-action="view-doubt"
+                            data-doubt-id="doubt-201">
+
+                        View Doubt
+
+                        <i data-lucide="arrow-right"></i>
+
+                    </button>
+
+
+                    <button class="expand-btn"
+                            type="button"
+                            aria-label="Expand doubt">
+
+                        <i data-lucide="chevron-down"></i>
+
+                    </button>
+
+                </article>
+
+
+
+                <!-- =================================
+                     GROUPED DOUBT 2
+                ================================== -->
+
+                <article class="queue-card grouped"
+                         data-type="grouped"
+                         data-group-id="group-102">
+
+                    <div class="queue-icon">
+
+                        <i data-lucide="users-round"></i>
+
+                    </div>
+
+
+                    <div class="queue-details">
+
+                        <span class="queue-type">GROUPED DOUBTS</span>
+
+                        <h3>Propositional Logic</h3>
+
+                        <p class="queue-meta">
+                            8 related doubts
+                        </p>
+
+                        <p class="queue-description">
+                            Students are confused about implication
+                            and biconditional.
+                        </p>
+
+                        <span class="queue-time">
+                            Last received: Yesterday, 5:17 PM
+                        </span>
+
+                    </div>
+
+
+                    <button class="queue-action"
+                            type="button"
+                            data-action="view-group"
+                            data-group-id="group-102">
+
+                        View Group
+
+                        <i data-lucide="arrow-right"></i>
+
+                    </button>
+
+
+                    <button class="expand-btn"
+                            type="button"
+                            aria-label="Expand group">
+
+                        <i data-lucide="chevron-down"></i>
+
+                    </button>
+
+                </article>
+
+
+
+                <!-- =================================
+                     INDIVIDUAL DOUBT 2
+                ================================== -->
+
+                <article class="queue-card individual"
+                         data-type="individual"
+                         data-doubt-id="doubt-202">
+
+                    <div class="queue-icon">
+
+                        <i data-lucide="file-text"></i>
+
+                    </div>
+
+
+                    <div class="queue-details">
+
+                        <span class="queue-type">INDIVIDUAL DOUBT</span>
+
+                        <h3>What is De Morgan's Law?</h3>
+
+                        <p class="queue-meta">
+                            Doubt ID: #8417
+                        </p>
+
+                        <span class="queue-time">
+                            Last received: Yesterday, 4:20 PM
+                        </span>
+
+                    </div>
+
+
+                    <button class="queue-action"
+                            type="button"
+                            data-action="view-doubt"
+                            data-doubt-id="doubt-202">
+
+                        View Doubt
+
+                        <i data-lucide="arrow-right"></i>
+
+                    </button>
+
+
+                    <button class="expand-btn"
+                            type="button"
+                            aria-label="Expand doubt">
+
+                        <i data-lucide="chevron-down"></i>
+
+                    </button>
+
+                </article>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+</body>
+</html>
+
+
+

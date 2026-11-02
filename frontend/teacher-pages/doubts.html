@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" href="../teacher-css/common.css">
+    <link rel="stylesheet" href="../teacher-css/doubts.css">
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+    <script src="../teacher-js/components.js" defer></script>
+
+</head>
+
+<body>
+    <div id="sidebar-container"></div>
+    <div id="topbar-container"></div>
+
+
+
+    <main class="doubts-page">
+        <header class="page-title">
+            <h1>Doubt Management</h1>
+            <h2>Get insights, manage incoming doubts and view resolved queries</h2>
+
+        </header>
+
+
+        <!-- ================================= -->
+        <!-- AI DOUBT INSIGHTS -->
+        <!-- ================================= -->
+
+        <section class="insights-section">
+
+            <div class="insights-header">
+
+                <div class="section-title">
+                    <i data-lucide="sparkles"></i>
+
+                    <h2>AI Doubt Insights</h2>
+                </div>
+
+                <div class="carousel-controls">
+
+                    <button class="carousel-btn"
+                            id="insights-prev"
+                            type="button"
+                            aria-label="Previous class">
+                        <i data-lucide="chevron-left"></i>
+                    </button>
+
+                    <span id="insights-counter">1 of 3</span>
+
+                    <button class="carousel-btn"
+                            id="insights-next"
+                            type="button"
+                            aria-label="Next class">
+                        <i data-lucide="chevron-right"></i>
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- CAROUSEL CONTENT -->
+
+            <div class="insights-carousel" id="insights-carousel">
+
+                <!-- SLIDE 1 -->
+
+                <div class="insight-slide"
+                     data-assignment="ai-ml-dstl">
+
+                    <!-- CLASS INFORMATION -->
+
+                    <div class="assignment-info">
+
+                        <div class="assignment-icon">
+                            <i data-lucide="users-round"></i>
+                        </div>
+
+                        <h3>2nd Year AI & ML · DSTL</h3>
+
+                        <p>Insights based on recent student submissions.</p>
+
+                    </div>
+
+
+                    <!-- FREQUENTLY ASKED TOPICS -->
+
+                    <div class="insight-column">
+
+                        <h3>
+                            <i data-lucide="chart-no-axes-column-increasing"></i>
+                            Frequently Asked Topics
+                        </h3>
+
+                        <ol class="topic-list">
+
+                            <li>
+                                <span>Equivalence Relations</span>
+                                <span class="topic-count">12</span>
+                            </li>
+
+                            <li>
+                                <span>Propositional Logic</span>
+                                <span class="topic-count">9</span>
+                            </li>
+
+                            <li>
+                                <span>Lattices</span>
+                                <span class="topic-count">7</span>
+                            </li>
+
+                        </ol>
+
+                    </div>
+
+
+                    <!-- SIMILAR DOUBTS -->
+
+                    <div class="insight-column">
+
+                        <h3>
+                            <i data-lucide="link"></i>
+                            Similar Doubts Detected
+                        </h3>
+
+                        <div class="insight-detail">
+
+                            <h4>Equivalence Relations</h4>
+
+                            <p>12 similar doubts</p>
+
+                            <button class="outline-btn"
+                                    type="button"
+                                    data-action="view-group"
+                                    data-group-id="group-101">
+
+                                View Group
+                                <i data-lucide="arrow-right"></i>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TOPICS NEEDING ATTENTION -->
+
+                    <div class="insight-column">
+
+                        <h3>
+                            <i data-lucide="alert-triangle"
+                               class="attention-icon"></i>
+
+                            Topics Needing Attention
+                        </h3>
+
+                        <div class="insight-detail">
+
+                            <h4>Equivalence Relations</h4>
+
+                            <p>High number of doubts this week.</p>
+
+                            <button class="outline-btn"
+                                    type="button"
+                                    data-action="add-to-session"
+                                    data-topic="Equivalence Relations">
+
+                                Add to Session Draft
+                                <i data-lucide="arrow-right"></i>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MORE SLIDES WILL BE POPULATED THROUGH JS -->
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================================= -->
+        <!-- DOUBT INBOX -->
+        <!-- ================================= -->
+
+        <section class="inbox-section">
+
+
+            <div class="section-heading">
+
+                <div class="heading-left">
+
+                    <div class="heading-icon inbox-icon">
+                        <i data-lucide="message-circle-more"></i>
+                    </div>
+
+                    <div>
+                        <h2>Doubt Inbox</h2>
+                        <p>Review incoming student doubts across your classes.</p>
+                    </div>
+
+                </div>
+
+                <a href="doubt-inbox.html" class="view-all-link">
+                    View All
+                    <i data-lucide="arrow-right"></i>
+                </a>
+
+            </div>
+
+
+
+            <!-- CLASS CARDS -->
+
+            <div class="inbox-grid" id="inbox-grid">
+
+
+                <!-- CLASS 1 -->
+
+                <article class="inbox-card"
+                         data-assignment="ai-ml-dstl">
+
+                    <div class="inbox-card-header">
+
+                        <div class="class-icon">
+                            <i data-lucide="users-round"></i>
+                        </div>
+
+                        <div class="class-info">
+
+                            <h3>2nd Year AI & ML · DSTL</h3>
+
+                            <div class="status-counts">
+
+                                <span class="status-pill needs-attention">
+                                    Needs Attention <b>(4)</b>
+                                </span>
+
+                                <span class="status-pill in-progress">
+                                    In Progress <b>(2)</b>
+                                </span>
+
+                                <span class="status-pill resolved">
+                                    Resolved <b>(8)</b>
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="inbox-card-content">
+
+
+                        <!-- GROUPED DOUBTS -->
+
+                        <div class="doubt-category">
+
+                            <h4>GROUPED DOUBTS</h4>
+
+                            <div class="doubt-list">
+
+                                <div class="doubt-item"
+                                     data-group-id="group-101">
+
+                                    <div class="doubt-item-info">
+
+                                        <i data-lucide="users-round"></i>
+
+                                        <span>Binary Relations</span>
+
+                                        <small>8 doubts</small>
+
+                                    </div>
+
+                                    <button class="small-outline-btn"
+                                            type="button"
+                                            data-action="view-group"
+                                            data-group-id="group-101">
+
+                                        View Group
+                                        <i data-lucide="arrow-right"></i>
+
+                                    </button>
+
+                                </div>
+
+
+                                <div class="doubt-item"
+                                     data-group-id="group-102">
+
+                                    <div class="doubt-item-info">
+
+                                        <i data-lucide="users-round"></i>
+
+                                        <span>Posets</span>
+
+                                        <small>5 doubts</small>
+
+                                    </div>
+
+                                    <button class="small-outline-btn"
+                                            type="button"
+                                            data-action="view-group"
+                                            data-group-id="group-102">
+
+                                        View Group
+                                        <i data-lucide="arrow-right"></i>
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- INDIVIDUAL DOUBTS -->
+
+                        <div class="doubt-category">
+
+                            <h4>INDIVIDUAL DOUBTS</h4>
+
+                            <div class="doubt-list">
+
+                                <div class="doubt-item"
+                                     data-doubt-id="doubt-201">
+
+                                    <div class="doubt-item-info">
+
+                                        <i data-lucide="file-text"></i>
+
+                                        <span>Lattice Properties</span>
+
+                                    </div>
+
+                                    <button class="small-outline-btn"
+                                            type="button"
+                                            data-action="view-doubt"
+                                            data-doubt-id="doubt-201">
+
+                                        View Doubt
+                                        <i data-lucide="arrow-right"></i>
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- CLASS 2 -->
+
+                <article class="inbox-card"
+                         data-assignment="cse-dstl">
+
+                    <div class="inbox-card-header">
+
+                        <div class="class-icon">
+                            <i data-lucide="users-round"></i>
+                        </div>
+
+                        <div class="class-info">
+
+                            <h3>2nd Year CSE · DSTL</h3>
+
+                            <div class="status-counts">
+
+                                <span class="status-pill needs-attention">
+                                    Needs Attention <b>(3)</b>
+                                </span>
+
+                                <span class="status-pill in-progress">
+                                    In Progress <b>(1)</b>
+                                </span>
+
+                                <span class="status-pill resolved">
+                                    Resolved <b>(5)</b>
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="inbox-card-content">
+
+
+                        <!-- GROUPED DOUBTS -->
+
+                        <div class="doubt-category">
+
+                            <h4>GROUPED DOUBTS</h4>
+
+                            <div class="doubt-list">
+
+                                <div class="doubt-item"
+                                     data-group-id="group-103">
+
+                                    <div class="doubt-item-info">
+
+                                        <i data-lucide="users-round"></i>
+
+                                        <span>Propositional Logic</span>
+
+                                        <small>6 doubts</small>
+
+                                    </div>
+
+                                    <button class="small-outline-btn"
+                                            type="button"
+                                            data-action="view-group"
+                                            data-group-id="group-103">
+
+                                        View Group
+                                        <i data-lucide="arrow-right"></i>
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- INDIVIDUAL DOUBTS -->
+
+                        <div class="doubt-category">
+
+                            <h4>INDIVIDUAL DOUBTS</h4>
+
+                            <div class="doubt-list">
+
+                                <div class="doubt-item"
+                                     data-doubt-id="doubt-202">
+
+                                    <div class="doubt-item-info">
+
+                                        <i data-lucide="file-text"></i>
+
+                                        <span>Boolean Algebra</span>
+
+                                    </div>
+
+                                    <button class="small-outline-btn"
+                                            type="button"
+                                            data-action="view-doubt"
+                                            data-doubt-id="doubt-202">
+
+                                        View Doubt
+                                        <i data-lucide="arrow-right"></i>
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================================= -->
+        <!-- RECENTLY RESOLVED -->
+        <!-- ================================= -->
+
+        <section class="recent-section">
+
+
+            <div class="section-heading">
+
+                <div class="heading-left">
+
+                    <div class="heading-icon resolved-icon">
+                        <i data-lucide="circle-check"></i>
+                    </div>
+
+                    <div>
+                        <h2>Recently Resolved</h2>
+                        <p>A quick look at your recent resolutions.</p>
+                    </div>
+
+                </div>
+
+                <a href="resolved-doubts.html" class="view-all-link">
+                    View All
+                    <i data-lucide="arrow-right"></i>
+                </a>
+
+            </div>
+
+
+
+            <!-- HORIZONTAL RESOLVED DOUBT CARDS -->
+
+            <div class="recent-doubts-scroll"
+                 id="recent-doubts-list">
+
+
+                <!-- RESOLVED DOUBT 1 -->
+
+                <article class="recent-doubt-card"
+                         data-doubt-id="doubt-301"
+                         data-assignment="ai-ml-dstl">
+
+                    <div class="recent-card-top">
+
+                        <h3>Stack Implementation</h3>
+
+                        <span class="publish-status published">
+                            Published
+                        </span>
+
+                    </div>
+
+                    <div class="recent-card-bottom">
+
+                        <span class="assignment-label">
+                            2nd Year AI & ML · DSTL
+                        </span>
+
+                        <span class="resolved-date">2 Nov, 4:30 PM</span>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- RESOLVED DOUBT 2 -->
+
+                <article class="recent-doubt-card"
+                         data-doubt-id="doubt-302"
+                         data-assignment="cse-dstl">
+
+                    <div class="recent-card-top">
+
+                        <h3>Binary Search</h3>
+
+                        <span class="publish-status private">
+                            Private
+                        </span>
+
+                    </div>
+
+                    <div class="recent-card-bottom">
+
+                        <span class="assignment-label">
+                            2nd Year CSE · DSTL
+                        </span>
+
+                        <span class="resolved-date">1 Nov, 6:12 PM</span>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- RESOLVED DOUBT 3 -->
+
+                <article class="recent-doubt-card"
+                         data-doubt-id="doubt-303"
+                         data-assignment="ai-ml-dstl">
+
+                    <div class="recent-card-top">
+
+                        <h3>Queue Operations</h3>
+
+                        <span class="publish-status published">
+                            Published
+                        </span>
+
+                    </div>
+
+                    <div class="recent-card-bottom">
+
+                        <span class="assignment-label">
+                            2nd Year AI & ML · DSTL
+                        </span>
+
+                        <span class="resolved-date">31 Oct, 5:20 PM</span>
+
+                    </div>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+</body>
+</html>
+
+
+</body>
+
+</html>

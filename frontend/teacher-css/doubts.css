@@ -1,0 +1,715 @@
+
+.page-title {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.page-title h1 {
+    font-size: 28px;
+
+    color: #0f2658;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+}
+
+.page-title h2 {
+    font-size: 16px;
+    color: #70788A;
+    font-weight: 300;
+    margin-bottom: 30px;
+
+}
+
+
+/* =========================================
+   DOUBTS PAGE
+========================================= */
+
+.doubts-page {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+
+/* =========================================
+   COMMON SECTION HEADINGS
+========================================= */
+
+.section-title,
+.heading-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.section-title h2,
+.heading-left h2 {
+    font-size: 21px;
+    font-weight: 600;
+    color: #111333;
+}
+
+.heading-left p {
+    font-size: 13px;
+    color: #55547D;
+    margin-top: 2px;
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.heading-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.heading-icon svg {
+    width: 23px;
+    height: 23px;
+}
+
+.inbox-icon {
+    background-color: #F0EBFF;
+    color: #4932B8;
+}
+
+.resolved-icon {
+    background-color: #DDF7E9;
+    color: #07965B;
+}
+
+.view-all-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    color: #4932C5;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.view-all-link svg {
+    width: 16px;
+    height: 16px;
+}
+
+
+/* =========================================
+   AI DOUBT INSIGHTS
+========================================= */
+
+.insights-section {
+    background-color: #FFFFFF;
+    border: 1px solid #DED9FF;
+    border-radius: 16px;
+    padding: 12px;
+}
+
+
+/* HEADER */
+
+.insights-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 4px 10px;
+}
+
+.section-title svg {
+    width: 25px;
+    height: 25px;
+    color: #7754FF;
+}
+
+
+/* CAROUSEL CONTROLS */
+
+.carousel-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #171641;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.carousel-btn {
+    width: 34px;
+    height: 34px;
+    border: 1px solid #DDD7FF;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6653D8;
+    cursor: pointer;
+}
+
+.carousel-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+
+/* CAROUSEL */
+
+.insights-carousel {
+    overflow: hidden;
+    border-radius: 13px;
+}
+
+.insight-slide {
+    display: grid;
+    grid-template-columns: 210px 1fr 1fr 1fr;
+    min-height: 150px;
+    background-color: #FFFFFF;
+    border: 1px solid #E4E0FF;
+    border-radius: 13px;
+    padding: 12px;
+    gap: 12px;
+}
+
+
+/* ASSIGNMENT INFORMATION */
+
+.assignment-info {
+    background-color: #F3F0FF;
+    border-radius: 12px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.assignment-icon {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background-color: #E7DFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6849E8;
+    margin-bottom: 10px;
+}
+
+.assignment-icon svg {
+    width: 38px;
+    height: 38px;
+}
+
+.assignment-info h3 {
+    font-size: 14px;
+    color: #171641;
+    font-weight: 600;
+}
+
+.assignment-info p {
+    font-size: 12px;
+    color: #55547D;
+    line-height: 17px;
+    margin-top: 5px;
+}
+
+
+/* INSIGHT COLUMNS */
+
+.insight-column {
+    padding: 5px 12px;
+    border-right: 1px solid #E4E0FF;
+    display: flex;
+    flex-direction: column;
+}
+
+.insight-column:last-child {
+    border-right: none;
+}
+
+.insight-column > h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #15143D;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.insight-column > h3 svg {
+    width: 19px;
+    height: 19px;
+    color: #7754FF;
+    flex-shrink: 0;
+}
+
+.insight-column > h3 .attention-icon {
+    color: #F28A00;
+}
+
+
+/* FREQUENT TOPICS */
+
+.topic-list {
+    padding-left: 22px;
+    margin: 12px 0 0;
+    color: #4932C5;
+}
+
+.topic-list li {
+    padding-left: 3px;
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+
+.topic-list li span:first-child {
+    color: #22214B;
+}
+
+.topic-count {
+    float: right;
+    color: #4932C5;
+}
+
+
+/* SIMILAR DOUBTS + ATTENTION */
+
+.insight-detail {
+    margin-top: 17px;
+}
+
+.insight-detail h4 {
+    font-size: 13px;
+    color: #201F4B;
+    font-weight: 600;
+}
+
+.insight-detail p {
+    color: #55547D;
+    font-size: 12px;
+    margin-top: 7px;
+}
+
+
+/* OUTLINE BUTTONS */
+
+.outline-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    border: 1px solid #A995FF;
+    border-radius: 30px;
+    padding: 7px 14px;
+    color: #5436D6;
+    background-color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+    margin: 15px auto 0;
+}
+
+.outline-btn svg {
+    width: 15px;
+    height: 15px;
+}
+
+
+/* =========================================
+   DOUBT INBOX
+========================================= */
+
+.inbox-section {
+    margin-top: 0;
+}
+
+
+/* INBOX GRID */
+
+.inbox-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+
+/* INBOX CARD */
+
+.inbox-card {
+    background-color: white;
+    border: 1px solid #DDD9FF;
+    border-radius: 16px;
+    padding: 12px;
+    min-width: 0;
+}
+
+
+/* CARD HEADER */
+
+.inbox-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 4px 12px;
+}
+
+.class-icon {
+    width: 58px;
+    height: 58px;
+    border-radius: 15px;
+    background-color: #F0ECFF;
+    color: #6849E8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.class-icon svg {
+    width: 32px;
+    height: 32px;
+}
+
+.class-info {
+    min-width: 0;
+}
+
+.class-info h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #171641;
+}
+
+
+/* STATUS COUNTS */
+
+.status-counts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.status-pill {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.needs-attention {
+    background-color: #FFE6EA;
+    color: #CE2341;
+}
+
+.in-progress {
+    background-color: #EAE9FF;
+    color: #4437B5;
+}
+
+.resolved {
+    background-color: #DDF7E9;
+    color: #087B55;
+}
+
+
+/* INBOX CARD CONTENT */
+
+.inbox-card-content {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    border-top: 1px solid #E7E3FF;
+    padding-top: 10px;
+}
+
+.doubt-category {
+    min-width: 0;
+    padding: 0 4px;
+}
+
+.doubt-category + .doubt-category {
+    border-left: 1px solid #E0DCFA;
+    padding-left: 12px;
+}
+
+.doubt-category h4 {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: #39318A;
+    margin-bottom: 8px;
+}
+
+
+/* DOUBT ITEMS */
+
+.doubt-list {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.doubt-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    min-width: 0;
+}
+
+.doubt-item-info {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    min-width: 0;
+}
+
+.doubt-item-info > svg {
+    width: 20px;
+    height: 20px;
+    padding: 3px;
+    border-radius: 7px;
+    background-color: #F0ECFF;
+    color: #6347DC;
+    flex-shrink: 0;
+}
+
+.doubt-item-info span {
+    font-size: 11px;
+    color: #25234E;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.doubt-item-info small {
+    font-size: 10px;
+    color: #55547D;
+    white-space: nowrap;
+}
+
+
+/* SMALL OUTLINE BUTTON */
+
+.small-outline-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border: 1px solid #B3A3FF;
+    background-color: white;
+    border-radius: 25px;
+    padding: 6px 9px;
+    color: #5339D4;
+    font-family: 'Poppins', sans-serif;
+    font-size: 10px;
+    white-space: nowrap;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.small-outline-btn svg {
+    width: 12px;
+    height: 12px;
+}
+
+
+/* =========================================
+   RECENTLY RESOLVED
+========================================= */
+
+.recent-section {
+    background-color: white;
+    border: 1px solid #DDD9FF;
+    border-radius: 16px;
+    padding: 14px;
+}
+
+
+/* HORIZONTAL SCROLL */
+
+.recent-doubts-scroll {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding: 5px 2px 10px;
+    scrollbar-width: thin;
+    scrollbar-color: #D2C8FF transparent;
+}
+
+.recent-doubts-scroll::-webkit-scrollbar {
+    height: 5px;
+}
+
+.recent-doubts-scroll::-webkit-scrollbar-thumb {
+    background-color: #D2C8FF;
+    border-radius: 10px;
+}
+
+
+/* INDIVIDUAL RESOLVED DOUBT CARD */
+
+.recent-doubt-card {
+    flex: 0 0 280px;
+    min-width: 0;
+    border: 1px solid #E4E0FF;
+    border-radius: 12px;
+    padding: 12px 14px;
+    background-color: #FFFFFF;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+.recent-doubt-card:hover {
+    border-color: #A995FF;
+}
+
+
+/* CARD TOP */
+
+.recent-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.recent-card-top h3 {
+    font-size: 13px;
+    font-weight: 600;
+    color: #19183F;
+}
+
+
+/* PUBLICATION STATUS */
+
+.publish-status {
+    font-size: 10px;
+    padding: 4px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.publish-status.published {
+    color: #078653;
+    background-color: #DDF7E9;
+}
+
+.publish-status.private {
+    color: #4437A9;
+    background-color: #ECEAFF;
+}
+
+
+/* CARD BOTTOM */
+
+.recent-card-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.assignment-label {
+    color: #55547D;
+    font-size: 10px;
+}
+
+.resolved-date {
+    color: #77758E;
+    font-size: 10px;
+    white-space: nowrap;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1100px) {
+
+    .insight-slide {
+        grid-template-columns: 180px 1fr 1fr 1fr;
+    }
+
+    .inbox-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 750px) {
+
+    .insight-slide {
+        grid-template-columns: 1fr;
+    }
+
+    .assignment-info {
+        min-height: 130px;
+    }
+
+    .insight-column {
+        border-right: none;
+        border-bottom: 1px solid #E4E0FF;
+        padding: 12px;
+    }
+
+    .insight-column:last-child {
+        border-bottom: none;
+    }
+
+    .inbox-card-content {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .doubt-category + .doubt-category {
+        border-left: none;
+        border-top: 1px solid #E0DCFA;
+        padding: 12px 4px 0;
+    }
+
+    .section-heading {
+        align-items: flex-start;
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .inbox-card-header {
+        align-items: flex-start;
+    }
+
+    .status-counts {
+        gap: 5px;
+    }
+
+    .status-pill {
+        font-size: 10px;
+        padding: 4px 7px;
+    }
+
+    .doubt-item {
+        flex-wrap: wrap;
+    }
+
+}

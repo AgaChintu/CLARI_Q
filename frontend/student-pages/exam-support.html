@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Dashboard</title>
     <link rel="stylesheet" href="../student-css/common.css">
-    <link rel="stylesheet" href="../student-css/dashboard.css">
+    <link rel="stylesheet" href="../student-css/exam-support.css">
     <script src="https://unpkg.com/lucide@latest"></script>
 
 </head>
@@ -47,7 +47,7 @@
                 </a>
             </li>
             <li>
-                <a href="exam-support.html"  class="nav-item-active">
+                <a href="exam-support.html" class="nav-item-active">
                     <i data-lucide="calendar"></i>
                     <span>Exam Support</span>
                 </a>
@@ -103,6 +103,178 @@
 
 
     <main>
+
+        <header class="page-title">
+            <h1>
+                Exam Support
+            </h1>
+            <h2>
+                Get your exam-related doubts resolved through dedicated teacher-led sessions.
+            </h2>
+        </header>
+
+
+        <!-- Active Exam Support -->
+
+        <section class="active-exam-session">
+            <div class="section-header">
+                <i data-lucide=""></i>
+                <h2>Active Exam Support</h2>
+            </div>
+
+            <div class="subj-grid">
+
+                <article class="subj-card">
+
+                    <div class="subj-title">
+                        <img src="../assets/icons/dsa-icon.svg" alt="">
+                        <h3>DSA</h3>
+
+                    </div>
+
+                    <div class="subj-schedule">
+
+                        <div class="subj-item">
+                            <i data-lucide="calendar-days"></i>
+                            <div class="schedule-details">
+                                <span class="schedule-label">Submission Deadline :</span>
+                                <span class="schedule-time" id="deadline">25 Aug, 11:59 PM</span>
+                            </div>
+                        </div>
+
+
+                        <div class="subject-item">
+                            <i data-lucide="clock"></i>
+
+                            <div class="schedule-details">
+                                <span class="schedule-label">Doubt-clearing Session :</span>
+                                <span class="schedule-time" id="session-time">27 Aug, 2:00 PM</span>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="subj-footer">
+
+                        <div class="doubt-submit">
+
+                            <div class="doubt-submit-item">
+                                <i data-lucide="users-round"></i>
+                                <span>Total Doubts :</span>
+                                <span id="total-doubts">12</span>
+
+                            </div>
+
+                            <div class="doubt-submit-item">
+                                <i data-lucide="message-circle-question"></i>
+                                <span>Your Submissions :</span>
+                                <span id="your-doubts">1</span>
+                            </div>
+
+
+
+                        </div>
+
+
+                        <button class="exam-details">
+                            View Details
+                            <i data-lucide="arrow-right"></i>
+                        </button>
+
+
+
+
+
+                    </div>
+
+
+
+
+                </article>
+            </div>
+
+        </section>
+
+
+
+
+        <section class="past-exam-session">
+
+
+            <div class="section-header">
+                <div class="section-title">
+                    <i data-lucide="clock"></i>
+                    <h2>Past Sessions</h2>
+
+                </div>
+
+                <button class="view-all-btn">
+                    View All
+                    <i data-lucide="arrow-right"></i>
+
+                </button>
+
+            </div>
+
+            <div class="past-sessions-list">
+
+                <!-- One Past Session Card -->
+                <article class="past-session-card">
+
+                    <!-- Subject Information -->
+                    <div class="session-subject">
+                        <div class="subject-icon">
+                            <img src="../assets/icons/dsa-icon.svg" alt="">
+                        </div>
+
+                        <div class="subject-info">
+                            <h3>DSA</h3>
+                            <span>Mid-Semester Examination</span>
+                        </div>
+                    </div>
+
+                    <!-- Session Details -->
+                    <div class="session-details">
+
+                        <div class="session-meta">
+                            <div class="session-date">
+                                <i data-lucide="calendar-days"></i>
+                                <span>Session Date:</span>
+                                <span id="past-session-date">18 Aug</span>
+                            </div>
+
+                            <div class="session-resources">
+                                <i data-lucide="paperclip"></i>
+                                <span>2 Resources</span>
+                            </div>
+                        </div>
+
+                        <div class="session-topics">
+                            <i data-lucide="list"></i>
+                            <span>Topics: Binary Tree, Sorting</span>
+                        </div>
+
+                    </div>
+
+                    <!-- Action -->
+                    <div class="session-action">
+                        <button>
+                            View Summary
+                            <i data-lucide="arrow-right"></i>
+                        </button>
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+        </section>
+
+
+
 
     </main>
 

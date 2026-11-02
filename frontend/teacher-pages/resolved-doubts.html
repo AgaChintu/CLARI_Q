@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Resolved Doubts | ClariQ</title>
+
+    <link rel="stylesheet" href="../teacher-css/common.css">
+    <link rel="stylesheet" href="../teacher-css/resolved-doubts.css">
+
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+    <script src="../teacher-js/components.js" defer></script>
+    <script src="../teacher-js/resolved-doubts.js" defer></script>
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <div id="sidebar-container"></div>
+
+    <!-- TOPBAR -->
+    <div id="topbar-container"></div>
+
+
+    <main class="resolved-page">
+
+        <!-- PAGE HEADER -->
+
+        <section class="page-title">
+
+            <div>
+                <h1>Resolved Doubts</h1>
+
+                <p>
+                    Access, review and manage all previously resolved student doubts.
+                </p>
+            </div>
+
+            <div class="assignment-selector">
+
+                <select id="assignment-select">
+
+                    <option value="ai-ml-dstl" selected>
+                        2nd Year AI & ML · DSTL
+                    </option>
+
+                    <option value="cse-dstl">
+                        2nd Year CSE · DSTL
+                    </option>
+
+                    <option value="ai-ml-maths">
+                        1st Year AI & ML · Engineering Maths I
+                    </option>
+
+                </select>
+
+                <i data-lucide="chevron-down"></i>
+
+            </div>
+
+        </section>
+
+
+        <!-- STATISTICS -->
+
+        <section class="stats-grid">
+
+            <article class="stat-card">
+
+                <div class="stat-icon total-icon">
+                    <i data-lucide="circle-check"></i>
+                </div>
+
+                <div>
+                    <h2 id="total-resolved">78</h2>
+                    <p>Total Resolved</p>
+                </div>
+
+            </article>
+
+
+            <article class="stat-card">
+
+                <div class="stat-icon group-icon">
+                    <i data-lucide="users-round"></i>
+                </div>
+
+                <div>
+                    <h2 id="group-resolutions">42</h2>
+                    <p>Group Resolutions</p>
+                </div>
+
+            </article>
+
+
+            <article class="stat-card">
+
+                <div class="stat-icon individual-icon">
+                    <i data-lucide="user-round"></i>
+                </div>
+
+                <div>
+                    <h2 id="individual-resolutions">36</h2>
+                    <p>Individual Resolutions</p>
+                </div>
+
+            </article>
+
+
+            <article class="stat-card">
+
+                <div class="stat-icon published-icon">
+                    <i data-lucide="upload"></i>
+                </div>
+
+                <div>
+                    <h2 id="published-count">28</h2>
+                    <p>Published to Library</p>
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <!-- FILTERS -->
+
+        <section class="filter-section">
+
+            <div class="search-box">
+
+                <i data-lucide="search"></i>
+
+                <input
+                    type="search"
+                    id="doubt-search"
+                    placeholder="Search by question, Doubt ID or topic..."
+                >
+
+            </div>
+
+
+            <div class="status-filters">
+
+                <button class="status-btn active" data-status="all">
+                    All
+                </button>
+
+                <button class="status-btn" data-status="published">
+                    Published
+                </button>
+
+                <button class="status-btn" data-status="private">
+                    Private
+                </button>
+
+            </div>
+
+
+            <div class="sort-dropdown">
+
+                <select id="sort-select">
+
+                    <option value="recent" selected>
+                        Recently Resolved
+                    </option>
+
+                    <option value="oldest">
+                        Oldest Resolved
+                    </option>
+
+                    <option value="most">
+                        Most Doubts Resolved
+                    </option>
+
+                    <option value="az">
+                        A–Z
+                    </option>
+
+                </select>
+
+                <i data-lucide="chevron-down"></i>
+
+            </div>
+
+        </section>
+
+
+        <!-- RESOLVED DOUBTS LIST -->
+
+        <section class="resolved-list" id="resolved-list">
+
+
+            <!-- GROUPED RESOLUTION -->
+
+            <article class="resolved-card"
+                     data-status="private"
+                     data-type="grouped"
+                     data-topic="Equivalence Relations"
+                     data-count="10"
+                     data-date="2026-10-29"
+                     data-id="group-101">
+
+                <div class="resolved-icon group-resolved-icon">
+                    <i data-lucide="users-round"></i>
+                </div>
+
+
+                <div class="resolved-details">
+
+                    <div class="title-row">
+
+                        <h3>Equivalence Relations</h3>
+
+                        <span class="type-badge">
+                            Grouped
+                        </span>
+
+                    </div>
+
+                    <p class="resolution-meta">
+                        10 individual doubts resolved
+                        <span>•</span>
+                        Grouped response
+                    </p>
+
+                    <p class="resolution-description">
+                        Students were confused about the properties
+                        of equivalence relations...
+                    </p>
+
+                    <div class="resolution-footer">
+
+                        <span>
+                            <i data-lucide="calendar"></i>
+                            Resolved on: 29 Oct, 2026
+                        </span>
+
+                        <span class="visibility private">
+                            <i data-lucide="lock"></i>
+                            Private
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button class="view-btn"
+                        data-action="view-details"
+                        data-id="group-101">
+
+                    View Details
+                    <i data-lucide="arrow-right"></i>
+
+                </button>
+
+            </article>
+
+
+            <!-- INDIVIDUAL RESOLUTION -->
+
+            <article class="resolved-card"
+                     data-status="published"
+                     data-type="individual"
+                     data-topic="Minimal Elements"
+                     data-count="1"
+                     data-date="2026-10-28"
+                     data-id="doubt-1048">
+
+                <div class="resolved-icon individual-resolved-icon">
+                    <i data-lucide="file-text"></i>
+                </div>
+
+
+                <div class="resolved-details">
+
+                    <div class="title-row">
+
+                        <h3>DQ-1048</h3>
+
+                        <span class="type-badge">
+                            Individual
+                        </span>
+
+                    </div>
+
+                    <p class="question-text">
+                        "How do we identify minimal elements in a partially ordered set?"
+                    </p>
+
+                    <div class="resolution-footer">
+
+                        <span>
+                            <i data-lucide="calendar"></i>
+                            Resolved on: 28 Oct, 2026
+                        </span>
+
+                        <span class="visibility published">
+                            <i data-lucide="globe"></i>
+                            Published
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button class="view-btn"
+                        data-action="view-details"
+                        data-id="doubt-1048">
+
+                    View Details
+                    <i data-lucide="arrow-right"></i>
+
+                </button>
+
+            </article>
+
+
+            <!-- GROUPED RESOLUTION -->
+
+            <article class="resolved-card"
+                     data-status="published"
+                     data-type="grouped"
+                     data-topic="Propositional Logic"
+                     data-count="8"
+                     data-date="2026-10-26"
+                     data-id="group-102">
+
+                <div class="resolved-icon group-resolved-icon">
+                    <i data-lucide="users-round"></i>
+                </div>
+
+
+                <div class="resolved-details">
+
+                    <div class="title-row">
+
+                        <h3>Propositional Logic</h3>
+
+                        <span class="type-badge">
+                            Grouped
+                        </span>
+
+                    </div>
+
+                    <p class="resolution-meta">
+                        8 individual doubts resolved
+                        <span>•</span>
+                        Grouped response
+                    </p>
+
+                    <p class="resolution-description">
+                        Students are facing issues with logical equivalences...
+                    </p>
+
+                    <div class="resolution-footer">
+
+                        <span>
+                            <i data-lucide="calendar"></i>
+                            Resolved on: 26 Oct, 2026
+                        </span>
+
+                        <span class="visibility published">
+                            <i data-lucide="globe"></i>
+                            Published
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button class="view-btn"
+                        data-action="view-details"
+                        data-id="group-102">
+
+                    View Details
+                    <i data-lucide="arrow-right"></i>
+
+                </button>
+
+            </article>
+
+
+            <!-- INDIVIDUAL RESOLUTION -->
+
+            <article class="resolved-card"
+                     data-status="published"
+                     data-type="individual"
+                     data-topic="Tautology and Contradiction"
+                     data-count="1"
+                     data-date="2026-10-25"
+                     data-id="doubt-1007">
+
+                <div class="resolved-icon individual-resolved-icon">
+                    <i data-lucide="file-text"></i>
+                </div>
+
+
+                <div class="resolved-details">
+
+                    <div class="title-row">
+
+                        <h3>DQ-1007</h3>
+
+                        <span class="type-badge">
+                            Individual
+                        </span>
+
+                    </div>
+
+                    <p class="question-text">
+                        "What is the difference between tautology and contradiction?"
+                    </p>
+
+                    <div class="resolution-footer">
+
+                        <span>
+                            <i data-lucide="calendar"></i>
+                            Resolved on: 25 Oct, 2026
+                        </span>
+
+                        <span class="visibility published">
+                            <i data-lucide="globe"></i>
+                            Published
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button class="view-btn"
+                        data-action="view-details"
+                        data-id="doubt-1007">
+
+                    View Details
+                    <i data-lucide="arrow-right"></i>
+
+                </button>
+
+            </article>
+
+
+            <!-- SESSION RESOLUTION -->
+
+            <article class="resolved-card"
+                     data-status="private"
+                     data-type="session"
+                     data-topic="Doubt Session Set Theory"
+                     data-count="12"
+                     data-date="2026-10-22"
+                     data-id="session-301">
+
+                <div class="resolved-icon session-resolved-icon">
+                    <i data-lucide="calendar-days"></i>
+                </div>
+
+
+                <div class="resolved-details">
+
+                    <div class="title-row">
+
+                        <h3>Doubt Session – Set Theory</h3>
+
+                        <span class="type-badge">
+                            Session
+                        </span>
+
+                    </div>
+
+                    <p class="resolution-meta">
+                        12 individual doubts resolved
+                        <span>•</span>
+                        From Doubt Session
+                    </p>
+
+                    <div class="resolution-footer">
+
+                        <span>
+                            <i data-lucide="calendar"></i>
+                            Resolved on: 22 Oct, 2026
+                        </span>
+
+                        <span class="visibility private">
+                            <i data-lucide="lock"></i>
+                            Private
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button class="view-btn"
+                        data-action="view-details"
+                        data-id="session-301">
+
+                    View Details
+                    <i data-lucide="arrow-right"></i>
+
+                </button>
+
+            </article>
+
+
+        </section>
+
+
+        <!-- EMPTY STATE -->
+
+        <div class="empty-state" id="empty-state" hidden>
+
+            <i data-lucide="folder-search"></i>
+
+            <h3>No resolved doubts found</h3>
+
+            <p>Try changing your filters or search terms.</p>
+
+        </div>
+
+
+        <!-- PAGINATION -->
+
+        <div class="pagination" id="pagination">
+
+            <button class="page-btn" disabled aria-label="Previous page">
+                <i data-lucide="chevron-left"></i>
+            </button>
+
+            <button class="page-number active">1</button>
+            <button class="page-number">2</button>
+            <button class="page-number">3</button>
+
+            <span>...</span>
+
+            <button class="page-number">10</button>
+
+            <button class="page-btn" aria-label="Next page">
+                <i data-lucide="chevron-right"></i>
+            </button>
+
+        </div>
+
+
+    </main>
+
+</body>
+</html>
