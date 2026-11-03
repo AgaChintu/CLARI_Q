@@ -1,0 +1,307 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f8ff;
+    color: #1e293b;
+}
+
+/* MAIN CONTENT ADJUSTMENT FOR SIDEBAR */
+.notifications-main {
+    margin-left: 260px;
+    padding: 40px 50px;
+    width: calc(100% - 260px);
+    background-color: #f4f8ff;
+    min-height: 100vh;
+}
+
+/* TOP RIGHT NOTIFICATION BADGE */
+.notification-btn {
+    position: relative;
+}
+
+.badge-count {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background-color: #ef4444;
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #ffffff;
+}
+
+/* BACK LINK */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #4965E8;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    margin-bottom: 20px;
+    transition: transform 0.2s ease;
+}
+
+.back-link svg {
+    width: 16px;
+    height: 16px;
+}
+
+.back-link:hover {
+    transform: translateX(-4px);
+}
+
+/* HEADER FLEX */
+.notif-header-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.notif-title-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.bell-circle-icon {
+    width: 44px;
+    height: 44px;
+    background-color: #EEF2FF;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4965E8;
+}
+
+.bell-circle-icon svg {
+    width: 22px;
+    height: 22px;
+}
+
+.notif-title-group h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #0f2658;
+}
+
+.notif-title-group .subtitle {
+    font-size: 14px;
+    color: #70788A;
+    font-weight: 400;
+    margin-top: 2px;
+}
+
+/* MARK ALL AS READ BUTTON */
+.mark-all-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #EEF2FF;
+    color: #4965E8;
+    border: 1px solid #DCE6F7;
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.2s ease;
+}
+
+.mark-all-btn svg {
+    width: 15px;
+    height: 15px;
+}
+
+.mark-all-btn:hover {
+    background-color: #4965E8;
+    color: #ffffff;
+}
+
+/* FILTER CHIPS */
+.filter-chips-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 28px;
+}
+
+.chip {
+    background-color: #ffffff;
+    border: 1px solid #DCE6F7;
+    color: #4965E8;
+    padding: 7px 18px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.2s ease;
+}
+
+.chip:hover {
+    background-color: #EEF2FF;
+}
+
+.chip.active {
+    background-color: #4965E8;
+    color: #ffffff;
+    border-color: #4965E8;
+    font-weight: 600;
+}
+
+/* DATE HEADINGS */
+.date-group-heading {
+    font-size: 12px;
+    font-weight: 700;
+    color: #0f2658;
+    letter-spacing: 0.8px;
+    margin-bottom: 14px;
+}
+
+.margin-top-group {
+    margin-top: 28px;
+}
+
+/* NOTIFICATION CARDS (Clean floating box layout like reference image) */
+.notifications-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.notif-card {
+    background-color: #ffffff;
+    border: 1px solid #eef2f6;
+    border-radius: 16px;
+    padding: 16px 24px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 2px 10px rgba(15, 38, 88, 0.03);
+    transition: all 0.2s ease;
+}
+
+.notif-card:hover {
+    box-shadow: 0 4px 16px rgba(15, 38, 88, 0.06);
+    transform: translateY(-1px);
+}
+
+.blue-status-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #4965E8;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.blue-status-dot.hidden-dot {
+    opacity: 0;
+}
+
+.card-icon-wrapper {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.card-icon-wrapper.light-blue {
+    background-color: #e0f2fe;
+    color: #0284c7;
+}
+
+.card-icon-wrapper.soft-blue {
+    background-color: #EEF2FF;
+    color: #4965E8;
+}
+
+.card-icon-wrapper.brand-blue {
+    background-color: #dbeafe;
+    color: #2563eb;
+}
+
+.card-icon-wrapper svg {
+    width: 20px;
+    height: 20px;
+}
+
+.card-body-text {
+    flex: 1;
+}
+
+.card-body-text h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #0f2658;
+    margin-bottom: 3px;
+}
+
+.card-body-text p {
+    font-size: 13.5px;
+    color: #70788A;
+}
+
+.card-right-action {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.time-stamp {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #8493AE;
+}
+
+.time-stamp svg {
+    width: 14px;
+    height: 14px;
+}
+
+.pill-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid #DCE6F7;
+    background-color: #ffffff;
+    color: #4965E8;
+    padding: 7px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.pill-btn svg {
+    width: 14px;
+    height: 14px;
+}
+
+.pill-btn:hover {
+    background-color: #4965E8;
+    color: #ffffff;
+    border-color: #4965E8;
+}
