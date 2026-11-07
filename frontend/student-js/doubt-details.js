@@ -1,3 +1,4 @@
+
 // ==========================================
 // 1. GET URL PARAMETERS
 // ==========================================
@@ -5,8 +6,9 @@
 const params = new URLSearchParams(window.location.search);
 
 const doubtId = Number(params.get("id"));
-
 const source = params.get("source") || "my-doubts";
+
+const isLibrarySource = source === "library";
 
 
 // ==========================================
@@ -14,7 +16,6 @@ const source = params.get("source") || "my-doubts";
 // ==========================================
 
 const detailContent = document.getElementById("detailContent");
-
 const detailSidebar = document.getElementById("detailSidebar");
 
 const followupConversation =
@@ -24,7 +25,6 @@ const followupAction =
     document.getElementById("followupAction");
 
 const backBtn = document.getElementById("backBtn");
-
 const backLink = document.getElementById("backLink");
 
 
@@ -32,7 +32,7 @@ const backLink = document.getElementById("backLink");
 // 3. STORAGE CONFIGURATION
 // ==========================================
 
-const storageKey = source === "library"
+const storageKey = isLibrarySource
     ? "clariqLibrary"
     : "clariqDoubts";
 
@@ -49,15 +49,36 @@ const FILE_STORE = "attachments";
 // 4. FIND SELECTED DOUBT
 // ==========================================
 
-const doubt = doubts.find(function(item) {
-
-    return Number(item.id) === doubtId;
-
-});
+const doubt = doubts.find(item => Number(item.id) === doubtId);
 
 
 // ==========================================
-// 5. INDEXEDDB FUNCTIONS
+// 5. SIDEBAR ACTIVE STATE
+// ==========================================
+
+function setActiveSidebarLink() {
+
+    const activeHref = isLibrarySource
+        ? "library.html"
+        : "my-doubts.html";
+
+    const sidebarLinks = document.querySelectorAll(".sidebar a");
+
+    sidebarLinks.forEach(link => {
+
+        link.classList.remove("nav-item-active");
+
+        if (link.getAttribute("href") === activeHref) {
+            link.classList.add("nav-item-active");
+        }
+
+    });
+
+}
+
+
+// ==========================================
+// 6. INDEXEDDB FUNCTIONS
 // ==========================================
 
 function openAttachmentDB() {
@@ -104,7 +125,6 @@ async function getAttachment(fileId) {
         request.onsuccess = () => {
 
             db.close();
-
             resolve(request.result || null);
 
         };
@@ -112,7 +132,6 @@ async function getAttachment(fileId) {
         request.onerror = () => {
 
             db.close();
-
             reject(request.error);
 
         };
@@ -123,7 +142,7 @@ async function getAttachment(fileId) {
 
 
 // ==========================================
-// 6. FORMAT DATE
+// 7. FORMAT DATE
 // ==========================================
 
 function formatDate(dateString) {
@@ -135,18 +154,16 @@ function formatDate(dateString) {
     if (isNaN(date)) return "Not available";
 
     return date.toLocaleDateString("en-IN", {
-
         day: "numeric",
         month: "short",
         year: "numeric"
-
     });
 
 }
 
 
 // ==========================================
-// 7. RELATIVE DATE
+// 8. RELATIVE DATE
 // ==========================================
 
 function formatRelativeDate(dateString) {
@@ -166,29 +183,23 @@ function formatRelativeDate(dateString) {
     );
 
     if (days === 0) return "Today";
-
     if (days === 1) return "1 day ago";
-
     if (days < 7) return `${days} days ago`;
 
     const weeks = Math.floor(days / 7);
 
     if (weeks < 5) {
-
         return weeks === 1
             ? "1 week ago"
             : `${weeks} weeks ago`;
-
     }
 
     const months = Math.floor(days / 30);
 
     if (months < 12) {
-
         return months === 1
             ? "1 month ago"
             : `${months} months ago`;
-
     }
 
     const years = Math.floor(days / 365);
@@ -201,21 +212,19 @@ function formatRelativeDate(dateString) {
 
 
 // ==========================================
-// 8. ESCAPE HTML
+// 9. ESCAPE HTML
 // ==========================================
 
 function escapeHTML(value) {
 
-    return String(value ?? "").replace(/[&<>"']/g, function(character) {
+    return String(value ?? "").replace(/[&<>"']/g, character => {
 
         const entities = {
-
             "&": "&amp;",
             "<": "&lt;",
             ">": "&gt;",
             '"': "&quot;",
             "'": "&#39;"
-
         };
 
         return entities[character];
@@ -226,7 +235,7 @@ function escapeHTML(value) {
 
 
 // ==========================================
-// 9. DISPLAY DOUBT HEADER
+// 10. DISPLAY DOUBT HEADER
 // ==========================================
 
 function displayHeader() {
@@ -265,23 +274,25 @@ function displayHeader() {
 
             <div class="detail-status-area">
 
-                <div class="detail-status"
-                    style="
-                        background: ${status.background};
-                        color: ${status.color};
-                    "
-                >
+                ${!isLibrarySource ? `
 
-                    <i data-lucide="${status.icon}"></i>
+                    <div class="detail-status"
+                        style="
+                            background: ${status.background};
+                            color: ${status.color};
+                        "
+                    >
 
-                    ${status.label}
+                        <i data-lucide="${status.icon}"></i>
 
-                </div>
+                        ${status.label}
+
+                    </div>
+
+                ` : ""}
 
                 <p class="detail-date">
-
                     ${formatRelativeDate(doubt.createdAt)}
-
                 </p>
 
             </div>
@@ -313,63 +324,55 @@ function displayHeader() {
 
 
 // ==========================================
-// 10. DISPLAY TAGS
+// 11. DISPLAY TAGS
 // ==========================================
 
 function displayTags() {
+
     if (!doubt.tags || doubt.tags.length === 0) return;
 
     const tagsHTML = `
+
         <div class="doubt-tags">
+
             ${doubt.tags.map(tag => `
-                <span class="doubt-tag">${escapeHTML(tag)}</span>
+                <span class="doubt-tag">
+                    ${escapeHTML(tag)}
+                </span>
             `).join("")}
+
         </div>
+
     `;
 
-    const questionSection = detailContent.querySelector(".question-section");
+    const questionSection =
+        detailContent.querySelector(".question-section");
 
     if (questionSection) {
         questionSection.insertAdjacentHTML("afterend", tagsHTML);
     }
+
 }
 
 
 // ==========================================
-// 11. DISPLAY ATTACHMENTS
+// 12. DISPLAY ATTACHMENTS
 // ==========================================
 
-async function displayAttachments(attachments, heading) {
+async function displayAttachments(attachments) {
 
     if (!attachments || attachments.length === 0) return;
 
     const section = document.createElement("div");
-
     section.className = "doubt-attachments";
 
-    section.innerHTML = `
+    const content = document.createElement("div");
+    content.className = "attachment-content";
 
-        <h3 class="attachment-heading">
-
-            <i data-lucide="paperclip"></i>
-
-            ${escapeHTML(heading)} (${attachments.length})
-
-        </h3>
-
-        <div class="attachment-content"></div>
-
-    `;
-
+    section.appendChild(content);
     detailContent.appendChild(section);
 
-    const content = section.querySelector(".attachment-content");
-
-    const imageGallery = document.createElement("div");
-
-    imageGallery.className = "image-gallery";
-
-    let hasImages = false;
+    const images = [];
 
     for (const attachment of attachments) {
 
@@ -378,52 +381,28 @@ async function displayAttachments(attachments, heading) {
             const storedFile = await getAttachment(attachment.fileId);
 
             if (!storedFile || !storedFile.blob) {
-
                 console.warn("Attachment not found:", attachment.fileId);
-
                 continue;
-
             }
 
             const fileURL = URL.createObjectURL(storedFile.blob);
 
             const fileType = storedFile.type || attachment.type;
-
-            const fileName = escapeHTML(
-                storedFile.name || attachment.name
-            );
+            const fileName = storedFile.name || attachment.name;
 
             const fileSize = formatFileSize(
                 storedFile.size || attachment.size
             );
 
 
-            // IMAGE
-
             if (fileType.startsWith("image/")) {
 
-                hasImages = true;
-
-                const image = document.createElement("img");
-
-                image.src = fileURL;
-
-                image.alt = fileName;
-
-                image.className = "image-preview";
-
-                image.addEventListener("click", () => {
-
-                    openImageLightbox(fileURL);
-
+                images.push({
+                    url: fileURL,
+                    name: fileName
                 });
 
-                imageGallery.appendChild(image);
-
             }
-
-
-            // PDF
 
             else if (fileType === "application/pdf") {
 
@@ -434,16 +413,18 @@ async function displayAttachments(attachments, heading) {
                 pdfCard.innerHTML = `
 
                     <div class="resource-icon">
-
                         <i data-lucide="file-text"></i>
-
                     </div>
 
                     <div class="pdf-file-info">
 
-                        <p class="attachment-name">${fileName}</p>
+                        <p class="attachment-name">
+                            ${escapeHTML(fileName)}
+                        </p>
 
-                        <p class="attachment-size">${fileSize}</p>
+                        <p class="attachment-size">
+                            ${fileSize}
+                        </p>
 
                     </div>
 
@@ -454,7 +435,6 @@ async function displayAttachments(attachments, heading) {
                     >
 
                         <i data-lucide="eye"></i>
-
                         View PDF
 
                     </a>
@@ -474,9 +454,123 @@ async function displayAttachments(attachments, heading) {
     }
 
 
-    if (hasImages) {
+    if (images.length > 0) {
 
-        content.insertBefore(imageGallery, content.firstChild);
+        const carousel = document.createElement("div");
+
+        carousel.className = "image-carousel";
+
+        carousel.innerHTML = `
+
+            <div class="image-carousel-stage">
+
+                <img
+                    class="carousel-image"
+                    src="${images[0].url}"
+                    alt="${escapeHTML(images[0].name)}"
+                >
+
+                ${images.length > 1 ? `
+
+                    <button type="button"
+                        class="carousel-arrow carousel-prev"
+                        aria-label="Previous image"
+                    >
+                        <i data-lucide="chevron-left"></i>
+                    </button>
+
+                    <button type="button"
+                        class="carousel-arrow carousel-next"
+                        aria-label="Next image"
+                    >
+                        <i data-lucide="chevron-right"></i>
+                    </button>
+
+                ` : ""}
+
+            </div>
+
+            ${images.length > 1 ? `
+
+                <div class="image-carousel-footer">
+
+                    <span class="carousel-counter">
+                        1 / ${images.length}
+                    </span>
+
+                </div>
+
+            ` : ""}
+
+        `;
+
+
+        const imageElement =
+            carousel.querySelector(".carousel-image");
+
+        let currentIndex = 0;
+
+
+        function updateCarousel() {
+
+            const currentImage = images[currentIndex];
+
+            imageElement.src = currentImage.url;
+            imageElement.alt = currentImage.name;
+
+            const counter =
+                carousel.querySelector(".carousel-counter");
+
+            if (counter) {
+                counter.textContent =
+                    `${currentIndex + 1} / ${images.length}`;
+            }
+
+        }
+
+
+        const previousButton =
+            carousel.querySelector(".carousel-prev");
+
+        if (previousButton) {
+
+            previousButton.addEventListener("click", function() {
+
+                currentIndex =
+                    (currentIndex - 1 + images.length) % images.length;
+
+                updateCarousel();
+
+            });
+
+        }
+
+
+        const nextButton =
+            carousel.querySelector(".carousel-next");
+
+        if (nextButton) {
+
+            nextButton.addEventListener("click", function() {
+
+                currentIndex =
+                    (currentIndex + 1) % images.length;
+
+                updateCarousel();
+
+            });
+
+        }
+
+
+        imageElement.addEventListener("click", function() {
+
+            openImageLightbox(images[currentIndex].url);
+
+        });
+
+
+        content.insertBefore(carousel, content.firstChild);
 
     }
 
@@ -486,7 +580,7 @@ async function displayAttachments(attachments, heading) {
 
 
 // ==========================================
-// 12. FILE SIZE FORMAT
+// 13. FILE SIZE FORMAT
 // ==========================================
 
 function formatFileSize(bytes) {
@@ -494,9 +588,7 @@ function formatFileSize(bytes) {
     if (!bytes) return "File";
 
     if (bytes < 1024 * 1024) {
-
         return `${(bytes / 1024).toFixed(1)} KB`;
-
     }
 
     return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
@@ -505,7 +597,7 @@ function formatFileSize(bytes) {
 
 
 // ==========================================
-// 13. IMAGE LIGHTBOX
+// 14. IMAGE LIGHTBOX
 // ==========================================
 
 function openImageLightbox(imageURL) {
@@ -517,9 +609,7 @@ function openImageLightbox(imageURL) {
     overlay.innerHTML = `
 
         <button class="lightbox-close">
-
             <i data-lucide="x"></i>
-
         </button>
 
         <img src="${imageURL}" alt="Attachment preview">
@@ -536,9 +626,7 @@ function openImageLightbox(imageURL) {
             event.target === overlay ||
             event.target.closest(".lightbox-close")
         ) {
-
             overlay.remove();
-
         }
 
     });
@@ -547,7 +635,7 @@ function openImageLightbox(imageURL) {
 
 
 // ==========================================
-// 14. DISPLAY TEACHER ANSWER
+// 15. DISPLAY TEACHER ANSWER
 // ==========================================
 
 function displayAnswer() {
@@ -585,7 +673,7 @@ function displayAnswer() {
 
 
 // ==========================================
-// 15. DISPLAY TEACHER ATTACHMENTS
+// 16. DISPLAY TEACHER ATTACHMENTS
 // ==========================================
 
 async function displayTeacherAttachments() {
@@ -597,16 +685,13 @@ async function displayTeacherAttachments() {
         doubt.answerAttachments ||
         [];
 
-    await displayAttachments(
-        attachments,
-        "Teacher's Attachments"
-    );
+    await displayAttachments(attachments);
 
 }
 
 
 // ==========================================
-// 16. DISPLAY LEGACY RESOURCES
+// 17. DISPLAY LEGACY RESOURCES
 // ==========================================
 
 function displayResources() {
@@ -618,15 +703,7 @@ function displayResources() {
     section.className = "resources-section";
 
     section.innerHTML = `
-
-        <h3 class="resource-heading">
-
-            <i data-lucide="paperclip"></i>
-
-            Additional Resources (${doubt.resources.length})
-
-        </h3>
-
+        <div class="attachment-content"></div>
     `;
 
     doubt.resources.forEach(resource => {
@@ -640,9 +717,7 @@ function displayResources() {
             <div class="resource-info">
 
                 <div class="resource-icon">
-
                     <i data-lucide="file-text"></i>
-
                 </div>
 
                 <div>
@@ -669,7 +744,6 @@ function displayResources() {
                 >
 
                     <i data-lucide="download"></i>
-
                     Download
 
                 </a>
@@ -686,14 +760,18 @@ function displayResources() {
 
 }
 
+
 // ==========================================
-// ==========================================
-// 17. FOLLOW-UP QUESTIONS
+// 18. FOLLOW-UP QUESTIONS
 // ==========================================
 
 function displayFollowUps() {
 
     followupConversation.innerHTML = "";
+
+    // Library doubts never show follow-up discussions.
+
+    if (isLibrarySource) return;
 
     if (doubt.status !== "resolved") return;
 
@@ -701,7 +779,6 @@ function displayFollowUps() {
         doubt.followUps = [];
     }
 
-    // Don't show the discussion section until a follow-up exists.
     if (doubt.followUps.length === 0) return;
 
     detailContent.appendChild(followupConversation);
@@ -711,10 +788,12 @@ function displayFollowUps() {
     heading.className = "followup-section-heading";
 
     heading.innerHTML = `
+
         <div>
             <h3>Follow-up Discussion</h3>
             <p>Continue the conversation about your doubt.</p>
         </div>
+
     `;
 
     followupConversation.appendChild(heading);
@@ -722,7 +801,6 @@ function displayFollowUps() {
     const section = document.createElement("div");
 
     section.className = "followup-list";
-
     section.id = "followupList";
 
     followupConversation.appendChild(section);
@@ -733,10 +811,12 @@ function displayFollowUps() {
 
 
 // ==========================================
-// 18. CHECK IF ANOTHER FOLLOW-UP IS ALLOWED
+// 19. CHECK IF FOLLOW-UP IS ALLOWED
 // ==========================================
 
 function canAskFollowUp() {
+
+    if (isLibrarySource) return false;
 
     if (doubt.status !== "resolved") return false;
 
@@ -755,10 +835,12 @@ function canAskFollowUp() {
 
 
 // ==========================================
-// 19. OPEN FOLLOW-UP FORM
+// 20. OPEN FOLLOW-UP FORM
 // ==========================================
 
 function openFollowUpForm() {
+
+    if (isLibrarySource) return;
 
     if (document.getElementById("followupFormSection")) return;
 
@@ -768,15 +850,12 @@ function openFollowUpForm() {
         document.getElementById("sidebarFollowupBtn");
 
     if (sidebarButton) {
-
         sidebarButton.remove();
-
     }
 
     const formSection = document.createElement("div");
 
     formSection.className = "followup-form-section";
-
     formSection.id = "followupFormSection";
 
     formSection.innerHTML = `
@@ -784,11 +863,8 @@ function openFollowUpForm() {
         <div class="followup-form-heading">
 
             <h3>
-
                 <i data-lucide="message-circle-question"></i>
-
                 Follow-up Question
-
             </h3>
 
             <button
@@ -797,9 +873,7 @@ function openFollowUpForm() {
                 id="cancelFollowup"
                 aria-label="Cancel follow-up"
             >
-
                 <i data-lucide="x"></i>
-
             </button>
 
         </div>
@@ -817,7 +891,6 @@ function openFollowUpForm() {
             <button type="submit" class="followup-submit">
 
                 <i data-lucide="send"></i>
-
                 Submit Follow-up
 
             </button>
@@ -825,9 +898,6 @@ function openFollowUpForm() {
         </form>
 
     `;
-
-    // Form appears in the conversation area,
-    // below the main doubt card.
 
     followupConversation.insertBefore(
         formSection,
@@ -848,7 +918,7 @@ function openFollowUpForm() {
 
 
 // ==========================================
-// 20. CANCEL FOLLOW-UP FORM
+// 21. CANCEL FOLLOW-UP FORM
 // ==========================================
 
 function cancelFollowUp() {
@@ -857,9 +927,7 @@ function cancelFollowUp() {
         document.getElementById("followupFormSection");
 
     if (formSection) {
-
         formSection.remove();
-
     }
 
     displaySidebarFollowupButton();
@@ -868,45 +936,36 @@ function cancelFollowUp() {
 
 
 // ==========================================
-// 21. SUBMIT FOLLOW-UP
+// 22. SUBMIT FOLLOW-UP
 // ==========================================
 
 function submitFollowUp(event) {
 
     event.preventDefault();
 
+    if (isLibrarySource) return;
+
     const input = document.getElementById("followupInput");
 
     const question = input.value.trim();
 
     if (!question) {
-
         alert("Please enter your follow-up question.");
-
         return;
-
     }
 
     if (!Array.isArray(doubt.followUps)) {
-
         doubt.followUps = [];
-
     }
 
     doubt.followUps.push({
 
         id: Date.now(),
-
         question: question,
-
         createdAt: new Date().toISOString(),
-
         status: "awaiting-response",
-
         teacherResponse: "",
-
         respondedAt: null,
-
         reason: ""
 
     });
@@ -917,18 +976,18 @@ function submitFollowUp(event) {
 
     displayFollowUps();
 
-    // The button remains hidden until the teacher responds.
-
     alert("Your follow-up question has been submitted!");
 
 }
 
 
 // ==========================================
-// 22. RENDER FOLLOW-UP LIST
+// 23. RENDER FOLLOW-UP LIST
 // ==========================================
 
 function renderFollowUpList() {
+
+    if (isLibrarySource) return;
 
     const list = document.getElementById("followupList");
 
@@ -937,11 +996,8 @@ function renderFollowUpList() {
     const followUps = doubt.followUps || [];
 
     if (followUps.length === 0) {
-
         list.innerHTML = "";
-
         return;
-
     }
 
     list.innerHTML = followUps.map(followUp => {
@@ -962,13 +1018,9 @@ function renderFollowUpList() {
                 <div class="followup-card-heading">
 
                     <h3>
-
                         <i data-lucide="message-circle-question"></i>
-
                         Follow-up Question
-
                     </h3>
-
 
                     <div class="followup-menu-wrapper">
 
@@ -978,39 +1030,27 @@ function renderFollowUpList() {
                             aria-label="Follow-up options"
                             data-menu-id="${followUp.id}"
                         >
-
                             <i data-lucide="ellipsis"></i>
-
                         </button>
-
 
                         <div class="followup-dropdown"
                              id="followupMenu-${followUp.id}"
                         >
 
-                            <button
-                                type="button"
+                            <button type="button"
                                 data-action="edit"
                                 data-id="${followUp.id}"
                             >
-
                                 <i data-lucide="pencil"></i>
-
                                 Edit
-
                             </button>
 
-
-                            <button
-                                type="button"
+                            <button type="button"
                                 data-action="delete"
                                 data-id="${followUp.id}"
                             >
-
                                 <i data-lucide="trash-2"></i>
-
                                 Delete
-
                             </button>
 
                         </div>
@@ -1025,15 +1065,11 @@ function renderFollowUpList() {
                 >
 
                     <p class="followup-question">
-
                         ${escapeHTML(followUp.question)}
-
                     </p>
 
                     <span class="followup-date">
-
                         ${formatDate(followUp.createdAt)}
-
                     </span>
 
                 </div>
@@ -1050,20 +1086,16 @@ function renderFollowUpList() {
                             <strong>Teacher's Response</strong>
 
                             <span>
-
                                 ${formatDate(
                                     followUp.respondedAt ||
                                     followUp.createdAt
                                 )}
-
                             </span>
 
                         </div>
 
                         <p>
-
                             ${escapeHTML(followUp.teacherResponse)}
-
                         </p>
 
                     </div>
@@ -1074,9 +1106,7 @@ function renderFollowUpList() {
                 ${isNotRequired && followUp.reason ? `
 
                     <p class="followup-reason">
-
                         Reason: ${escapeHTML(followUp.reason)}
-
                     </p>
 
                 ` : ""}
@@ -1087,8 +1117,6 @@ function renderFollowUpList() {
 
     }).join("");
 
-
-    // THREE DOT MENUS
 
     list.querySelectorAll(".followup-menu-btn").forEach(button => {
 
@@ -1104,9 +1132,7 @@ function renderFollowUpList() {
             document.querySelectorAll(".followup-dropdown").forEach(item => {
 
                 if (item !== menu) {
-
                     item.classList.remove("show");
-
                 }
 
             });
@@ -1118,26 +1144,19 @@ function renderFollowUpList() {
     });
 
 
-    // EDIT AND DELETE
-
     list.querySelectorAll(".followup-dropdown button").forEach(button => {
 
         button.addEventListener("click", function() {
 
             const id = Number(this.dataset.id);
-
             const action = this.dataset.action;
 
             if (action === "edit") {
-
                 editFollowUp(id);
-
             }
 
             if (action === "delete") {
-
                 deleteFollowUp(id);
-
             }
 
         });
@@ -1150,15 +1169,15 @@ function renderFollowUpList() {
 
 
 // ==========================================
-// 23. EDIT FOLLOW-UP
+// 24. EDIT FOLLOW-UP
 // ==========================================
 
 function editFollowUp(id) {
 
+    if (isLibrarySource) return;
+
     const followUp = doubt.followUps.find(item => {
-
         return Number(item.id) === Number(id);
-
     });
 
     if (!followUp) return;
@@ -1176,7 +1195,6 @@ function editFollowUp(id) {
             maxlength="1000"
         >${escapeHTML(followUp.question)}</textarea>
 
-
         <div class="followup-edit-actions">
 
             <button
@@ -1184,20 +1202,15 @@ function editFollowUp(id) {
                 class="followup-edit-cancel"
                 id="cancelFollowupEdit-${id}"
             >
-
                 Cancel
-
             </button>
-
 
             <button
                 type="button"
                 class="followup-edit-save"
                 id="saveFollowupEdit-${id}"
             >
-
                 Save Changes
-
             </button>
 
         </div>
@@ -1215,11 +1228,8 @@ function editFollowUp(id) {
                 .value.trim();
 
             if (!newQuestion) {
-
                 alert("Please enter your follow-up question.");
-
                 return;
-
             }
 
             followUp.question = newQuestion;
@@ -1234,10 +1244,12 @@ function editFollowUp(id) {
 
 
 // ==========================================
-// 24. DELETE FOLLOW-UP
+// 25. DELETE FOLLOW-UP
 // ==========================================
 
 function deleteFollowUp(id) {
+
+    if (isLibrarySource) return;
 
     const confirmDelete = confirm(
         "Are you sure you want to delete this follow-up question?"
@@ -1246,9 +1258,7 @@ function deleteFollowUp(id) {
     if (!confirmDelete) return;
 
     doubt.followUps = doubt.followUps.filter(item => {
-
         return Number(item.id) !== Number(id);
-
     });
 
     saveDoubtData();
@@ -1261,14 +1271,16 @@ function deleteFollowUp(id) {
 
 
 // ==========================================
-// 25. SIDEBAR FOLLOW-UP BUTTON
+// 26. SIDEBAR FOLLOW-UP BUTTON
 // ==========================================
 
 function displaySidebarFollowupButton() {
 
-    // Clear the existing action area first.
-
     followupAction.innerHTML = "";
+
+    // Library never displays a follow-up action.
+
+    if (isLibrarySource) return;
 
     if (!canAskFollowUp()) return;
 
@@ -1277,9 +1289,7 @@ function displaySidebarFollowupButton() {
     const button = document.createElement("button");
 
     button.type = "button";
-
     button.id = "sidebarFollowupBtn";
-
     button.className = "sidebar-followup-btn";
 
     button.innerHTML = `
@@ -1289,8 +1299,6 @@ function displaySidebarFollowupButton() {
         Ask a Follow-up Question
 
     `;
-
-    // Button is outside the Doubt Information card.
 
     followupAction.appendChild(button);
 
@@ -1302,15 +1310,13 @@ function displaySidebarFollowupButton() {
 
 
 // ==========================================
-// 26. SAVE DOUBT DATA
+// 27. SAVE DOUBT DATA
 // ==========================================
 
 function saveDoubtData() {
 
     const index = doubts.findIndex(item => {
-
         return Number(item.id) === doubtId;
-
     });
 
     if (index === -1) return;
@@ -1326,7 +1332,7 @@ function saveDoubtData() {
 
 
 // ==========================================
-// 27. DISPLAY ACTION BUTTONS
+// 28. DISPLAY ACTION BUTTONS
 // ==========================================
 
 function displayActions() {
@@ -1343,20 +1349,13 @@ function displayActions() {
             <div class="detail-actions">
 
                 <button class="edit-btn" id="editBtn">
-
                     <i data-lucide="pencil"></i>
-
                     Edit Doubt
-
                 </button>
 
-
                 <button class="delete-btn" id="deleteBtn">
-
                     <i data-lucide="trash-2"></i>
-
                     Delete Doubt
-
                 </button>
 
             </div>
@@ -1368,18 +1367,15 @@ function displayActions() {
 
     // LIBRARY: SAVE OPTION
 
-    if (source === "library") {
+    if (isLibrarySource) {
 
         actionHTML = `
 
             <div class="detail-actions">
 
                 <button class="save-library-btn" id="saveBtn">
-
                     <i data-lucide="bookmark"></i>
-
                     Save to Saves
-
                 </button>
 
             </div>
@@ -1395,34 +1391,28 @@ function displayActions() {
     const editBtn = document.getElementById("editBtn");
 
     if (editBtn) {
-
         editBtn.addEventListener("click", displayEditForm);
-
     }
 
 
     const deleteBtn = document.getElementById("deleteBtn");
 
     if (deleteBtn) {
-
         deleteBtn.addEventListener("click", deleteDoubt);
-
     }
 
 
     const saveBtn = document.getElementById("saveBtn");
 
     if (saveBtn) {
-
         saveBtn.addEventListener("click", saveToSaves);
-
     }
 
 }
 
 
 // ==========================================
-// 28. EDIT DOUBT
+// 29. EDIT DOUBT
 // ==========================================
 
 function displayEditForm() {
@@ -1434,7 +1424,6 @@ function displayEditForm() {
     const form = document.createElement("div");
 
     form.id = "editForm";
-
     form.className = "edit-form";
 
     form.innerHTML = `
@@ -1443,23 +1432,17 @@ function displayEditForm() {
             Edit Your Doubt
         </h3>
 
-
         <label for="editTitle">
             Doubt Title
         </label>
 
-        <input type="text"
-               id="editTitle"
-               required
-        >
-
+        <input type="text" id="editTitle" required>
 
         <label for="editQuestion">
             Your Question
         </label>
 
         <textarea id="editQuestion" required></textarea>
-
 
         <div class="edit-form-actions">
 
@@ -1478,7 +1461,6 @@ function displayEditForm() {
     detailContent.appendChild(form);
 
     document.getElementById("editTitle").value = doubt.title;
-
     document.getElementById("editQuestion").value = doubt.question;
 
     document.getElementById("cancelEdit")
@@ -1491,25 +1473,23 @@ function displayEditForm() {
 
 
 // ==========================================
-// 29. SAVE EDITED DOUBT
+// 30. SAVE EDITED DOUBT
 // ==========================================
 
 function saveEdit() {
 
-    const newTitle = document.getElementById("editTitle").value.trim();
+    const newTitle =
+        document.getElementById("editTitle").value.trim();
 
-    const newQuestion = document.getElementById("editQuestion").value.trim();
+    const newQuestion =
+        document.getElementById("editQuestion").value.trim();
 
     if (!newTitle || !newQuestion) {
-
         alert("Please fill in both fields.");
-
         return;
-
     }
 
     doubt.title = newTitle;
-
     doubt.question = newQuestion;
 
     saveDoubtData();
@@ -1522,7 +1502,7 @@ function saveEdit() {
 
 
 // ==========================================
-// 30. DELETE DOUBT
+// 31. DELETE DOUBT
 // ==========================================
 
 function deleteDoubt() {
@@ -1534,9 +1514,7 @@ function deleteDoubt() {
     if (!confirmDelete) return;
 
     const updatedDoubts = doubts.filter(item => {
-
         return Number(item.id) !== doubtId;
-
     });
 
     localStorage.setItem(
@@ -1552,7 +1530,7 @@ function deleteDoubt() {
 
 
 // ==========================================
-// 31. SAVE TO SAVES
+// 32. SAVE TO SAVES
 // ==========================================
 
 function saveToSaves() {
@@ -1569,19 +1547,13 @@ function saveToSaves() {
     });
 
     if (alreadySaved) {
-
         alert("This doubt is already saved!");
-
         return;
-
     }
 
     savedItems.push({
-
         ...doubt,
-
         source: "library"
-
     });
 
     localStorage.setItem(
@@ -1595,7 +1567,7 @@ function saveToSaves() {
 
 
 // ==========================================
-// 32. DISPLAY INFORMATION SIDEBAR
+// 33. DISPLAY INFORMATION SIDEBAR
 // ==========================================
 
 function displayInformation() {
@@ -1616,11 +1588,8 @@ function displayInformation() {
         <div class="info-row">
 
             <span class="info-label">
-
                 <i data-lucide="book-open"></i>
-
                 Subject
-
             </span>
 
             <span class="info-value">
@@ -1630,96 +1599,77 @@ function displayInformation() {
         </div>
 
 
+        ${!isLibrarySource ? `
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    <i data-lucide="tag"></i>
+                    Status
+                </span>
+
+                <span class="detail-status"
+                    style="
+                        background: ${status.background};
+                        color: ${status.color};
+                    "
+                >
+                    ${status.label}
+                </span>
+
+            </div>
+
+        ` : ""}
+
+
         <div class="info-row">
 
             <span class="info-label">
-
-                <i data-lucide="tag"></i>
-
-                Status
-
-            </span>
-
-            <span class="detail-status"
-                style="
-                    background: ${status.background};
-                    color: ${status.color};
-                "
-            >
-
-                ${status.label}
-
-            </span>
-
-        </div>
-
-
-        <div class="info-row">
-
-            <span class="info-label">
-
                 <i data-lucide="calendar"></i>
-
                 Submitted On
-
             </span>
 
             <span class="info-value">
-
                 ${formatDate(doubt.createdAt)}
-
             </span>
 
         </div>
 
 
-        ${
-            doubt.status === "resolved"
-            ? `
+        ${doubt.status === "resolved" ? `
 
-                <div class="info-row">
+            <div class="info-row">
 
-                    <span class="info-label">
+                <span class="info-label">
+                    <i data-lucide="calendar-check"></i>
+                    Resolved On
+                </span>
 
-                        <i data-lucide="calendar-check"></i>
+                <span class="info-value">
+                    ${formatDate(doubt.resolvedAt || doubt.createdAt)}
+                </span>
 
-                        Resolved On
-
-                    </span>
-
-                    <span class="info-value">
-
-                        ${formatDate(doubt.resolvedAt || doubt.createdAt)}
-
-                    </span>
-
-                </div>
+            </div>
 
 
-                <div class="info-row teacher-info">
+            <div class="info-row teacher-info">
 
-                    <span class="info-label">
+                <span class="info-label">
+                    <i data-lucide="user"></i>
+                    Answered By
+                </span>
 
-                        <i data-lucide="user"></i>
+                <span class="info-value">
+                    ${escapeHTML(
+                        doubt.answeredBy ||
+                        doubt.teacherName ||
+                        "Subject Teacher"
+                    )}
+                </span>
 
-                        Answered By
+            </div>
 
-                    </span>
-
-                    <span class="info-value">
-
-                        ${escapeHTML(
-                            doubt.answeredBy ||
-                            doubt.teacherName ||
-                            "Subject Teacher"
-                        )}
-
-                    </span>
-
-                </div>
-
-            ` : ""
-        }
+        ` : ""}
 
     `;
 
@@ -1729,10 +1679,10 @@ function displayInformation() {
 
 
 // ==========================================
-// 33. BACK NAVIGATION
+// 34. BACK NAVIGATION
 // ==========================================
 
-const returnPage = source === "library"
+const returnPage = isLibrarySource
     ? "library.html"
     : "my-doubts.html";
 
@@ -1757,7 +1707,7 @@ backBtn.addEventListener("click", function() {
 
 backLink.href = returnPage;
 
-backLink.textContent = source === "library"
+backLink.textContent = isLibrarySource
     ? "Library"
     : "My Doubts";
 
@@ -1766,13 +1716,13 @@ backBtn.innerHTML = `
 
     <i data-lucide="arrow-left"></i>
 
-    Back to ${source === "library" ? "Library" : "My Doubts"}
+    Back to ${isLibrarySource ? "Library" : "My Doubts"}
 
 `;
 
 
 // ==========================================
-// 34. CLOSE MENUS WHEN CLICKING OUTSIDE
+// 35. CLOSE MENUS WHEN CLICKING OUTSIDE
 // ==========================================
 
 document.addEventListener("click", function(event) {
@@ -1780,9 +1730,7 @@ document.addEventListener("click", function(event) {
     if (!event.target.closest(".followup-menu-wrapper")) {
 
         document.querySelectorAll(".followup-dropdown").forEach(menu => {
-
             menu.classList.remove("show");
-
         });
 
     }
@@ -1791,7 +1739,7 @@ document.addEventListener("click", function(event) {
 
 
 // ==========================================
-// 35. MAIN RENDER FUNCTION
+// 36. MAIN RENDER FUNCTION
 // ==========================================
 
 async function renderDetails() {
@@ -1815,9 +1763,7 @@ async function renderDetails() {
         `;
 
         detailSidebar.innerHTML = "";
-
         followupConversation.innerHTML = "";
-
         followupAction.innerHTML = "";
 
         lucide.createIcons();
@@ -1842,9 +1788,7 @@ async function renderDetails() {
         `;
 
         detailSidebar.innerHTML = "";
-
         followupConversation.innerHTML = "";
-
         followupAction.innerHTML = "";
 
         lucide.createIcons();
@@ -1854,23 +1798,17 @@ async function renderDetails() {
     }
 
 
-    // Clear old content before rendering again.
-
     detailContent.innerHTML = "";
-
     detailSidebar.innerHTML = "";
-
     followupConversation.innerHTML = "";
-
     followupAction.innerHTML = "";
 
 
+    setActiveSidebarLink();
+
     displayHeader();
 
-    await displayAttachments(
-        doubt.attachments,
-        "Attachments"
-    );
+    await displayAttachments(doubt.attachments);
 
     displayAnswer();
 
@@ -1890,7 +1828,7 @@ async function renderDetails() {
 
 
 // ==========================================
-// 36. INITIALISE PAGE
+// 37. INITIALISE PAGE
 // ==========================================
 
 renderDetails();
