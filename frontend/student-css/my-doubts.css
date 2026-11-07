@@ -13,7 +13,6 @@
 
 .page-title h1 {
     font-size: 28px;
-
     color: #0f2658;
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
@@ -24,8 +23,12 @@
     color: #70788A;
     font-weight: 300;
     margin-bottom: 30px;
-
 }
+
+
+/* ==========================================
+   SEARCH SECTION
+========================================== */
 
 .search-card {
     display: flex;
@@ -33,11 +36,10 @@
     align-items: center;
     background-color: white;
     border-radius: 12px;
-    height: 60px;
+    height: 65px;
     padding: 6px 14px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
     margin-bottom: 18px;
-
 }
 
 .search-box {
@@ -55,13 +57,14 @@
     width: 18px;
     height: 18px;
     color: #8493AE;
+}
 
-}
-.search-box input::placeholder{
-    color:#667085;
+.search-box input::placeholder {
+    color: #667085;
     font-size: 14px;
-    font-family: 'Poppins',sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
+
 .search-card input {
     flex: 1;
     min-width: 0;
@@ -78,8 +81,6 @@
     padding: 4px 14px;
     width: 160px;
     cursor: pointer;
-
-
 }
 
 .select-subj {
@@ -91,15 +92,14 @@
     outline: none;
     cursor: pointer;
     font-size: 14px;
-     color: #667085;
-      font-family: 'Poppins', sans-serif;
-
-
+    color: #667085;
+    font-family: 'Poppins', sans-serif;
 }
-.select-subj option{
+
+.select-subj option {
     font-size: 14px;
-     color: #667085;
-      font-family: 'Poppins', sans-serif;
+    color: #667085;
+    font-family: 'Poppins', sans-serif;
 }
 
 .select-wrapper svg {
@@ -109,6 +109,10 @@
 }
 
 
+/* ==========================================
+   ASK DOUBT BUTTON
+========================================== */
+
 .ask-doubt-btn {
     display: flex;
     align-items: center;
@@ -116,20 +120,29 @@
     gap: 10px;
     background-color: #4965E8;
     color: white;
-    border-radius: 6px;
+    border-radius: 28px;
     height: 36px;
-    width: 160px;
+    width: 150px;
     padding: 4px 8px;
 
+    transition: background-color 0.2s ease,
+                transform 0.2s ease;
+}
 
+.ask-doubt-btn:hover {
+    background: #3456ed;
+    transform: translateY(-1px);
 }
 
 .ask-doubt-btn svg {
     width: 18px;
     height: 18px;
-
 }
 
+
+/* ==========================================
+   DOUBT CONTROLS
+========================================== */
 
 .doubt-controls {
     display: flex;
@@ -146,7 +159,6 @@
     display: flex;
     align-items: center;
     gap: 40px;
-
 }
 
 .status-tab {
@@ -184,28 +196,48 @@
 .sort-controls select {
     appearance: none;
     border: none;
-    color:#667085;
+    color: #667085;
 }
 
 .sort-controls svg {
     height: 18px;
     width: 18px;
     color: #8493AE;
-
 }
+
+
+/* ==========================================
+   DOUBT CARD
+========================================== */
 
 .doubt-card {
     display: flex;
     align-items: center;
     gap: 28px;
-    background-color: white;
+
     border-radius: 12px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
     padding: 12px 16px;
     min-height: 90px;
     margin-bottom: 12px;
 
+    background: linear-gradient(110deg, #ffffff, #fafbff);
+    border: 1px solid #e3ebff;
+
+    cursor: pointer;
+    transition: border-color 0.2s ease,
+                background-color 0.2s ease;
 }
+
+.doubt-card:hover {
+    background: #f8faff;
+    border-color: #bdceff;
+}
+
+
+/* ==========================================
+   SUBJECT ICON
+========================================== */
 
 .doubt-icon {
     display: flex;
@@ -215,31 +247,34 @@
     border-radius: 50%;
     height: 42px;
     width: 42px;
-
-
 }
 
 .doubt-icon svg {
     height: 32px;
     width: 32px;
-
 }
+
+
+/* ==========================================
+   DOUBT INFORMATION
+========================================== */
 
 .doubt-meta {
     display: flex;
     align-items: center;
     gap: 6px;
 }
-.doubt-info{
-    width:65%;
+
+.doubt-info {
+    width: 70%;
 }
+
 .doubt-title {
     font-family: 'Inter', sans-serif;
 }
 
 .separator {
     color: #667085;
-
 }
 
 .doubt-subject {
@@ -251,17 +286,21 @@
     color: #667085;
     font-size: 14px;
     margin-top: 8px;
-
 }
 
+
+/* ==========================================
+   STATUS
+========================================== */
+
 .doubt-status-meta {
-   width:fit-content;
+    width: fit-content;
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding:6px 14px;
-
+    padding: 6px 24px;
+    margin-left: auto;
 }
 
 .status {
@@ -273,15 +312,95 @@
     border-radius: 8px;
     color: #5471D8;
     font-size: 14px;
+
 }
 
 .status svg {
     height: 18px;
     width: 18px;
-
 }
 
 .asked-time {
     font-size: 12px;
     color: #667085;
+}
+
+
+/* ==========================================
+   TAGS
+========================================== */
+
+.doubt-tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.doubt-tag {
+    display: inline-flex;
+    align-items: center;
+    background-color: #EEF2FF;
+    color: #4965E8;
+    padding: 5px 10px;
+    border-radius: 14px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+
+/* ==========================================
+   TEACHER INFORMATION
+========================================== */
+
+.teacher-meta {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 12px;
+    color: #70788A;
+    font-size: 13px;
+}
+
+.teacher-meta svg {
+    width: 16px;
+    height: 16px;
+    color: #8493AE;
+}
+
+.teacher-name {
+    color: #64718C;
+}
+
+.doubt-date {
+    color: #929BB1;
+    margin-left: 4px;
+}
+
+
+/* ==========================================
+   RESOURCE INDICATOR
+========================================== */
+
+.resource-indicator {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+
+    color: #4965E8;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.resource-indicator svg {
+    width: 15px;
+    height: 15px;
+    color: #4965E8;
 }
