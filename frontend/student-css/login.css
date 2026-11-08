@@ -1,4 +1,3 @@
-
 /* ==========================================
    GLOBAL RESET
 ========================================== */
@@ -27,6 +26,8 @@ body {
     align-items: center;
     justify-content: center;
 
+    position: relative;
+
     width: 100%;
     min-height: 100vh;
 
@@ -34,6 +35,58 @@ body {
     gap: 50px;
 
     background: #f4f8ff;
+}
+
+
+/* ==========================================
+   TOP RIGHT ROLE SWITCH
+========================================== */
+
+.role-switch-wrapper {
+    position: absolute;
+    top: 28px;
+    right: 4%;
+
+    z-index: 10;
+}
+
+.role-switch-btn {
+    background: transparent;
+    border: none;
+
+    color: #70788A;
+
+    font-size: 13px;
+    font-weight: 400;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    transition: color 0.2s ease;
+}
+
+.role-switch-btn span {
+    color: #4965E8;
+    font-weight: 600;
+
+    transition: color 0.2s ease;
+}
+
+.role-switch-btn:hover {
+    color: #0f2658;
+}
+
+.role-switch-btn:hover span {
+    color: #3d57d5;
+}
+
+.role-switch-btn:focus-visible {
+    outline: 2px solid #4965E8;
+    outline-offset: 5px;
+    border-radius: 4px;
 }
 
 
@@ -214,7 +267,7 @@ p, span, input, button,
 .login-box {
     width: 100%;
     max-width: 450px;
-    min-height: 600px;
+    min-height: auto;
 
     background: #ffffff;
 
@@ -277,7 +330,7 @@ p, span, input, button,
     display: flex;
     flex-direction: column;
 
-    margin-bottom: 18px;
+    margin-bottom: 38px;
 }
 
 .form-group label {
@@ -322,6 +375,41 @@ p, span, input, button,
 .form-group input:focus {
     border-color: #4965E8;
     box-shadow: 0 0 0 3px rgba(73, 101, 232, 0.08);
+}
+
+
+/* ==========================================
+   INPUT VALIDATION
+========================================== */
+
+.form-group input.input-error {
+    border-color: #e05252;
+}
+
+.form-group input.input-error:focus {
+    border-color: #e05252;
+    box-shadow: 0 0 0 3px rgba(224, 82, 82, 0.08);
+}
+
+.field-error {
+    color: #e05252;
+    font-size: 12px;
+
+    margin-top: 6px;
+    line-height: 1.4;
+}
+
+.login-error {
+    color: #e05252;
+    background: #fff1f1;
+
+    padding: 11px 13px;
+    border-radius: 9px;
+
+    font-size: 13px;
+    line-height: 1.4;
+
+    margin-bottom: 15px;
 }
 
 
@@ -398,7 +486,8 @@ p, span, input, button,
     gap: 8px;
 
     transition: background-color 0.2s ease,
-                transform 0.2s ease;
+                transform 0.2s ease,
+                opacity 0.2s ease;
 }
 
 #loginBtn:hover {
@@ -407,6 +496,12 @@ p, span, input, button,
 
 #loginBtn:active {
     transform: scale(0.99);
+}
+
+#loginBtn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
 }
 
 
@@ -452,38 +547,6 @@ p, span, input, button,
 }
 
 
-/* ==========================================
-   FOOTER BADGES
-========================================== */
-
-.footer-badges {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    gap: 8px;
-
-    font-size: 13px;
-    color: #70788A;
-}
-
-.badge-item {
-    display: flex;
-    align-items: center;
-
-    gap: 4px;
-}
-
-.badge-item svg {
-    width: 15px;
-    height: 15px;
-}
-
-.dot {
-    font-size: 10px;
-    color: #70788A;
-}
-
 
 /* ==========================================
    TABLET RESPONSIVENESS
@@ -494,8 +557,13 @@ p, span, input, button,
     .container {
         flex-direction: column;
 
-        padding: 30px 20px;
+        padding: 75px 20px 30px;
         gap: 30px;
+    }
+
+    .role-switch-wrapper {
+        top: 22px;
+        right: 24px;
     }
 
     .left {
@@ -545,8 +613,17 @@ p, span, input, button,
 @media (max-width: 480px) {
 
     .container {
-        padding: 25px 16px;
+        padding: 70px 16px 25px;
         gap: 25px;
+    }
+
+    .role-switch-wrapper {
+        top: 20px;
+        right: 16px;
+    }
+
+    .role-switch-btn {
+        font-size: 12px;
     }
 
     .hero-title {
@@ -596,10 +673,5 @@ p, span, input, button,
     .card-header h2 {
         font-size: 21px;
     }
-
-    .footer-badges {
-        flex-wrap: wrap;
-        font-size: 11px;
-    }
-
 }
+  

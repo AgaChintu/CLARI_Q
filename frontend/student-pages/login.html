@@ -5,16 +5,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ClariQ Login</title>
+
     <link rel="stylesheet" href="../student-css/login.css">
     <link rel="stylesheet" href="../student-css/common.css">
+    <script src="../student-js/login.js" defer></script>
+
 </head>
 
 <body>
 
     <div class="container">
 
+        <!-- TOP RIGHT: ROLE SWITCH -->
+        <div class="role-switch-wrapper">
+
+            <button type="button"
+                    class="role-switch-btn"
+                    id="roleSwitchBtn">
+
+                Are you a teacher?
+                <span id="roleSwitchText">Login as Teacher →</span>
+
+            </button>
+
+        </div>
+
+
         <!-- LEFT SIDE: Text and Illustration -->
         <div class="left">
+
             <div class="left-content">
 
                 <h1 class="hero-title">
@@ -28,6 +47,7 @@
                     academic journey.
                 </p>
 
+
                 <!-- Illustration -->
                 <div class="illustration-container">
 
@@ -39,48 +59,62 @@
 
                         <!-- Feature 1 -->
                         <div class="feature-item">
+
                             <div class="feature-icon-circle">
                                 <i data-lucide="shield-check"></i>
                             </div>
+
                             <span class="feature-text">
                                 Your doubts,<br>your privacy
                             </span>
+
                         </div>
 
                         <div class="feature-divider"></div>
+
 
                         <!-- Feature 2 -->
                         <div class="feature-item">
+
                             <div class="feature-icon-circle">
                                 <i data-lucide="user-round"></i>
                             </div>
+
                             <span class="feature-text">
                                 Teacher verified<br>answers
                             </span>
+
                         </div>
 
                         <div class="feature-divider"></div>
 
+
                         <!-- Feature 3 -->
                         <div class="feature-item">
+
                             <div class="feature-icon-circle">
                                 <i data-lucide="book-open"></i>
                             </div>
+
                             <span class="feature-text">
                                 Better learning,<br>together
                             </span>
+
                         </div>
 
                     </div>
                 </div>
+
             </div>
         </div>
+
 
 
         <!-- RIGHT SIDE: Login Box -->
         <div class="right">
 
             <div class="login-box">
+
 
                 <!-- Header -->
                 <div class="card-header">
@@ -89,46 +123,65 @@
                          alt="ClariQ Logo"
                          class="logo" />
 
-                    <h2>Welcome Back</h2>
+                    <h2 id="loginHeading">
+                        Welcome Back
+                    </h2>
 
-                    <p class="login-subtitle">
+                    <p class="login-subtitle" id="loginSubtitle">
                         Log in with your Student ID to continue
                     </p>
 
                 </div>
 
 
-                <!-- Login Form -->
-                <form class="login-form">
 
-                    <!-- Student ID -->
+                <!-- Login Form -->
+                <form class="login-form" id="loginForm">
+
+
+                    <!-- Student / Teacher ID -->
                     <div class="form-group">
 
-                        <label for="studentId">
-                            <i data-lucide="user-round" class="input-icon"></i>
+                        <label for="userId" id="userIdLabel">
+
+                            <i data-lucide="user-round"
+                               class="input-icon"></i>
+
                             Student ID
+
                         </label>
 
                         <input type="text"
-                               id="studentId"
-                               placeholder="Enter your Student ID" />
+                               id="userId"
+                               name="userId"
+                               placeholder="Enter your Student ID"
+                               autocomplete="username"
+                               required />
 
                     </div>
+
 
 
                     <!-- Password -->
                     <div class="form-group">
 
                         <label for="password">
-                            <i data-lucide="lock-keyhole" class="input-icon"></i>
+
+                            <i data-lucide="lock-keyhole"
+                               class="input-icon"></i>
+
                             Password
+
                         </label>
 
                         <div class="password-wrapper">
 
                             <input type="password"
                                    id="password"
-                                   placeholder="Enter your password" />
+                                   name="password"
+                                   placeholder="Enter your password"
+                                   autocomplete="current-password"
+                                   required />
 
                             <button type="button"
                                     class="eye-btn"
@@ -144,41 +197,17 @@
                     </div>
 
 
+
                     <!-- Submit Button -->
                     <button type="submit" id="loginBtn">
-                        Login <span>&rarr;</span>
+
+                        <span id="loginBtnText">Login</span>
+                        <span>&rarr;</span>
+
                     </button>
 
                 </form>
 
-
-                <!-- Divider -->
-                <div class="divider">
-                    <span>ClariQ</span>
-                </div>
-
-
-                <!-- Security Badges -->
-                <div class="footer-badges">
-
-                    <span class="badge-item">
-                        <i data-lucide="shield-check"></i>
-                        Secure
-                    </span>
-
-                    <span class="dot">&bull;</span>
-
-                    <span class="badge-item">
-                        Private
-                    </span>
-
-                    <span class="dot">&bull;</span>
-
-                    <span class="badge-item">
-                        For Students
-                    </span>
-
-                </div>
 
             </div>
         </div>
@@ -186,11 +215,12 @@
     </div>
 
 
+
     <!-- Lucide -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <!-- Login JS -->
-    
+    <!-- Role switching and authentication logic will go here. -->
 
     <script>
         lucide.createIcons();
