@@ -1,230 +1,130 @@
 
 // ==========================================
-// SAMPLE DOUBTS
-// ==========================================
-
-const doubts = [
-
-    // PENDING
-    {
-        id: 101,
-        title: "Linked List Traversal",
-        subject: "DSA",
-        question: "Why do we need to traverse a linked list from the head instead of accessing elements directly?",
-        tags: ["Linked List", "Traversal"],
-        teacherName: "Dr. Dhaka",
-        status: "pending",
-        createdAt: "2026-09-29",
-        teacherResources: []
-    },
-
-    {
-        id: 102,
-        title: "JK Flip-Flop",
-        subject: "DE",
-        question: "Why does a JK flip-flop avoid the invalid state of an SR flip-flop?",
-        tags: ["Flip-Flops", "Digital Logic"],
-        teacherName: "Prof. Nipun Pande",
-        status: "pending",
-        createdAt: "2026-09-25",
-        teacherResources: []
-    },
-
-    {
-        id: 112,
-        title: "Binary Search Tree",
-        subject: "DSA",
-        question: "How does searching work in a binary search tree?",
-        tags: ["Trees", "BST"],
-        teacherName: "Dr. Dhaka",
-        status: "resolved",
-        createdAt: "2026-09-21",
-        teacherResources: [
-            { name: "BST Notes.pdf", type: "application/pdf" },
-            { name: "BST Examples.pdf", type: "application/pdf" }
-        ]
-    },
-
-    // IN PROGRESS
-    {
-        id: 103,
-        title: "POSets and Hasse Diagram",
-        subject: "DSTL",
-        question: "How do we construct a Hasse diagram from a given partially ordered set?",
-        tags: ["POSets", "Hasse Diagram"],
-        teacherName: "Prof. Kamlendra",
-        status: "in-progress",
-        createdAt: "2026-09-28",
-        teacherResources: []
-    },
-
-    {
-        id: 104,
-        title: "Python List Comprehension",
-        subject: "Python",
-        question: "When should we use list comprehension instead of a normal for loop?",
-        tags: ["Python", "Lists"],
-        teacherName: "Prof. Vivek Shukla",
-        status: "in-progress",
-        createdAt: "2026-09-23",
-        teacherResources: []
-    },
-
-    // RESOLVED
-    {
-        id: 105,
-        title: "Cache Memory",
-        subject: "COA",
-        question: "Why is cache memory faster than main memory even though both are used by the CPU?",
-        tags: ["Cache Memory", "Memory Hierarchy"],
-        teacherName: "Prof. Kamran",
-        status: "resolved",
-        createdAt: "2026-09-27",
-        teacherResources: [
-            { name: "Cache Memory Notes.pdf", type: "application/pdf" }
-        ]
-    },
-
-    {
-        id: 106,
-        title: "Technical Presentation",
-        subject: "TC",
-        question: "What are the main elements of an effective technical presentation?",
-        tags: ["Presentation", "Communication"],
-        teacherName: "Dr. Ruchi Shah",
-        status: "resolved",
-        createdAt: "2026-09-22",
-        teacherResources: []
-    },
-
-    {
-        id: 107,
-        title: "Stack Implementation",
-        subject: "DSA",
-        question: "How does push and pop work when implementing a stack using a linked list?",
-        tags: ["Stack", "Linked List"],
-        teacherName: "Dr. Dhaka",
-        status: "resolved",
-        createdAt: "2026-09-18",
-        teacherResources: [
-            { name: "Stack Implementation.pdf", type: "application/pdf" },
-            { name: "Stack Examples.pdf", type: "application/pdf" },
-            { name: "Practice Questions.pdf", type: "application/pdf" }
-        ]
-    },
-
-    {
-        id: 108,
-        title: "CPU Registers",
-        subject: "COA",
-        question: "What is the purpose of registers inside the CPU?",
-        tags: ["CPU", "Registers"],
-        teacherName: "Prof. Kamran",
-        status: "resolved",
-        createdAt: "2026-09-25",
-        teacherResources: [
-            { name: "CPU Registers Notes.pdf", type: "application/pdf" }
-        ]
-    },
-
-    {
-        id: 109,
-        title: "Group Homomorphism",
-        subject: "DSTL",
-        question: "How do we determine whether a mapping between two groups is a homomorphism?",
-        tags: ["Groups", "Homomorphism"],
-        teacherName: "Prof. Kamlendra",
-        status: "in-progress",
-        createdAt: "2026-09-20",
-        teacherResources: []
-    }
-
-];
-// =====================================
-// INITIALIZE DOUBTS IN LOCAL STORAGE
-// =====================================
-
-let storedDoubts = JSON.parse(
-    localStorage.getItem("clariqDoubts") || "[]"
-);
-
-if (!Array.isArray(storedDoubts)) {
-    storedDoubts = [];
-}
-
-// Identify sample doubts that aren't already stored
-const storedIds = new Set(
-    storedDoubts.map(doubt => Number(doubt.id))
-);
-
-const missingSampleDoubts = doubts.filter(
-    doubt => !storedIds.has(Number(doubt.id))
-);
-
-// Combine stored and missing sample doubts
-let allDoubts = [
-    ...storedDoubts,
-    ...missingSampleDoubts
-];
-
-// Save the combined array
-localStorage.setItem(
-    "clariqDoubts",
-    JSON.stringify(allDoubts)
-);
-
-
-// ==========================================
-// GET HTML ELEMENTS
+// 1. GET HTML ELEMENTS
 // ==========================================
 
 const doubtContainer = document.getElementById("doubtContainer");
 
+const searchInput = document.getElementById("searchInput");
+
+const subjectSelect = document.getElementById("subjectSelect");
+
+const sortSelect = document.getElementById("sort-doubts");
+
+const statusTabs = document.querySelectorAll(
+    ".status-tab, .status-tab-active"
+);
+
 
 // ==========================================
-// FORMAT DATE
+// 2. CURRENT STUDENT
 // ==========================================
 
+const CURRENT_STUDENT_ID =
+    localStorage.getItem("clariqStudentId") || "S001";
+
+
 // ==========================================
-// FORMAT DATE
+// 3. LOAD DOUBTS
+// ==========================================
+
+function getStoredDoubts() {
+
+    let doubts = JSON.parse(
+        localStorage.getItem("clariqDoubts") || "[]"
+    );
+
+    if (!Array.isArray(doubts)) {
+        return [];
+    }
+
+    return doubts.filter(doubt => {
+
+        return (
+            !doubt.studentId ||
+            doubt.studentId === CURRENT_STUDENT_ID
+        );
+
+    });
+
+}
+
+
+// ==========================================
+// 4. FILTER STATE
+// ==========================================
+
+let selectedStatus = "all";
+
+let selectedSubject = "all";
+
+let selectedSort = "latest";
+
+
+// ==========================================
+// 5. ESCAPE HTML
+// ==========================================
+
+function escapeHTML(value) {
+
+    return String(value ?? "").replace(/[&<>"']/g, character => {
+
+        const entities = {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#039;"
+        };
+
+        return entities[character];
+
+    });
+
+}
+
+
+// ==========================================
+// 6. FORMAT RELATIVE DATE
 // ==========================================
 
 function formatRelativeDate(dateString) {
 
-    const doubtDate = new Date(dateString);
+    if (!dateString) return "";
 
-    if (isNaN(doubtDate.getTime())) {
-        return "";
+    const date = new Date(dateString);
+
+    if (isNaN(date.getTime())) return "";
+
+    const difference = Date.now() - date.getTime();
+
+    const minutes = Math.floor(difference / 60000);
+
+    if (minutes < 1) return "Just now";
+
+    if (minutes < 60) {
+        return `${minutes} ${minutes === 1 ? "minute" : "minutes"} ago`;
     }
 
-    doubtDate.setHours(0, 0, 0, 0);
+    const hours = Math.floor(minutes / 60);
 
-    const today = new Date();
-
-    today.setHours(0, 0, 0, 0);
-
-    const difference = Math.floor(
-        (today - doubtDate) / (1000 * 60 * 60 * 24)
-    );
-
-    if (difference === 0) {
-        return "Today";
+    if (hours < 24) {
+        return `${hours} ${hours === 1 ? "hour" : "hours"} ago`;
     }
 
-    if (difference === 1) {
-        return "Yesterday";
+    const days = Math.floor(hours / 24);
+
+    if (days < 7) {
+        return `${days} ${days === 1 ? "day" : "days"} ago`;
     }
 
-    if (difference < 7) {
-        return `${difference} days ago`;
-    }
+    const weeks = Math.floor(days / 7);
 
-    if (difference < 30) {
-        const weeks = Math.floor(difference / 7);
+    if (weeks < 5) {
         return `${weeks} ${weeks === 1 ? "week" : "weeks"} ago`;
     }
 
-    const months = Math.floor(difference / 30);
+    const months = Math.floor(days / 30);
 
     if (months < 12) {
         return `${months} ${months === 1 ? "month" : "months"} ago`;
@@ -238,149 +138,231 @@ function formatRelativeDate(dateString) {
 
 
 // ==========================================
-// CREATE DOUBT CARD
+// 7. GET TOPICS AND SUBTOPICS
+// ==========================================
+
+function getDoubtTags(doubt) {
+
+    const tags = [];
+
+    // Topics array
+
+    if (Array.isArray(doubt.topics)) {
+
+        doubt.topics.forEach(topic => {
+
+            const name =
+                typeof topic === "string"
+                    ? topic
+                    : topic?.name;
+
+            if (name) tags.push(name);
+
+        });
+
+    }
+
+
+    // Subtopics array
+
+    if (Array.isArray(doubt.subtopics)) {
+
+        doubt.subtopics.forEach(subtopic => {
+
+            const name =
+                typeof subtopic === "string"
+                    ? subtopic
+                    : subtopic?.name;
+
+            if (name) tags.push(name);
+
+        });
+
+    }
+
+
+    // Legacy format
+
+    if (!tags.length) {
+
+        if (doubt.topic) {
+            tags.push(doubt.topic);
+        }
+
+        if (doubt.subtopic) {
+            tags.push(doubt.subtopic);
+        }
+
+        if (Array.isArray(doubt.tags)) {
+            tags.push(...doubt.tags);
+        }
+
+    }
+
+    return [...new Set(tags)];
+
+}
+
+
+// ==========================================
+// 8. STATUS CONFIGURATION
+// ==========================================
+
+const statusConfig = {
+
+    pending: {
+        label: "Pending",
+        className: "pending"
+    },
+
+    "in-progress": {
+        label: "In Progress",
+        className: "in-progress"
+    },
+
+    resolved: {
+        label: "Resolved",
+        className: "resolved"
+    }
+
+};
+
+
+// ==========================================
+// 9. CREATE DOUBT CARD
 // ==========================================
 
 function createDoubtCard(doubt) {
 
-    const card = document.createElement("div");
+    const card = document.createElement("article");
 
     card.className = "doubt-card";
 
+    card.tabIndex = 0;
 
-    // OPEN DOUBT DETAILS ON CLICK
-
-    card.addEventListener("click", function () {
-
-        window.location.href =
-            `doubt-details.html?source=my-doubts&id=${doubt.id}`;
-
-    });
+    card.setAttribute("role", "button");
 
 
-    const subject = subjectStyles[doubt.subject];
-    const status = statusStyles[doubt.status];
+    // SUBJECT
+
+    const subject = escapeHTML(doubt.subject || "General");
 
 
-    // ======================================
-    // RESOURCE COUNT
-    // ======================================
+    // STATUS
 
-    const resourceCount = (doubt.teacherResources || []).length;
+    const status =
+        statusConfig[doubt.status] || statusConfig.pending;
 
 
-    // ======================================
-    // TAGS + RESOURCE INDICATOR
-    // ======================================
+    // QUESTION
 
-    const tagsHTML = (doubt.tags || []).length || resourceCount > 0
+    const question = escapeHTML(
+        doubt.question ||
+        doubt.description ||
+        doubt.title ||
+        "No question provided."
+    );
 
+
+    // TAGS
+
+    const tags = getDoubtTags(doubt);
+
+    const tagsHTML = tags.length
         ? `
             <div class="doubt-tags">
 
-                ${(doubt.tags || []).map(tag => `
-                    <span class="doubt-tag">${tag}</span>
-                `).join("")}
-
-                ${resourceCount > 0 ? `
-                    <span class="resource-indicator">
-                        <i data-lucide="link"></i>
-                        <span>${resourceCount}</span>
+                ${tags.map(tag => `
+                    <span class="doubt-tag">
+                        ${escapeHTML(tag)}
                     </span>
-                ` : ""}
+                `).join("")}
 
             </div>
         `
-
         : "";
 
 
-    // ======================================
-    // TEACHER INFORMATION + DATE
-    // ======================================
+    // TEACHER NAME
 
     const teacherHTML = `
-        <div class="teacher-meta">
+        <div class="doubt-teacher">
 
             <i data-lucide="user-round"></i>
 
-            <span class="teacher-name">
-                ${doubt.teacherName || "Teacher not assigned"}
-            </span>
-
-            <span class="doubt-date">
-                ${formatRelativeDate(doubt.createdAt)}
+            <span>
+                ${escapeHTML(doubt.teacherName || "Not assigned")}
             </span>
 
         </div>
     `;
 
 
-    // ======================================
+    // TIMESTAMP
+
+    const timestamp = formatRelativeDate(doubt.createdAt);
+
+
     // CARD HTML
-    // ======================================
 
     card.innerHTML = `
 
-        <div class="doubt-icon">
+        <div class="doubt-card-top">
 
-            <img
-                src="${subject.icon}"
-                alt="${doubt.subject} icon"
-            >
+            <span class="subject-badge">
+                ${subject}
+            </span>
+
+            <span class="doubt-status ${status.className}">
+                ${status.label}
+            </span>
 
         </div>
 
 
-        <div class="doubt-info">
-
-            <div class="doubt-meta">
-
-                <span class="doubt-title">
-                    ${doubt.title}
-                </span>
-
-                <span class="separator">•</span>
-
-                <span class="doubt-subject">
-                    ${doubt.subject}
-                </span>
-
-            </div>
+        <p class="doubt-question">
+            ${question}
+        </p>
 
 
-            <p class="doubt-ques">
-                ${doubt.question}
-            </p>
+        ${tagsHTML}
 
 
-            ${tagsHTML}
-
+        <div class="doubt-card-bottom">
 
             ${teacherHTML}
 
-        </div>
-
-
-        <div class="doubt-status-meta">
-
-            <div
-                class="status"
-                style="
-                    background-color: ${status.background};
-                    color: ${status.color};
-                "
-            >
-
-                <i data-lucide="${status.icon}"></i>
-
-                <p>${status.label}</p>
-
-            </div>
+            <span class="doubt-time">
+                ${escapeHTML(timestamp)}
+            </span>
 
         </div>
 
     `;
+
+
+    // OPEN DOUBT DETAILS
+
+    function openDoubt() {
+
+        window.location.href =
+            `doubt-details.html?source=my-doubts&id=${encodeURIComponent(doubt.id)}`;
+
+    }
+
+    card.addEventListener("click", openDoubt);
+
+    card.addEventListener("keydown", event => {
+
+        if (event.key === "Enter" || event.key === " ") {
+
+            event.preventDefault();
+
+            openDoubt();
+
+        }
+
+    });
 
 
     return card;
@@ -389,59 +371,19 @@ function createDoubtCard(doubt) {
 
 
 // ==========================================
-// DISPLAY DOUBTS
+// 10. FILTER DOUBTS
 // ==========================================
 
-function displayDoubts(doubtsToDisplay) {
+function getFilteredDoubts() {
 
-    doubtContainer.innerHTML = "";
-
-    doubtsToDisplay.forEach(function (doubt) {
-
-        const card = createDoubtCard(doubt);
-
-        doubtContainer.appendChild(card);
-
-    });
-
-    lucide.createIcons();
-
-}
+    let doubts = getStoredDoubts();
 
 
-// ==========================================
-// FILTER AND SORT ELEMENTS
-// ==========================================
-
-const statusTabs = document.querySelectorAll(
-    ".status-tab, .status-tab-active"
-);
-
-const sortSelect = document.getElementById("sort-doubts");
-
-const subjectSelect = document.querySelector(".select-subj");
-
-
-let selectedStatus = "all";
-let selectedSort = "latest";
-let selectedSubject = "all";
-
-
-// ==========================================
-// UPDATE DOUBTS
-// ==========================================
-
-function updateDoubts() {
-
-    // Start with all stored doubts
-    let filteredDoubts = allDoubts.slice();
-
-
-    // FILTER BY SUBJECT
+    // SUBJECT FILTER
 
     if (selectedSubject !== "all") {
 
-        filteredDoubts = filteredDoubts.filter(function (doubt) {
+        doubts = doubts.filter(doubt => {
 
             return doubt.subject === selectedSubject;
 
@@ -450,11 +392,11 @@ function updateDoubts() {
     }
 
 
-    // FILTER BY STATUS
+    // STATUS FILTER
 
     if (selectedStatus !== "all") {
 
-        filteredDoubts = filteredDoubts.filter(function (doubt) {
+        doubts = doubts.filter(doubt => {
 
             return doubt.status === selectedStatus;
 
@@ -463,59 +405,133 @@ function updateDoubts() {
     }
 
 
-    // SORT DOUBTS
+    // SEARCH
 
-    if (selectedSort === "latest") {
+    const searchTerm = searchInput.value.trim().toLowerCase();
 
-        filteredDoubts.sort(function (a, b) {
+    if (searchTerm) {
 
-            return new Date(b.createdAt) - new Date(a.createdAt);
+        doubts = doubts.filter(doubt => {
+
+            const searchableText = [
+
+                doubt.title,
+                doubt.question,
+                doubt.description,
+                doubt.subject,
+                doubt.teacherName,
+
+                ...getDoubtTags(doubt)
+
+            ].join(" ").toLowerCase();
+
+
+            return searchableText.includes(searchTerm);
 
         });
 
     }
 
-    else if (selectedSort === "oldest") {
 
-        filteredDoubts.sort(function (a, b) {
+    // SORT
 
-            return new Date(a.createdAt) - new Date(b.createdAt);
+    doubts.sort((a, b) => {
 
-        });
+        const dateA = new Date(a.createdAt).getTime() || 0;
 
-    }
+        const dateB = new Date(b.createdAt).getTime() || 0;
+
+        return selectedSort === "latest"
+            ? dateB - dateA
+            : dateA - dateB;
+
+    });
 
 
-    // DISPLAY
-
-    displayDoubts(filteredDoubts);
+    return doubts;
 
 }
 
+
 // ==========================================
-// STATUS TABS
+// 11. DISPLAY DOUBTS
 // ==========================================
 
-statusTabs.forEach(function (tab) {
+function displayDoubts() {
 
-    tab.addEventListener("click", function () {
+    const doubts = getFilteredDoubts();
+
+    doubtContainer.innerHTML = "";
+
+
+    if (!doubts.length) {
+
+        doubtContainer.innerHTML = `
+
+            <div class="doubts-empty">
+
+                <i data-lucide="inbox"></i>
+
+                <h3>No doubts found</h3>
+
+                <p>
+                    Try changing your filters or ask a new doubt.
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+    else {
+
+        doubts.forEach(doubt => {
+
+            doubtContainer.appendChild(
+                createDoubtCard(doubt)
+            );
+
+        });
+
+    }
+
+
+    // RENDER LUCIDE ICONS
+
+    if (window.lucide) {
+        window.lucide.createIcons();
+    }
+
+}
+
+
+// ==========================================
+// 12. STATUS TABS
+// ==========================================
+
+statusTabs.forEach(tab => {
+
+    tab.addEventListener("click", () => {
 
         selectedStatus = tab.dataset.status;
 
 
-        statusTabs.forEach(function (tab) {
+        statusTabs.forEach(item => {
 
-            tab.classList.remove("status-tab-active");
-            tab.classList.add("status-tab");
+            item.classList.remove("status-tab-active");
+
+            item.classList.add("status-tab");
 
         });
 
 
         tab.classList.remove("status-tab");
+
         tab.classList.add("status-tab-active");
 
 
-        updateDoubts();
+        displayDoubts();
 
     });
 
@@ -523,33 +539,40 @@ statusTabs.forEach(function (tab) {
 
 
 // ==========================================
-// SUBJECT DROPDOWN
+// 13. SUBJECT FILTER
 // ==========================================
 
-subjectSelect.addEventListener("change", function () {
+subjectSelect.addEventListener("change", () => {
 
     selectedSubject = subjectSelect.value;
 
-    updateDoubts();
+    displayDoubts();
 
 });
 
 
 // ==========================================
-// SORT DROPDOWN
+// 14. SEARCH
 // ==========================================
 
-sortSelect.addEventListener("change", function () {
+searchInput.addEventListener("input", displayDoubts);
+
+
+// ==========================================
+// 15. SORT
+// ==========================================
+
+sortSelect.addEventListener("change", () => {
 
     selectedSort = sortSelect.value;
 
-    updateDoubts();
+    displayDoubts();
 
 });
 
 
 // ==========================================
-// INITIAL DISPLAY
+// 16. INITIALIZE
 // ==========================================
 
-updateDoubts();
+displayDoubts();

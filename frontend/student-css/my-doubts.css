@@ -1,8 +1,18 @@
+
+/* ==========================================
+   GLOBAL
+========================================== */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
+
+/* ==========================================
+   PAGE TITLE
+========================================== */
 
 .page-title {
     display: flex;
@@ -13,7 +23,7 @@
 
 .page-title h1 {
     font-size: 28px;
-    color: #0f2658;
+    color: #0F2658;
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
 }
@@ -46,7 +56,7 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    border: 1px solid #c9d0df;
+    border: 1px solid #C9D0DF;
     border-radius: 6px;
     padding: 4px 8px;
     flex: 1;
@@ -70,13 +80,14 @@
     min-width: 0;
     height: 30px;
     border: none;
+    outline: none;
 }
 
 .select-wrapper {
     display: flex;
     gap: 12px;
     align-items: center;
-    border: 1px solid #c9d0df;
+    border: 1px solid #C9D0DF;
     border-radius: 8px;
     padding: 4px 14px;
     width: 160px;
@@ -124,13 +135,16 @@
     height: 36px;
     width: 150px;
     padding: 4px 8px;
+    border: none;
+    cursor: pointer;
 
-    transition: background-color 0.2s ease,
-                transform 0.2s ease;
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
 }
 
 .ask-doubt-btn:hover {
-    background: #3456ed;
+    background: #3456ED;
     transform: translateY(-1px);
 }
 
@@ -187,16 +201,18 @@
     display: flex;
     gap: 12px;
     align-items: center;
-    margin-left: 180px;
+    margin-left: auto;
     padding: 4px 6px;
     width: auto;
-    margin-left: auto;
 }
 
 .sort-controls select {
     appearance: none;
     border: none;
+    outline: none;
     color: #667085;
+    background: transparent;
+    cursor: pointer;
 }
 
 .sort-controls svg {
@@ -207,120 +223,146 @@
 
 
 /* ==========================================
+   DOUBT CONTAINER
+========================================== */
+
+#doubtContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+
+/* ==========================================
    DOUBT CARD
 ========================================== */
 
 .doubt-card {
     display: flex;
-    align-items: center;
-    gap: 28px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
 
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-    padding: 12px 16px;
-    min-height: 90px;
-    margin-bottom: 12px;
+    width: 100%;
+    min-height: auto;
 
-    background: linear-gradient(110deg, #ffffff, #fafbff);
-    border: 1px solid #e3ebff;
+    padding: 15px 25px 13px;
+
+    background: #FFFFFF;
+
+    border: 1px solid #DCE6FF;
+    border-radius: 15px;
+
+    box-shadow: none;
 
     cursor: pointer;
-    transition: border-color 0.2s ease,
-                background-color 0.2s ease;
+    margin: 0;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .doubt-card:hover {
-    background: #f8faff;
-    border-color: #bdceff;
+    transform: translateY(-2px);
+    background: #F3F6FF;
+    border-color: #CCD5F2;
+    box-shadow: 0 5px 18px rgba(73, 101, 232, 0.07);
+}
+
+.doubt-card:focus-visible {
+    outline: 2px solid #4965E8;
+    outline-offset: 3px;
 }
 
 
 /* ==========================================
-   SUBJECT ICON
+   TOP ROW
 ========================================== */
 
-.doubt-icon {
+.doubt-card-top {
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 12px;
+}
+
+
+/* SUBJECT BADGE */
+
+.subject-badge {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 6px 13px;
+
+    background: #4965E8;
+    color: #FFFFFF;
+
+    border-radius: 7px;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+}
+
+
+/* ==========================================
+   STATUS BADGE
+========================================== */
+
+.doubt-status {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
 
+    padding: 5px 11px;
 
+    border-radius: 7px;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+
+    white-space: nowrap;
 }
 
-.doubt-icon svg {
-    height: 32px;
-    width: 32px;
+.doubt-status.pending {
+    background: #FFF5E8;
+    color: #D18A32;
 }
 
-
-/* ==========================================
-   DOUBT INFORMATION
-========================================== */
-
-.doubt-meta {
-    display: flex;
-    align-items: center;
-    gap: 6px;
+.doubt-status.in-progress {
+    background: #EEF2FF;
+    color: #4965E8;
 }
 
-.doubt-info {
-    width: 70%;
-}
-
-.doubt-title {
-    font-family: 'Inter', sans-serif;
-}
-
-.separator {
-    color: #667085;
-}
-
-.doubt-subject {
-    color: #667085;
-    font-family: 'Inter', sans-serif;
-}
-
-.doubt-ques {
-    color: #667085;
-    font-size: 14px;
-    margin-top: 8px;
+.doubt-status.resolved {
+    background: #E9F8EF;
+    color: #29965A;
 }
 
 
 /* ==========================================
-   STATUS
+   QUESTION
 ========================================== */
 
-.doubt-status-meta {
-    width: fit-content;
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 6px 24px;
-    margin-left: auto;
-}
+.doubt-question {
+    margin: 0 0 18px;
 
-.status {
-    display: flex;
-    gap: 4px;
-    align-items: center;
-    padding: 4px;
-    background-color: #E5ECFF;
-    border-radius: 8px;
-    color: #5471D8;
-    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.65;
 
-}
+    color: #0F2658;
 
-.status svg {
-    height: 18px;
-    width: 18px;
-}
-
-.asked-time {
-    font-size: 12px;
-    color: #667085;
+    letter-spacing: -0.15px;
 }
 
 
@@ -330,21 +372,30 @@
 
 .doubt-tags {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    gap: 8px;
-    margin-top: 12px;
+    flex-wrap: wrap;
+
+    gap: 9px;
+
+    margin: 0 0 17px;
 }
 
 .doubt-tag {
     display: inline-flex;
     align-items: center;
-    background-color: #EEF2FF;
-    color: #4965E8;
+
     padding: 5px 10px;
+
+    border: none;
     border-radius: 14px;
+
+    background: #EEF2FF;
+    color: #4965E8;
+
+    font-family: 'Poppins', sans-serif;
     font-size: 11px;
     font-weight: 500;
+    line-height: 1.4;
 }
 
 
@@ -352,53 +403,124 @@
    TEACHER INFORMATION
 ========================================== */
 
-.teacher-meta {
+.doubt-teacher {
     display: flex;
     align-items: center;
     gap: 7px;
-    margin-top: 12px;
-    color: #70788A;
-    font-size: 13px;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    color: #64748B;
+
+    margin-bottom: 17px;
 }
 
-.teacher-meta svg {
-    width: 16px;
-    height: 16px;
-    color: #8493AE;
+.doubt-teacher svg {
+    width: 14px;
+    height: 14px;
+
+    stroke-width: 1.8;
+
+    flex-shrink: 0;
 }
 
-.teacher-name {
-    color: #64718C;
-}
-
-.doubt-date {
-    color: #929BB1;
-    margin-left: 4px;
+.doubt-teacher span {
+    font-weight: 500;
+    color: #0F2658;
 }
 
 
 /* ==========================================
-   RESOURCE INDICATOR
+   BOTTOM ROW
 ========================================== */
 
-.resource-indicator {
-    display: inline-flex;
+.doubt-card-bottom {
+    display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 4px;
+    justify-content: space-between;
+    gap: 15px;
 
-    padding: 0;
-    background: transparent;
-    border-radius: 0;
-
-    color: #4965E8;
-    font-size: 12px;
-    font-weight: 500;
-    white-space: nowrap;
+    width: 100%;
 }
 
-.resource-indicator svg {
-    width: 15px;
-    height: 15px;
+
+
+/* TIMESTAMP */
+
+.doubt-time {
+    flex-shrink: 0;
+    margin-left: auto;
+
+    color: #8998B3;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+
+    white-space: nowrap;
+    text-align: right;
+}
+
+
+/* ==========================================
+   EMPTY STATE
+========================================== */
+
+.doubts-empty {
+    min-height: 280px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+    gap: 12px;
+}
+
+.doubts-empty svg {
+    width: 30px;
+    height: 30px;
     color: #4965E8;
+}
+
+.doubts-empty h3 {
+    color: #0F2658;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.doubts-empty p {
+    color: #8998B3;
+    font-size: 13px;
+}
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 768px) {
+
+    .doubt-card {
+        padding: 20px;
+    }
+
+    .status-tabs {
+        gap: 18px;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    .doubt-card-bottom {
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .doubt-time {
+        margin-left: auto;
+    }
+
 }
