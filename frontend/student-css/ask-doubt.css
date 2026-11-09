@@ -1,4 +1,3 @@
-
 /* ==========================================
    GLOBAL
 ========================================== */
@@ -96,29 +95,67 @@ h4 {
     color: #4965E8;
 }
 
-.type-doubt {
-    margin-top: 15px;
+
+/* ==========================================
+   QUESTION TITLE TEXTAREA
+========================================== */
+
+.question-title {
+    margin-top: 18px;
+}
+
+.title-textarea {
+    width: 100%;
+    height: 54px;
+    min-height: 54px;
+    max-height: 64px;
+
+    background-color: #FAFCFE;
+    border-radius: 12px;
+    border: 1px solid #DCE6F7;
+
+    padding: 12px 14px;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+
+    resize: none;
+}
+
+
+/* ==========================================
+   DETAILED EXPLANATION TEXTAREA
+========================================== */
+
+.question-description {
+    margin-top: 12px;
     position: relative;
+}
+
+.description-textarea {
+    width: 100%;
+    min-height: 160px;
+
+    background-color: #FAFCFE;
+    border-radius: 12px;
+    border: 1px solid #DCE6F7;
+
+    padding: 12px 14px 32px;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+
+    resize: none;
 }
 
 .character-count {
     position: absolute;
-    bottom: 14px;
+    bottom: 12px;
     right: 14px;
+
     color: #8493AE;
     font-size: 12px;
     font-family: 'Poppins', sans-serif;
-}
-
-textarea {
-    width: 100%;
-    min-height: 160px;
-    background-color: #FAFCFE;
-    border-radius: 12px;
-    border: 1px solid #DCE6F7;
-    padding: 12px;
-    font-family: 'Poppins', sans-serif;
-    resize: none;
 }
 
 
@@ -128,7 +165,6 @@ textarea {
 
 .subject-title,
 .topic-title,
-.tags-title,
 .attach-title,
 .teacher-title {
     display: flex;
@@ -139,7 +175,6 @@ textarea {
 
 .subject-title svg,
 .topic-title svg,
-.tags-title svg,
 .attach-title svg,
 .teacher-title svg {
     color: #4965E8;
@@ -152,39 +187,23 @@ textarea {
 
 
 /* ==========================================
-   TOPIC INPUT
-========================================== */
-
-.topic-input input {
-    width: 100%;
-    height: 40px;
-    border: 1px solid #c9d0df;
-    border-radius: 5px;
-    padding: 12px;
-    background-color: #FAFCFE;
-}
-
-.topic-input input::placeholder {
-    color: #8493AE;
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-}
-
-
-/* ==========================================
    SUBJECT SELECT
 ========================================== */
 
 .select-subj {
     width: 100%;
     height: 40px;
-    border-color: #c9d0df;
+
+    border: 1px solid #c9d0df;
     border-radius: 5px;
+
     font-family: 'Poppins', sans-serif;
     color: #8493AE;
     font-size: 14px;
+
     background-color: #FAFCFE;
     appearance: none;
+
     padding: 12px;
 }
 
@@ -197,85 +216,233 @@ textarea {
     right: 12px;
     top: 50%;
     transform: translateY(-50%);
+
     pointer-events: none;
+
     height: 16px;
     width: 14px;
+
     color: #4965E8;
 }
 
-
 /* ==========================================
-   TAG INPUT
+   TOPIC SEARCHABLE MULTI-SELECT
 ========================================== */
 
-.tag-input input {
+.topic-search-wrapper {
+    position: relative;
     width: 100%;
-    height: 40px;
+}
+
+
+/* Search box containing chips and input */
+
+.topic-search-box {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 7px;
+
+    width: 100%;
+    min-height: 44px;
+
+    padding: 7px 11px;
+
     border: 1px solid #c9d0df;
     border-radius: 5px;
-    padding: 12px;
+
     background-color: #FAFCFE;
+
+    transition: border-color 0.2s ease;
 }
 
-.tag-input input::placeholder,
-textarea::placeholder {
-    color: #8493AE;
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
+.topic-search-box:focus-within {
+    border-color: #4965E8;
 }
 
 
-/* ==========================================
-   SELECTED TAGS
-========================================== */
+/* Selected chips */
 
-.selected-tags {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 14px;
+.topic-chips {
+    display: contents;
 }
 
-.tag {
+.selection-chip {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    gap: 8px;
+    gap: 7px;
+
+    max-width: 100%;
+
+    padding: 5px 9px 5px 11px;
+
+    border-radius: 50px;
+
     background-color: #EEF2FF;
-    color: #4965E8;
-    padding: 8px 12px;
-    border-radius: 14px;
+    border: 1px solid #DCE4FF;
+
+    color: #4059B9;
+
+    font-family: 'Poppins', sans-serif;
     font-size: 12px;
-    width: fit-content;
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    font-weight: 500;
+
+    white-space: nowrap;
+
+    animation: capsuleAppear 0.2s ease;
 }
 
-.tag svg {
-    color: #4965E8;
-    width: 16px;
-    height: 16px;
+.selection-chip-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.remove-tag {
+
+/* Remove chip button */
+
+.remove-selection {
+    width: 17px;
+    height: 17px;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0;
+
+    flex-shrink: 0;
+
     border: none;
-    background: transparent;
+    border-radius: 50%;
+
+    background-color: #DCE4FF;
+    color: #4965E8;
+
     cursor: pointer;
+    padding: 0;
+
+    transition: 0.2s ease;
 }
 
-.remove-tag:hover svg {
-    color: #263FAF;
+.remove-selection:hover {
+    background-color: #4965E8;
+    color: white;
 }
 
-.tag-removing {
-    opacity: 0;
-    transform: translateX(10px) scale(0.85);
+.remove-selection svg {
+    width: 11px;
+    height: 11px;
 }
 
+
+/* Search input */
+
+.topic-search-input {
+    flex: 1;
+    min-width: 140px;
+
+    height: 27px;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+
+    color: #354267;
+    padding: 0;
+}
+
+.topic-search-input::placeholder {
+    color: #8493AE;
+}
+
+.topic-search-input:disabled {
+    cursor: not-allowed;
+}
+
+.topic-search-box:has(.topic-search-input:disabled) {
+    background-color: #F5F7FB;
+}
+
+
+/* Search results dropdown */
+
+.multi-select-options {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+
+    width: 100%;
+    max-height: 230px;
+
+    overflow-y: auto;
+
+    background-color: white;
+
+    border: 1px solid #DCE4F5;
+    border-radius: 8px;
+
+    box-shadow: 0 8px 24px rgba(15, 38, 88, 0.10);
+
+    padding: 5px;
+
+    z-index: 20;
+}
+
+.multi-select-options[hidden] {
+    display: none;
+}
+
+
+/* Individual search result */
+
+.multi-select-option {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 10px 11px;
+
+    border: none;
+    border-radius: 6px;
+
+    background-color: transparent;
+
+    color: #354267;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+
+    text-align: left;
+    cursor: pointer;
+
+    transition: background-color 0.15s ease;
+}
+
+.multi-select-option:hover {
+    background-color: #F5F7FF;
+}
+
+
+/* Selected result indicator */
+
+.multi-select-option.selected {
+    background-color: #F5F7FF;
+}
+
+
+/* Empty search result */
+
+.multi-select-empty {
+    padding: 12px;
+
+    color: #929BB1;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+}
 
 /* ==========================================
    ATTACHMENT UPLOAD BOX
@@ -286,13 +453,19 @@ textarea::placeholder {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     border: 1px dashed #cccc;
+
     cursor: pointer;
+
     font-family: 'Poppins', sans-serif;
     font-size: 14px;
     color: #6B7A99;
+
     padding: 14px;
+
     border-radius: 8px;
+
     transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
@@ -319,15 +492,14 @@ textarea::placeholder {
     margin-top: 14px;
 }
 
-
-/* Individual capsule */
-
 .attachment-preview {
     display: inline-flex;
     align-items: center;
     gap: 9px;
+
     max-width: 260px;
     min-height: 38px;
+
     padding: 7px 10px;
 
     background-color: #F5F8FF;
@@ -348,7 +520,9 @@ textarea::placeholder {
     display: flex;
     align-items: center;
     justify-content: center;
+
     flex-shrink: 0;
+
     color: #4965E8;
 }
 
@@ -364,6 +538,7 @@ textarea::placeholder {
     display: flex;
     align-items: center;
     gap: 6px;
+
     min-width: 0;
     overflow: hidden;
 }
@@ -383,6 +558,7 @@ textarea::placeholder {
 .attachment-size {
     font-size: 11px;
     color: #929BB1;
+
     white-space: nowrap;
     flex-shrink: 0;
 }
@@ -450,8 +626,10 @@ textarea::placeholder {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     background-color: #F8FAFF;
     border-radius: 8px;
+
     padding: 6px;
 }
 
@@ -465,10 +643,13 @@ textarea::placeholder {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     background-color: #4965E8;
     color: white;
+
     border-radius: 28px;
     padding: 12px 22px;
+
     width: 165px;
     font-weight: 500;
 
@@ -480,6 +661,12 @@ textarea::placeholder {
 .submit-button:hover {
     background: #3456ed;
     transform: translateY(-1px);
+}
+
+.submit-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
 }
 
 .submit-button svg {
@@ -501,15 +688,20 @@ button {
     font-size: 14px;
 }
 
+textarea::placeholder {
+    color: #8493AE;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+}
+
 
 /* ==========================================
    SECTION SPACING
 ========================================== */
 
 .doubt-section,
-.topic-section,
 .subj-section,
-.tag-section,
+.topic-section,
 .attachment-section,
 .submit-section {
     margin-bottom: 25px;
@@ -527,9 +719,6 @@ button {
 .teacher-section[hidden] {
     display: none;
 }
-
-
-/* TEACHER TITLE */
 
 .teacher-title {
     display: flex;
@@ -562,28 +751,33 @@ button {
 .teacher-select select {
     width: 100%;
     height: 40px;
+
     border: 1px solid #c9d0df;
     border-radius: 5px;
+
     background-color: #FAFCFE;
+
     font-family: 'Poppins', sans-serif;
     color: #8493AE;
     font-size: 14px;
+
     appearance: none;
     padding: 12px;
+
     cursor: pointer;
 }
-
-
-/* TEACHER DROPDOWN ICON */
 
 .teacher-select svg {
     position: absolute;
     right: 12px;
     top: 50%;
     transform: translateY(-50%);
+
     pointer-events: none;
+
     height: 16px;
     width: 14px;
+
     color: #4965E8;
 }
 
@@ -592,11 +786,40 @@ button {
    FOCUS STATES
 ========================================== */
 
-.topic-input input:focus,
-.tag-input input:focus,
-textarea:focus,
+.title-textarea:focus,
+.description-textarea:focus,
 .select-subj:focus,
 .teacher-select select:focus {
     outline: none;
     border-color: #4965E8;
+}
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 768px) {
+
+    .fulldoubt-box {
+        padding: 18px;
+    }
+
+    .doubt-heading p {
+        font-size: 13px;
+    }
+
+    .submit-section {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .submit-button {
+        width: 100%;
+    }
+
+    .selection-chip {
+        font-size: 11px;
+    }
+
 }

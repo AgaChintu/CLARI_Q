@@ -1,4 +1,6 @@
-fetch("../Components/teacher-sidebar.html")
+// LOAD SIDEBAR
+
+fetch("../components/teacher-sidebar.html")
 .then(response => response.text())
 .then(data => {
 
@@ -13,46 +15,30 @@ fetch("../Components/teacher-sidebar.html")
 });
 
 
-function initializeSidebar() {
-
-const currentPage = window.location.pathname.split("/").pop();
-
-const navLinks = document.querySelectorAll(".sidebar a");
-
-const doubtsSection = document.querySelector(".nav-dropdown");
-const submenu = document.querySelector(".sub-menu");
-
-
 // ACTIVE PAGE HIGHLIGHTING
 
-navLinks.forEach(link => {
+function initializeSidebar() {
 
-    const linkPage = link.getAttribute("href");
+    const currentPage = window.location.pathname.split("/").pop();
 
-    if (linkPage === currentPage) {
+    const navLinks = document.querySelectorAll(".sidebar a");
 
-        link.classList.add("nav-item-active");
+    navLinks.forEach(link => {
 
-        // Check whether the current page belongs to Doubts
+        const linkPage = link.getAttribute("href");
 
-        if (
-            linkPage === "doubts.html" ||
-            link.classList.contains("sub-link")
-        ) {
-
-            doubtsSection.classList.add("parent-active");
-            submenu.hidden = false;
-
+        if (linkPage === currentPage) {
+            link.classList.add("nav-item-active");
         }
 
-    }
-
-});
+    });
 
 }
 
 
-fetch("../Components/teacher-topbar.html")
+// LOAD TOPBAR
+
+fetch("../components/teacher-topbar.html")
 .then(response => response.text())
 .then(data => {
 

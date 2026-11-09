@@ -1,719 +1,604 @@
-.page-title{
+/* ==========================================
+   CLARIQ - DOUBTS INBOX
+   STUDENT PAGE BLUE THEME
+========================================== */
+
+
+/* ==========================================
+   GLOBAL STYLES
+========================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+   
+    font-family: 'Poppins', sans-serif;
+    color: #26344A;
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+
+/* ==========================================
+   MAIN PAGE LAYOUT
+========================================== */
+
+.main-content {
+    margin-left: 270px;
+    min-height: 100vh;
+
+}
+
+
+
+/* ==========================================
+   PAGE HEADER
+========================================== */
+
+.page-header {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap:8px;
+    gap: 8px;
+    margin-bottom: 28px;
 }
 
-.page-title h1{
-    font-size: 28px;
-    color:#0f2658;
+.page-header h1 {
+    margin: 0;
     font-family: 'Poppins', sans-serif;
-    font-weight:600;
+    font-size: 28px;
+    font-weight: 600;
+    color: #0F2658;
 }
-.page-title h2{
+
+.page-header p {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
     font-size: 16px;
-    color: #70788A;
     font-weight: 300;
-    margin-bottom: 30px;
-  
-
+    color: #70788A;
+    line-height: 1.5;
 }
 
-/* =========================================
-   DOUBT INBOX PAGE
-========================================= */
 
-.inbox-page {
+/* ==========================================
+   TOOLBAR
+========================================== */
+
+.inbox-toolbar {
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 28px;
 }
 
 
+/* ==========================================
+   SEARCH
+========================================== */
 
-/* ASSIGNMENT SELECTOR */
-
-.assignment-selector {
+.search-wrapper {
     position: relative;
-    width: 295px;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    max-width: 560px;
+    height: 48px;
+
+    background: #FFFFFF;
+    border: 1px solid #DCE4F5;
+    border-radius: 10px;
+
+    padding: 0 15px;
+
+    transition: all 0.2s ease;
+}
+
+.search-wrapper:focus-within {
+    border-color: #4965E8;
+    box-shadow: 0 0 0 3px rgba(73, 101, 232, 0.10);
+}
+
+.search-wrapper > i {
+    width: 19px;
+    height: 19px;
+    color: #4965E8;
     flex-shrink: 0;
 }
 
-.assignment-selector select {
+.search-wrapper input {
     width: 100%;
-    height: 43px;
+    height: 100%;
 
+    border: none;
+    outline: none;
+    background: transparent;
+
+    padding: 0 12px;
+
+    font-size: 13px;
+    color: #26344A;
+}
+
+.search-wrapper input::placeholder {
+    color: #98A5BD;
+}
+
+.clear-search {
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    background: transparent;
+
+    color: #4965E8;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.clear-search.visible {
+    display: flex;
+}
+
+.clear-search i {
+    width: 16px;
+    height: 16px;
+}
+
+
+/* ==========================================
+   CLASS FILTER
+========================================== */
+
+.class-filter-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    height: 48px;
+    min-width: 195px;
+
+    padding: 0 14px;
+    gap: 10px;
+
+    background: #FFFFFF;
+    border: 1px solid #DCE4F5;
+    border-radius: 10px;
+
+    transition: all 0.2s ease;
+}
+
+.class-filter-wrapper:focus-within {
+    border-color: #4965E8;
+    box-shadow: 0 0 0 3px rgba(73, 101, 232, 0.08);
+}
+
+.class-filter-wrapper > i:first-child {
+    width: 18px;
+    height: 18px;
+    color: #4965E8;
+    flex-shrink: 0;
+}
+
+.class-filter-wrapper select {
     appearance: none;
     -webkit-appearance: none;
 
-    border: 1px solid #DDD9FF;
-    border-radius: 30px;
+    border: none;
+    outline: none;
+    background: transparent;
 
-    background-color: white;
+    width: 100%;
 
-    padding: 0 42px 0 18px;
-
-    font-family: 'Poppins', sans-serif;
+    color: #34445F;
     font-size: 13px;
-    color: #25234E;
+    font-weight: 500;
 
     cursor: pointer;
-    outline: none;
 }
 
-.assignment-selector > svg {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-
+.select-chevron {
     width: 16px;
     height: 16px;
-
-    color: #55547D;
+    color: #4965E8;
     pointer-events: none;
+    flex-shrink: 0;
 }
 
 
-/* =========================================
-   STATISTICS
-========================================= */
+/* ==========================================
+   TABS
+========================================== */
 
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 12px;
-}
-
-.stat-card {
+.inbox-tabs {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 30px;
 
-    background-color: white;
-    border: 1px solid #E2DEFF;
-    border-radius: 17px;
+    border-bottom: 1px solid #E1E8F7;
 
-    padding: 13px 16px;
-    min-height: 88px;
-    box-sizing: border-box;
+    margin-bottom: 22px;
 }
 
-.stat-icon {
-    width: 62px;
-    height: 62px;
+.inbox-tab {
+    position: relative;
 
-    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 
+    padding: 0 1px 15px;
+
+    border: none;
+    background: transparent;
+
+    color: #71809A;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: color 0.2s ease;
+}
+
+.inbox-tab:hover {
+    color: #4965E8;
+}
+
+.inbox-tab.active {
+    color: #4965E8;
+}
+
+.inbox-tab.active::after {
+    content: "";
+
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+
+    width: 100%;
+    height: 3px;
+
+    border-radius: 5px 5px 0 0;
+
+    background: #4965E8;
+}
+
+
+/* ==========================================
+   TAB COUNTS
+========================================== */
+
+.tab-count {
     display: flex;
     align-items: center;
     justify-content: center;
 
-    flex-shrink: 0;
-}
+    min-width: 23px;
+    height: 23px;
 
-.stat-icon svg {
-    width: 31px;
-    height: 31px;
-}
+    padding: 0 7px;
 
-.total-icon {
-    background-color: #EFEAFF;
-    color: #7651F5;
-}
+    border-radius: 50%;
 
-.awaiting-icon {
-    background-color: #FFF0E3;
-    color: #F28A00;
-}
+    background: #F0F3FA;
+    color: #8290AA;
 
-.progress-icon {
-    background-color: #E6F0FF;
-    color: #1675E8;
-}
-
-.resolved-icon {
-    background-color: #DDF7EB;
-    color: #0BA56A;
-}
-
-.stat-details h2 {
-    font-family: 'Inter', sans-serif;
-    font-size: 25px;
+    font-size: 11px;
     font-weight: 600;
-    color: #10123D;
 }
 
-.stat-details p {
-    font-size: 13px;
-    color: #55547D;
-    margin-top: 2px;
-}
-
-
-/* =========================================
-   AI DOUBT INSIGHTS
-========================================= */
-
-.insights-section {
-    background-color: white;
-    border: 1px solid #E1DDFF;
-    border-radius: 18px;
-    padding: 17px;
+.inbox-tab.active .tab-count {
+    background: #EEF2FF;
+    color: #4965E8;
 }
 
 
-/* HEADER */
+/* ==========================================
+   DOUBTS LIST
+========================================== */
 
-.insights-header {
+.doubts-list {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-}
-
-.insights-heading {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.insights-heading > svg {
-    width: 29px;
-    height: 29px;
-    color: #7754FF;
-    flex-shrink: 0;
-}
-
-.insights-heading h2 {
-    font-size: 19px;
-    font-weight: 600;
-    color: #11133E;
-}
-
-.insights-heading p {
-    font-size: 12px;
-    color: #55547D;
-    margin-top: 3px;
-}
-
-.ai-badge {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-
-    background-color: #F0EDFF;
-    color: #5942D0;
-
-    padding: 7px 12px;
-    border-radius: 25px;
-
-    font-size: 10px;
-    white-space: nowrap;
-}
-
-.ai-badge svg {
-    width: 13px;
-    height: 13px;
+    flex-direction: column;
+    gap: 15px;
 }
 
 
-/* INSIGHT GRID */
+/* ==========================================
+   DOUBT CARD
+========================================== */
 
-.insights-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 12px;
-}
+.doubt-card {
+    width: 100%;
 
+    padding: 22px 25px 20px;
 
-/* INSIGHT CARD */
-
-.insight-card {
-    background-color: #FCFBFF;
-    border: 1px solid #E5E1FF;
+    background: white;
+    border: 1px solid #DCE6FF;
     border-radius: 15px;
 
-    padding: 17px 16px;
+    cursor: pointer;
 
-    min-height: 190px;
-    box-sizing: border-box;
-
-    display: flex;
-    flex-direction: column;
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
-.insight-card > h3 {
+.doubt-card:hover {
+    transform: translateY(-2px);
+
+    background: #F3F6FF;
+    border-color: #ccd5f2;
+
+    box-shadow: 0 5px 18px rgba(73, 101, 232, 0.07);
+}
+
+.doubt-card:focus-visible {
+    outline: 2px solid #4965E8;
+    outline-offset: 3px;
+}
+
+
+/* ==========================================
+   SUBJECT + CLASS ROW
+========================================== */
+
+.doubt-card-meta {
     display: flex;
     align-items: center;
-    gap: 10px;
+    flex-wrap: wrap;
+    gap: 12px;
 
-    font-size: 14px;
-    font-weight: 600;
-    color: #171641;
-
-    white-space: nowrap;
-}
-
-.insight-card > h3 svg {
-    width: 21px;
-    height: 21px;
-    color: #7651F5;
-    flex-shrink: 0;
-}
-
-.attention-card > h3 svg {
-    color: #F28A00;
+    margin-bottom: 9px;
 }
 
 
-/* TOPIC LISTS */
+/* SUBJECT CAPSULE */
 
-.frequent-topics,
-.similar-topics {
-    margin-top: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-}
-
-.topic-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-
-    font-size: 12px;
-    color: #20204D;
-}
-
-.topic-row strong {
-    font-weight: 600;
-    white-space: nowrap;
-    color: #25234E;
-}
-
-
-/* INSIGHT BUTTON */
-
-.outline-btn {
-    display: flex;
+.subject-badge {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
+
+    padding: 6px 13px;
+
+    background: #4965E8;
+    color: #FFFFFF;
+
+    border: none;
+    border-radius: 7px;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+}
+
+
+/* CLASS */
+
+.doubt-class {
+    display: inline-flex;
+    align-items: center;
     gap: 7px;
 
-    border: 1px solid #B5A6FF;
-    border-radius: 30px;
+    color: #71809A;
 
-    background-color: white;
-    color: #5037D5;
-
-    padding: 8px 15px;
-
-    font-family: 'Poppins', sans-serif;
-    font-size: 11px;
-
-    cursor: pointer;
-    margin: auto auto 0;
-}
-
-.outline-btn svg {
-    width: 14px;
-    height: 14px;
-}
-
-
-/* ATTENTION CONTENT */
-
-.attention-content {
-    margin-top: 19px;
-}
-
-.attention-content h4 {
-    font-size: 14px;
-    font-weight: 600;
-    color: #20204D;
-}
-
-.attention-content p {
     font-size: 12px;
-    line-height: 19px;
-    color: #55547D;
-    margin-top: 7px;
+    font-weight: 500;
+}
+
+.doubt-class i {
+    width: 19px;
+    height: 19px;
+
+    color: #4965E8;
+    stroke-width: 2;
 }
 
 
-/* =========================================
-   DOUBT QUEUE
-========================================= */
+/* ==========================================
+   QUESTION
+========================================== */
 
-.queue-section {
-    background-color: white;
-    border: 1px solid #E1DDFF;
-    border-radius: 18px;
-    padding: 17px;
+.doubt-question {
+    margin: 0 0 22px;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.65;
+
+    color: #0F2658;
+
+    letter-spacing: -0.15px;
 }
 
 
-/* QUEUE HEADER */
+/* ==========================================
+   TAGS + TIMESTAMP
+========================================== */
 
-.queue-header {
+.doubt-card-footer {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-items: center;
     gap: 15px;
-    margin-bottom: 16px;
 }
 
-.queue-title {
+
+/* TAG CONTAINER */
+
+.doubt-tags {
     display: flex;
     align-items: center;
-    gap: 12px;
-}
-
-.queue-heading-icon {
-    width: 40px;
-    height: 40px;
-
-    background-color: #F0EDFF;
-    border-radius: 50%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    color: #4932B8;
-    flex-shrink: 0;
-}
-
-.queue-heading-icon svg {
-    width: 22px;
-    height: 22px;
-}
-
-.queue-title h2 {
-    font-size: 20px;
-    font-weight: 600;
-    color: #11133E;
-}
-
-.queue-title p {
-    font-size: 12px;
-    color: #55547D;
-    margin-top: 3px;
-}
-
-
-/* FILTERS AND SEARCH */
-
-.queue-controls {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-
-.queue-filters {
-    display: flex;
-    align-items: center;
-
-    border: 1px solid #E1DDFF;
-    border-radius: 30px;
-
-    overflow: hidden;
-}
-
-.filter-btn {
-    padding: 10px 16px;
-
-    background-color: white;
-    border: none;
-
-    color: #292752;
-
-    font-family: 'Poppins', sans-serif;
-    font-size: 12px;
-
-    white-space: nowrap;
-    cursor: pointer;
-}
-
-.filter-btn.active {
-    background-color: #5140E8;
-    color: white;
-}
-
-.filter-btn span {
-    font-size: 11px;
-}
-
-
-/* SEARCH BUTTON */
-
-.search-btn {
-    width: 41px;
-    height: 41px;
-
-    border: 1px solid #DED9FF;
-    border-radius: 50%;
-
-    background-color: white;
-    color: #4C3CC8;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    cursor: pointer;
-    flex-shrink: 0;
-}
-
-.search-btn svg {
-    width: 20px;
-    height: 20px;
-}
-
-
-/* SEARCH INPUT */
-
-.queue-search {
-    display: none;
-    margin-bottom: 14px;
-}
-
-.queue-search.show {
-    display: block;
-}
-
-.queue-search input {
-    width: 100%;
-    height: 42px;
-
-    box-sizing: border-box;
-
-    border: 1px solid #DED9FF;
-    border-radius: 10px;
-
-    padding: 0 14px;
-
-    font-family: 'Poppins', sans-serif;
-    font-size: 13px;
-
-    outline: none;
-}
-
-.queue-search input:focus {
-    border-color: #8D7AFF;
-}
-
-
-/* =========================================
-   DOUBT QUEUE CARDS
-========================================= */
-
-.doubt-queue {
-    display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     gap: 9px;
 }
 
-.queue-card {
-    display: flex;
+
+/* SAME TAG STYLE AS STUDENT MY DOUBTS */
+
+.doubt-tag {
+    display: inline-flex;
     align-items: center;
-    gap: 16px;
 
-    padding: 17px 19px;
+    padding: 5px 10px;
 
-    border: 1px solid #E1DDFF;
-    border-radius: 16px;
+    border: none;
+    border-radius: 14px;
 
-    background-color: white;
-    min-width: 0;
-}
-
-.queue-card.grouped {
-    background-color: #F4F2FF;
-}
-
-
-/* ICON */
-
-.queue-icon {
-    width: 70px;
-    height: 70px;
-
-    flex-shrink: 0;
-
-    border-radius: 50%;
-    background-color: #EAE7FF;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    color: #5848D9;
-}
-
-.queue-icon svg {
-    width: 35px;
-    height: 35px;
-}
-
-
-/* DETAILS */
-
-.queue-details {
-    flex: 1;
-    min-width: 0;
-}
-
-.queue-type {
-    display: block;
-    font-size: 11px;
-    font-weight: 500;
-    color: #6045D9;
-    margin-bottom: 5px;
-}
-
-.queue-details h3 {
-    font-size: 14px;
-    font-weight: 600;
-    color: #171641;
-    margin-bottom: 5px;
-}
-
-.queue-details p {
-    font-size: 12px;
-    color: #55547D;
-    margin-bottom: 4px;
-}
-
-.queue-description {
-    line-height: 18px;
-}
-
-.queue-time {
-    display: block;
-    font-size: 11px;
-    color: #66658C;
-    margin-top: 3px;
-}
-
-.queue-meta {
-    font-size: 12px;
-}
-
-
-/* ACTION BUTTON */
-
-.queue-action {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 7px;
-
-    flex-shrink: 0;
-
-    padding: 10px 17px;
-
-    border: 1px solid #B4A5FF;
-    border-radius: 25px;
-
-    background-color: transparent;
-    color: #4932D0;
+    background: #EEF2FF;
+    color: #4965E8;
 
     font-family: 'Poppins', sans-serif;
-    font-size: 12px;
-
-    cursor: pointer;
-}
-
-.queue-action svg {
-    width: 15px;
-    height: 15px;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.4;
 }
 
 
-/* EXPAND BUTTON */
+/* TIMESTAMP */
 
-.expand-btn {
+.doubt-time {
+    flex-shrink: 0;
+
+    color: #8998B3;
+
+    font-size: 11px;
+    font-weight: 400;
+
+    white-space: nowrap;
+}
+/* ==========================================
+   EMPTY STATE
+========================================== */
+
+.empty-state {
+    width: 100%;
+    min-height: 320px;
+    padding: 40px 20px;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+}
+
+/* ICON CONTAINER */
+
+.empty-icon {
+    width: 76px;
+    height: 76px;
+    flex-shrink: 0;
+
     display: flex;
     align-items: center;
     justify-content: center;
 
-    color: #55547D;
-    cursor: pointer;
+    background: #EEF2FF;
+    border-radius: 22px;
+    margin: 0 auto 20px;
 }
 
-.expand-btn svg {
-    width: 19px;
-    height: 19px;
+/* LUCIDE ICON */
+
+.empty-icon svg {
+    width: 28px;
+    height: 28px;
+    color: #4965E8;
+    stroke: #4965E8;
+    stroke-width: 2;
 }
 
+/* HEADING */
 
-/* HIDDEN CARDS WHEN FILTERING */
+.empty-state h3 {
+    width: 100%;
+    margin: 0 0 10px;
 
-.queue-card.hidden {
+    color: #0F2658;
+    font-size: 19px;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* DESCRIPTION */
+
+.empty-state p {
+    width: 100%;
+    margin: 0;
+
+    color: #8998B3;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* HIDDEN STATE */
+
+.empty-state.hidden {
     display: none;
 }
 
-
-/* =========================================
-   RESPONSIVE
-========================================= */
+/* ==========================================
+   RESPONSIVE DESIGN
+========================================== */
 
 @media (max-width: 1100px) {
 
-    .stats-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .insights-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .queue-header {
-        align-items: flex-start;
-        flex-direction: column;
+    .inbox-page {
+        padding: 28px 25px 40px;
     }
 
 }
 
 
-@media (max-width: 750px) {
+@media (max-width: 768px) {
 
-    .page-header {
-        align-items: flex-start;
+    .main-content {
+        margin-left: 0;
+    }
+
+    .inbox-page {
+        padding: 25px 18px 35px;
+    }
+
+    .page-header h1 {
+        font-size: 24px;
+    }
+
+    .inbox-toolbar {
         flex-direction: column;
+        align-items: stretch;
     }
 
-    .assignment-selector {
+    .search-wrapper {
+        max-width: none;
         width: 100%;
     }
 
-    .queue-controls {
+    .class-filter-wrapper {
         width: 100%;
-        justify-content: space-between;
     }
 
-    .queue-filters {
-        max-width: calc(100% - 55px);
-    }
-
-    .filter-btn {
-        padding: 9px 10px;
-    }
-
-    .queue-card {
-        flex-wrap: wrap;
-    }
-
-    .queue-details {
-        flex-basis: calc(100% - 90px);
-    }
-
-    .queue-action {
-        margin-left: 85px;
+    .doubt-card {
+        padding: 20px;
     }
 
 }
@@ -721,63 +606,29 @@
 
 @media (max-width: 480px) {
 
-    .stats-grid {
-        grid-template-columns: 1fr 1fr;
+    .page-header p {
+        font-size: 13px;
     }
 
-    .stat-card {
-        padding: 10px;
-        gap: 8px;
+    .inbox-tabs {
+        gap: 22px;
     }
 
-    .stat-icon {
-        width: 43px;
-        height: 43px;
+    .inbox-tab {
+        font-size: 12px;
     }
 
-    .stat-icon svg {
-        width: 23px;
-        height: 23px;
+    .doubt-question {
+        font-size: 14px;
     }
 
-    .stat-details h2 {
-        font-size: 20px;
-    }
-
-    .stat-details p {
-        font-size: 10px;
-    }
-
-    .insights-header {
+    .doubt-card-footer {
         align-items: flex-start;
-        gap: 10px;
+        flex-direction: column;
     }
 
-    .ai-badge {
-        font-size: 9px;
-    }
-
-    .queue-card {
-        padding: 12px;
-        gap: 10px;
-    }
-
-    .queue-icon {
-        width: 48px;
-        height: 48px;
-    }
-
-    .queue-icon svg {
-        width: 26px;
-        height: 26px;
-    }
-
-    .queue-details {
-        flex-basis: calc(100% - 65px);
-    }
-
-    .queue-action {
-        margin-left: 58px;
+    .doubt-time {
+        align-self: flex-end;
     }
 
 }

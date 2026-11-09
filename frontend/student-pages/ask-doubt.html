@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../student-css/ask-doubt.css">
 
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="../student-js/syllabus-data.js" defer></script>
     <script src="../student-js/ask-doubt.js" defer></script>
 </head>
 
@@ -136,27 +137,25 @@
 
                 </div>
 
-                <div class="type-doubt">
 
-                    <textarea placeholder="Type your doubt here..." maxlength="1000"></textarea>
+                <!-- SHORT QUESTION / DOUBT TITLE -->
+                <div class="question-title">
+
+                    <textarea class="title-textarea" placeholder="Give your doubt a short, descriptive title..."
+                        maxlength="120" rows="2"></textarea>
+
+                </div>
+
+
+                <!-- DETAILED EXPLANATION -->
+                <div class="question-description">
+
+                    <textarea class="description-textarea"
+                        placeholder="Explain your doubt in detail. Add context, what you've tried, or where you're getting confused..."
+                        maxlength="1000"></textarea>
 
                     <span class="character-count">0/1000</span>
 
-                </div>
-
-            </div>
-
-
-            <!-- TOPIC -->
-            <div class="topic-section">
-
-                <div class="topic-title">
-                    <i data-lucide="book-open"></i>
-                    <h4>Topic</h4>
-                </div>
-
-                <div class="topic-input">
-                    <input type="text" placeholder="e.g. Linked Lists" maxlength="40" required>
                 </div>
 
             </div>
@@ -176,13 +175,6 @@
 
                         <option value="" disabled selected>Select subject</option>
 
-                        <option>Data Structure (DS)</option>
-                        <option>Computer Organization and Architecture (COA)</option>
-                        <option>Discrete Structure & Theory of Logic (DSTL)</option>
-                        <option>Digital Electronics(DE)</option>
-                        <option>Python</option>
-                        <option>Technical Communication(TC)</option>
-
                     </select>
 
                     <i data-lucide="chevron-down"></i>
@@ -190,6 +182,8 @@
                 </div>
 
             </div>
+
+
             <!-- TEACHER SECTION -->
             <div class="teacher-section" hidden>
 
@@ -199,33 +193,52 @@
                 </div>
 
                 <div class="teacher-select">
+
                     <select class="select-teacher" required>
+
                         <option value="" disabled selected>Select a teacher</option>
+
                     </select>
 
                     <i data-lucide="chevron-down"></i>
+
                 </div>
 
             </div>
 
+            <!-- TOPIC -->
+            <div class="topic-section">
 
-            <!-- TAGS -->
-            <div class="tag-section">
+                <div class="topic-title">
 
-                <div class="tags-title">
-                    <i data-lucide="tags"></i>
-                    <h4>Tags</h4>
+                    <i data-lucide="book-open"></i>
+
+                    <h4>Topic</h4>
+
                     <p class="optional-text">(optional)</p>
+
                 </div>
 
-                <div class="tag-input">
-                    <input type="text" placeholder="Add keywords and press Enter...">
-                </div>
 
-                <div class="selected-tags"></div>
+                <div class="topic-search-wrapper">
+
+                    <!-- SEARCH INPUT + SELECTED CHIPS -->
+                    <div class="topic-search-box">
+
+                        <div class="topic-chips"></div>
+
+                        <input type="text" class="topic-search-input" placeholder="Search topics..." autocomplete="off"
+                            disabled>
+
+                    </div>
+
+
+                    <!-- SEARCH RESULTS -->
+                    <div class="multi-select-options topic-options" hidden></div>
+
+                </div>
 
             </div>
-
 
             <!-- ATTACHMENT -->
             <div class="attachment-section">

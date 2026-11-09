@@ -2,31 +2,49 @@
 // 1. GET HTML ELEMENTS
 // ==========================================
 
-const doubtTextarea = document.querySelector(".type-doubt textarea");
-const characterCount = document.querySelector(".character-count");
+const titleTextarea = document.querySelector(".title-textarea");
 
-const topicInput = document.querySelector(".topic-input input");
+const descriptionTextarea =
+    document.querySelector(".description-textarea");
 
-const subjectSelect = document.querySelector(".select-subj");
+const characterCount =
+    document.querySelector(".character-count");
 
-const teacherSection = document.querySelector(".teacher-section");
-const teacherSelect = document.querySelector(".select-teacher");
+const subjectSelect =
+    document.querySelector(".select-subj");
 
-const tagInput = document.querySelector(".tag-input input");
-const selectedTags = document.querySelector(".selected-tags");
+const teacherSection =
+    document.querySelector(".teacher-section");
 
-const attachmentInput = document.getElementById("attachment");
-const attachmentPreviewList = document.querySelector(".attachment-preview-list");
+const teacherSelect =
+    document.querySelector(".select-teacher");
 
-const submitButton = document.querySelector(".submit-button");
+
+// Topic elements
+
+const topicSearchInput =
+    document.querySelector(".topic-search-input");
+
+const topicOptions =
+    document.querySelector(".topic-options");
+
+const topicChips =
+    document.querySelector(".topic-chips");
+
+
+const attachmentInput =
+    document.getElementById("attachment");
+
+const attachmentPreviewList =
+    document.querySelector(".attachment-preview-list");
+
+const submitButton =
+    document.querySelector(".submit-button");
 
 
 // ==========================================
 // 2. CURRENT STUDENT INFORMATION
 // ==========================================
-
-// Temporary prototype values.
-// Later, these will come from the logged-in student's profile.
 
 const CURRENT_STUDENT_ID =
     localStorage.getItem("clariqStudentId") || "S001";
@@ -35,15 +53,13 @@ const CURRENT_STUDENT_CLASS_ID =
     localStorage.getItem("clariqStudentClass") || "2-AIML";
 
 
+const academicContext =
+    getClariQAcademicContext(CURRENT_STUDENT_CLASS_ID);
+
+
 // ==========================================
 // 3. TEACHER DATABASE
 // ==========================================
-
-// Each teacher has:
-// - Unique ID
-// - Name
-// - Subjects taught
-// - Classes assigned to them
 
 const teachers = [
 
@@ -122,6 +138,13 @@ const teachers = [
         name: "Prof. Arvind Rao",
         subjects: ["DE"],
         assignedClasses: ["2-CSE"]
+    },
+
+    {
+        id: "T012",
+        name: "Assigned PPS Faculty",
+        subjects: ["PPS"],
+        assignedClasses: ["1-AIML", "1-CSE"]
     }
 
 ];
@@ -131,10 +154,15 @@ const teachers = [
 // 4. CLASS-SUBJECT-TEACHER MAPPING
 // ==========================================
 
-// Determines the regular teacher for each
-// subject in a particular class.
-
 const classSubjectTeachers = {
+
+    "1-AIML": {
+        PPS: "T012"
+    },
+
+    "1-CSE": {
+        PPS: "T012"
+    },
 
     "2-AIML": {
         DSA: "T001",
@@ -156,31 +184,48 @@ const classSubjectTeachers = {
 // 5. SUBJECT MAPPING
 // ==========================================
 
-const subjectMap = {
+let subjectMap = {};
 
-    "Data Structure (DS)": "DSA",
 
-    "Computer Organization and Architecture (COA)": "COA",
+function populateSubjectDropdown() {
 
-    "Discrete Structure & Theory of Logic (DSTL)": "DSTL",
+    const availableSubjects =
+        getClariQSubjects(CURRENT_STUDENT_CLASS_ID);
 
-    "Digital Electronics(DE)": "DE",
+    subjectSelect.innerHTML = `
+        <option value="" disabled selected>
+            Select subject
+        </option>
+    `;
 
-    "Python": "Python",
+    availableSubjects.forEach(subject => {
 
-    "Technical Communication(TC)": "TC"
+        const option = document.createElement("option");
 
-};
+        option.value = subject.id;
+
+        option.textContent = subject.name;
+
+        subjectSelect.appendChild(option);
+
+        subjectMap[subject.id] = subject.id;
+
+    });
+
+}
+
+
+populateSubjectDropdown();
 
 
 // ==========================================
 // 6. CHARACTER COUNT
 // ==========================================
 
-doubtTextarea.addEventListener("input", () => {
+descriptionTextarea.addEventListener("input", () => {
 
     characterCount.textContent =
-        `${doubtTextarea.value.length}/1000`;
+        `${descriptionTextarea.value.length}/1000`;
 
 });
 
@@ -192,8 +237,6 @@ doubtTextarea.addEventListener("input", () => {
 let defaultTeacherId = null;
 
 
-// Get regular teacher for the student's class
-
 function getDefaultTeacher(subject) {
 
     const classTeachers =
@@ -203,12 +246,12 @@ function getDefaultTeacher(subject) {
 
     const teacherId = classTeachers[subject];
 
-    return teachers.find(teacher => teacher.id === teacherId) || null;
+    return teachers.find(
+        teacher => teacher.id === teacherId
+    ) || null;
 
 }
 
-
-// Get all other teachers who teach the selected subject
 
 function getAlternativeTeachers(subject, defaultTeacher) {
 
@@ -224,8 +267,6 @@ function getAlternativeTeachers(subject, defaultTeacher) {
 }
 
 
-// Populate teacher dropdown
-
 function updateTeacherDropdown(subject) {
 
     const defaultTeacher = getDefaultTeacher(subject);
@@ -235,13 +276,13 @@ function updateTeacherDropdown(subject) {
     defaultTeacherId = null;
 
 
-    // No regular teacher found
-
     if (!defaultTeacher) {
 
         teacherSection.hidden = true;
 
-        alert("No regular teacher is currently assigned to this subject.");
+        alert(
+            "No regular teacher is currently assigned to this subject."
+        );
 
         return;
 
@@ -251,17 +292,14 @@ function updateTeacherDropdown(subject) {
     defaultTeacherId = defaultTeacher.id;
 
 
-    // Add default teacher
-
     const defaultOption = document.createElement("option");
 
     defaultOption.value = defaultTeacher.id;
+
     defaultOption.textContent = defaultTeacher.name;
 
     teacherSelect.appendChild(defaultOption);
 
-
-    // Add alternative teachers
 
     const alternativeTeachers =
         getAlternativeTeachers(subject, defaultTeacher);
@@ -271,6 +309,7 @@ function updateTeacherDropdown(subject) {
         const option = document.createElement("option");
 
         option.value = teacher.id;
+
         option.textContent = teacher.name;
 
         teacherSelect.appendChild(option);
@@ -278,146 +317,483 @@ function updateTeacherDropdown(subject) {
     });
 
 
-    // Automatically select regular teacher
-
     teacherSelect.value = defaultTeacher.id;
-
-
-    // Show teacher section
 
     teacherSection.hidden = false;
 
 }
 
 
-// Update teacher list whenever subject changes
+// ==========================================
+// 8. UNIFIED TOPIC SELECTION STATE
+// ==========================================
 
-subjectSelect.addEventListener("change", () => {
+let availableTopicItems = [];
 
-    const selectedSubject = subjectMap[subjectSelect.value];
+let selectedTopicItems = [];
 
-    if (!selectedSubject) {
 
-        teacherSection.hidden = true;
+// ==========================================
+// 9. NORMALIZE TOPIC DATA
+// ==========================================
 
-        return;
+function normalizeTopic(topic) {
+
+    if (typeof topic === "string") {
+
+        return {
+            id: topic,
+            name: topic
+        };
 
     }
 
-    updateTeacherDropdown(selectedSubject);
+    return {
+        id: String(topic.id),
+        name: topic.name
+    };
+
+}
+
+
+// ==========================================
+// 10. BUILD UNIFIED SEARCHABLE COLLECTION
+// ==========================================
+
+function buildTopicItems(topics) {
+
+    const items = [];
+
+    topics.forEach(rawTopic => {
+
+        const topic = normalizeTopic(rawTopic);
+
+
+        // Add main topic.
+
+        items.push({
+
+            id: topic.id,
+
+            name: topic.name,
+
+            type: "topic",
+
+            topicId: topic.id,
+
+            topicName: topic.name
+
+        });
+
+
+        // Get its subtopics.
+
+        const subtopics = getClariQSubtopics(
+            CURRENT_STUDENT_CLASS_ID,
+            subjectSelect.value,
+            topic.id
+        );
+
+
+        subtopics.forEach(rawSubtopic => {
+
+            const subtopic = normalizeTopic(rawSubtopic);
+
+
+            items.push({
+
+                id: subtopic.id,
+
+                name: subtopic.name,
+
+                type: "subtopic",
+
+                topicId: topic.id,
+
+                topicName: topic.name
+
+            });
+
+        });
+
+    });
+
+
+    return items;
+
+}
+
+
+// ==========================================
+// 11. DROPDOWN HELPERS
+// ==========================================
+
+function closeTopicDropdown() {
+
+    topicOptions.hidden = true;
+
+}
+
+
+function openTopicDropdown() {
+
+    if (topicSearchInput.disabled) return;
+
+    topicOptions.hidden = false;
+
+    renderTopicOptions();
+
+}
+
+
+// ==========================================
+// 12. TOPIC SEARCH INPUT
+// ==========================================
+
+function updateTopicPlaceholder() {
+
+    if (selectedTopicItems.length > 0) {
+
+        topicSearchInput.placeholder = "";
+
+    } else {
+
+        topicSearchInput.placeholder = "Search topics...";
+
+    }
+
+}
+
+
+topicSearchInput.addEventListener("focus", () => {
+
+    openTopicDropdown();
+
+});
+
+
+topicSearchInput.addEventListener("input", () => {
+
+    updateTopicPlaceholder();
+
+    openTopicDropdown();
+
+});
+
+
+// Close dropdown when clicking outside.
+
+document.addEventListener("click", event => {
+
+    if (!event.target.closest(".topic-search-wrapper")) {
+
+        closeTopicDropdown();
+
+    }
 
 });
 
 
 // ==========================================
-// 8. TAG FUNCTIONALITY
+// 13. RESET TOPIC SELECTION
 // ==========================================
 
-let tags = [];
+function resetTopicSelection() {
+
+    availableTopicItems = [];
+
+    selectedTopicItems = [];
 
 
-function addTag(value) {
+    topicOptions.innerHTML = "";
 
-    const tag = value.trim().replace(/,$/, "");
-
-    if (!tag) return;
+    topicChips.innerHTML = "";
 
 
-    // Prevent duplicate tags
+    topicSearchInput.value = "";
 
-    const alreadyExists = tags.some(
-        existingTag => existingTag.toLowerCase() === tag.toLowerCase()
+    topicSearchInput.disabled = true;
+
+    topicSearchInput.placeholder = "Select a subject first";
+
+
+    closeTopicDropdown();
+
+}
+
+
+// ==========================================
+// 14. UPDATE TOPIC COLLECTION
+// ==========================================
+
+function updateTopicDropdown(subjectId) {
+
+    resetTopicSelection();
+
+
+    const topics = getClariQTopics(
+        CURRENT_STUDENT_CLASS_ID,
+        subjectId
     );
 
-    if (alreadyExists) {
 
-        tagInput.value = "";
+    availableTopicItems = buildTopicItems(topics);
+
+
+    if (!availableTopicItems.length) {
+
+        topicSearchInput.placeholder = "No topics available";
 
         return;
 
     }
 
 
-    tags.push(tag);
+    topicSearchInput.disabled = false;
 
-    renderTags();
-
-    tagInput.value = "";
+    topicSearchInput.placeholder = "Search topics...";
 
 }
 
 
-function renderTags() {
+// ==========================================
+// 15. RENDER SEARCH RESULTS
+// ==========================================
 
-    selectedTags.innerHTML = "";
+function renderTopicOptions() {
 
-    tags.forEach((tag, index) => {
-
-        const tagElement = document.createElement("span");
-        tagElement.className = "tag";
-
-
-        // Tag text
-
-        const tagText = document.createElement("span");
-        tagText.textContent = tag;
+    topicOptions.innerHTML = "";
 
 
-        // Remove button
+    const searchTerm =
+        topicSearchInput.value.trim().toLowerCase();
+
+
+    const filteredItems = availableTopicItems.filter(item => {
+
+        const alreadySelected = selectedTopicItems.some(
+            selected =>
+                selected.type === item.type &&
+                selected.id === item.id &&
+                selected.topicId === item.topicId
+        );
+
+
+        return (
+            !alreadySelected &&
+            item.name.toLowerCase().includes(searchTerm)
+        );
+
+    });
+
+
+    if (!filteredItems.length) {
+
+        const emptyMessage = document.createElement("div");
+
+        emptyMessage.className = "multi-select-empty";
+
+        emptyMessage.textContent =
+            searchTerm
+                ? "No matching topics found."
+                : "All available topics have been selected.";
+
+
+        topicOptions.appendChild(emptyMessage);
+
+        return;
+
+    }
+
+
+    filteredItems.forEach(item => {
+
+        const option = document.createElement("button");
+
+        option.type = "button";
+
+        option.className = "multi-select-option";
+
+
+        const label = document.createElement("span");
+
+        label.textContent = item.name;
+
+
+        option.appendChild(label);
+
+
+        option.addEventListener("click", () => {
+
+            selectTopicItem(item);
+
+        });
+
+
+        topicOptions.appendChild(option);
+
+    });
+
+}
+
+
+// ==========================================
+// 16. SELECT TOPIC OR SUBTOPIC
+// ==========================================
+
+function selectTopicItem(item) {
+
+    const alreadySelected = selectedTopicItems.some(selected => {
+
+        return (
+            selected.type === item.type &&
+            selected.id === item.id &&
+            selected.topicId === item.topicId
+        );
+
+    });
+
+
+    if (alreadySelected) return;
+
+
+    selectedTopicItems.push({
+
+        id: item.id,
+
+        name: item.name,
+
+        type: item.type,
+
+        topicId: item.topicId,
+
+        topicName: item.topicName
+
+    });
+
+
+    topicSearchInput.value = "";
+
+    updateTopicPlaceholder();
+
+    renderTopicChips();
+
+    renderTopicOptions();
+
+
+    // Keep dropdown open after selection.
+
+    topicOptions.hidden = false;
+
+}
+
+
+// ==========================================
+// 17. REMOVE SELECTED ITEM
+// ==========================================
+
+function removeTopicItem(item) {
+
+    selectedTopicItems = selectedTopicItems.filter(selected => {
+
+        return !(
+            selected.type === item.type &&
+            selected.id === item.id &&
+            selected.topicId === item.topicId
+        );
+
+    });
+
+
+    renderTopicChips();
+
+    updateTopicPlaceholder();
+
+    renderTopicOptions();
+
+}
+
+
+// ==========================================
+// 18. RENDER SELECTED CHIPS
+// ==========================================
+
+function renderTopicChips() {
+
+    topicChips.innerHTML = "";
+
+
+    selectedTopicItems.forEach(item => {
+
+        const chip = document.createElement("div");
+
+        chip.className = "selection-chip";
+
+
+        const label = document.createElement("span");
+
+        label.className = "selection-chip-text";
+
+        label.textContent = item.name;
+
 
         const removeButton = document.createElement("button");
 
         removeButton.type = "button";
-        removeButton.className = "remove-tag";
-        removeButton.setAttribute("aria-label", `Remove ${tag}`);
+
+        removeButton.className = "remove-selection";
+
+        removeButton.setAttribute(
+            "aria-label",
+            `Remove ${item.name}`
+        );
 
         removeButton.innerHTML = `<i data-lucide="x"></i>`;
 
 
         removeButton.addEventListener("click", () => {
 
-            tagElement.classList.add("tag-removing");
-
-            setTimeout(() => {
-
-                tags.splice(index, 1);
-
-                renderTags();
-
-            }, 200);
+            removeTopicItem(item);
 
         });
 
 
-        tagElement.appendChild(tagText);
-        tagElement.appendChild(removeButton);
+        chip.appendChild(label);
 
-        selectedTags.appendChild(tagElement);
+        chip.appendChild(removeButton);
+
+        topicChips.appendChild(chip);
 
     });
+
 
     lucide.createIcons();
 
 }
 
 
-// Add tag on Enter or comma
+// ==========================================
+// 19. SUBJECT CHANGE
+// ==========================================
 
-tagInput.addEventListener("keydown", (event) => {
+subjectSelect.addEventListener("change", () => {
 
-    if (event.key === "Enter" || event.key === ",") {
+    const selectedSubject = subjectSelect.value;
 
-        event.preventDefault();
+    updateTeacherDropdown(selectedSubject);
 
-        addTag(tagInput.value);
-
-    }
+    updateTopicDropdown(selectedSubject);
 
 });
 
 
+// Initial dropdown state.
+
+resetTopicSelection();
+
+
 // ==========================================
-// 9. ATTACHMENT FUNCTIONALITY
+// 20. ATTACHMENT FUNCTIONALITY
 // ==========================================
 
 let selectedFiles = [];
@@ -430,8 +806,6 @@ const allowedTypes = [
 
 const maxSize = 10 * 1024 * 1024;
 
-
-// Format file size
 
 function formatFileSize(bytes) {
 
@@ -447,15 +821,15 @@ function formatFileSize(bytes) {
 
 
 // ==========================================
-// 10. STORE ACTUAL FILES IN INDEXEDDB
+// 21. STORE ACTUAL FILES IN INDEXEDDB
 // ==========================================
 
-// localStorage is suitable for doubt information, but not for file contents.
-// IndexedDB stores the actual image/PDF files separately.
-
 const DB_NAME = "ClariQFiles";
+
 const DB_VERSION = 1;
+
 const FILE_STORE = "attachments";
+
 
 function openAttachmentDB() {
 
@@ -469,7 +843,9 @@ function openAttachmentDB() {
 
             if (!db.objectStoreNames.contains(FILE_STORE)) {
 
-                db.createObjectStore(FILE_STORE, { keyPath: "fileId" });
+                db.createObjectStore(FILE_STORE, {
+                    keyPath: "fileId"
+                });
 
             }
 
@@ -490,20 +866,27 @@ async function saveAttachment(fileId, file, doubtId) {
 
     return new Promise((resolve, reject) => {
 
-        const transaction = db.transaction(FILE_STORE, "readwrite");
+        const transaction =
+            db.transaction(FILE_STORE, "readwrite");
 
         const store = transaction.objectStore(FILE_STORE);
 
         store.put({
 
             fileId,
+
             doubtId,
+
             name: file.name,
+
             type: file.type,
+
             size: file.size,
+
             blob: file
 
         });
+
 
         transaction.oncomplete = () => {
 
@@ -513,6 +896,7 @@ async function saveAttachment(fileId, file, doubtId) {
 
         };
 
+
         transaction.onerror = () => {
 
             db.close();
@@ -521,11 +905,15 @@ async function saveAttachment(fileId, file, doubtId) {
 
         };
 
+
         transaction.onabort = () => {
 
             db.close();
 
-            reject(transaction.error || new Error("File storage was interrupted."));
+            reject(
+                transaction.error ||
+                new Error("File storage was interrupted.")
+            );
 
         };
 
@@ -534,27 +922,27 @@ async function saveAttachment(fileId, file, doubtId) {
 }
 
 
-// Handle file selection
+// ==========================================
+// 22. HANDLE FILE SELECTION
+// ==========================================
 
 attachmentInput.addEventListener("change", () => {
 
     const files = Array.from(attachmentInput.files);
 
+
     files.forEach(file => {
-
-
-        // Check file type
 
         if (!allowedTypes.includes(file.type)) {
 
-            alert(`${file.name} is not supported. Please select PNG, JPG or PDF.`);
+            alert(
+                `${file.name} is not supported. Please select PNG, JPG or PDF.`
+            );
 
             return;
 
         }
 
-
-        // Check file size
 
         if (file.size > maxSize) {
 
@@ -564,8 +952,6 @@ attachmentInput.addEventListener("change", () => {
 
         }
 
-
-        // Prevent duplicates
 
         const alreadyExists = selectedFiles.some(
             existingFile =>
@@ -584,29 +970,26 @@ attachmentInput.addEventListener("change", () => {
 
     renderAttachments();
 
-    // Allows the same file to be selected again after removal
-
     attachmentInput.value = "";
 
 });
 
 
 // ==========================================
-// 11. RENDER ATTACHMENT CAPSULES
+// 23. RENDER ATTACHMENT CAPSULES
 // ==========================================
 
 function renderAttachments() {
 
     attachmentPreviewList.innerHTML = "";
 
-    selectedFiles.forEach((file, index) => {
+
+    selectedFiles.forEach(file => {
 
         const capsule = document.createElement("div");
 
         capsule.className = "attachment-preview";
 
-
-        // File icon
 
         const icon = document.createElement("span");
 
@@ -619,11 +1002,10 @@ function renderAttachments() {
         icon.innerHTML = `<i data-lucide="${iconName}"></i>`;
 
 
-        // File name and size
-
         const details = document.createElement("div");
 
         details.className = "attachment-details";
+
 
         const fileName = document.createElement("span");
 
@@ -633,18 +1015,18 @@ function renderAttachments() {
 
         fileName.title = file.name;
 
+
         const fileSize = document.createElement("span");
 
         fileSize.className = "attachment-size";
 
         fileSize.textContent = formatFileSize(file.size);
 
+
         details.appendChild(fileName);
 
         details.appendChild(fileSize);
 
-
-        // Remove button
 
         const removeButton = document.createElement("button");
 
@@ -652,7 +1034,10 @@ function renderAttachments() {
 
         removeButton.className = "remove-attachment";
 
-        removeButton.setAttribute("aria-label", `Remove ${file.name}`);
+        removeButton.setAttribute(
+            "aria-label",
+            `Remove ${file.name}`
+        );
 
         removeButton.innerHTML = `<i data-lucide="x"></i>`;
 
@@ -663,7 +1048,9 @@ function renderAttachments() {
 
             setTimeout(() => {
 
-                selectedFiles.splice(index, 1);
+                selectedFiles = selectedFiles.filter(
+                    selectedFile => selectedFile !== file
+                );
 
                 renderAttachments();
 
@@ -671,8 +1058,6 @@ function renderAttachments() {
 
         });
 
-
-        // Assemble capsule
 
         capsule.appendChild(icon);
 
@@ -684,12 +1069,14 @@ function renderAttachments() {
 
     });
 
+
     lucide.createIcons();
 
 }
 
+
 // ==========================================
-// 12. GENERATE DOUBT ID
+// 24. GENERATE DOUBT ID
 // ==========================================
 
 function generateDoubtId(doubts) {
@@ -699,10 +1086,15 @@ function generateDoubtId(doubts) {
         106, 107, 108, 109, 112
     ];
 
+
     const allIds = [
+
         ...doubts.map(doubt => Number(doubt.id) || 0),
+
         ...sampleIds
+
     ];
+
 
     return Math.max(...allIds, 100) + 1;
 
@@ -710,7 +1102,7 @@ function generateDoubtId(doubts) {
 
 
 // ==========================================
-// 13. SUBMIT DOUBT
+// 25. SUBMIT DOUBT
 // ==========================================
 
 submitButton.addEventListener("click", async (event) => {
@@ -718,11 +1110,13 @@ submitButton.addEventListener("click", async (event) => {
     event.preventDefault();
 
 
-    // Get input values
+    // ======================================
+    // GET INPUT VALUES
+    // ======================================
 
-    const question = doubtTextarea.value.trim();
+    const title = titleTextarea.value.trim();
 
-    const topic = topicInput.value.trim();
+    const description = descriptionTextarea.value.trim();
 
     const selectedSubject = subjectSelect.value;
 
@@ -731,39 +1125,39 @@ submitButton.addEventListener("click", async (event) => {
     const selectedTeacherId = teacherSelect.value;
 
 
-    // --------------------------------------
-    // VALIDATE QUESTION
-    // --------------------------------------
+    // ======================================
+    // VALIDATE TITLE
+    // ======================================
 
-    if (!question) {
+    if (!title) {
 
-        alert("Please enter your doubt first.");
+        alert("Please give your doubt a short title.");
 
-        doubtTextarea.focus();
-
-        return;
-
-    }
-
-
-    // --------------------------------------
-    // VALIDATE TOPIC
-    // --------------------------------------
-
-    if (!topic) {
-
-        alert("Please enter the topic of your doubt.");
-
-        topicInput.focus();
+        titleTextarea.focus();
 
         return;
 
     }
 
 
-    // --------------------------------------
+    // ======================================
+    // VALIDATE DESCRIPTION
+    // ======================================
+
+    if (!description) {
+
+        alert("Please explain your doubt in detail.");
+
+        descriptionTextarea.focus();
+
+        return;
+
+    }
+
+
+    // ======================================
     // VALIDATE SUBJECT
-    // --------------------------------------
+    // ======================================
 
     if (!subject) {
 
@@ -776,13 +1170,14 @@ submitButton.addEventListener("click", async (event) => {
     }
 
 
-    // --------------------------------------
+    // ======================================
     // VALIDATE TEACHER
-    // --------------------------------------
+    // ======================================
 
     const selectedTeacher = teachers.find(
         teacher => teacher.id === selectedTeacherId
     );
+
 
     if (!selectedTeacher) {
 
@@ -795,13 +1190,109 @@ submitButton.addEventListener("click", async (event) => {
     }
 
 
-    // --------------------------------------
+    // ======================================
+    // GET SELECTED TOPIC DATA
+    // ======================================
+
+    const selectedTopics = selectedTopicItems.filter(
+        item => item.type === "topic"
+    );
+
+    const selectedSubtopics = selectedTopicItems.filter(
+        item => item.type === "subtopic"
+    );
+
+
+    const relatedTopicIds = [
+
+        ...new Set([
+
+            ...selectedTopics.map(topic => topic.id),
+
+            ...selectedSubtopics.map(subtopic => subtopic.topicId)
+
+        ])
+
+    ];
+
+
+    const topicSelections = relatedTopicIds.map(topicId => {
+
+        const parentTopic = availableTopicItems.find(item => {
+
+            return (
+                item.type === "topic" &&
+                item.id === topicId
+            );
+
+        });
+
+
+        const relatedSubtopics = selectedSubtopics
+
+            .filter(subtopic => subtopic.topicId === topicId)
+
+            .map(subtopic => ({
+
+                subtopicId: subtopic.id,
+
+                subtopicName: subtopic.name
+
+            }));
+
+
+        return {
+
+            topicId: topicId,
+
+            topicName: parentTopic
+                ? parentTopic.name
+                : selectedSubtopics.find(
+                    item => item.topicId === topicId
+                ).topicName,
+
+            subtopics: relatedSubtopics
+
+        };
+
+    });
+
+
+    const topics = selectedTopics.map(topic => ({
+
+        id: topic.id,
+
+        name: topic.name
+
+    }));
+
+
+    const subtopics = selectedSubtopics.map(subtopic => ({
+
+        id: subtopic.id,
+
+        name: subtopic.name,
+
+        topicId: subtopic.topicId,
+
+        topicName: subtopic.topicName
+
+    }));
+
+
+    const firstTopic = selectedTopics[0] || null;
+
+    const firstSubtopic = selectedSubtopics[0] || null;
+
+
+    // ======================================
     // LOAD EXISTING DOUBTS
-    // --------------------------------------
+    // ======================================
 
     let doubts = JSON.parse(
         localStorage.getItem("clariqDoubts") || "[]"
     );
+
 
     if (!Array.isArray(doubts)) {
 
@@ -810,9 +1301,9 @@ submitButton.addEventListener("click", async (event) => {
     }
 
 
-    // --------------------------------------
+    // ======================================
     // DETERMINE TEACHER ROUTE
-    // --------------------------------------
+    // ======================================
 
     const teacherRoute =
         selectedTeacherId === defaultTeacherId
@@ -820,16 +1311,14 @@ submitButton.addEventListener("click", async (event) => {
             : "alternative";
 
 
-    // --------------------------------------
+    // ======================================
     // CREATE NEW DOUBT
-    // --------------------------------------
+    // ======================================
 
     const doubtId = generateDoubtId(doubts);
 
     const createdAt = new Date().toISOString();
 
-    // Give every attachment a stable ID so the details page can retrieve
-    // the actual file from IndexedDB later.
 
     const attachmentRecords = selectedFiles.map((file, index) => ({
 
@@ -852,17 +1341,42 @@ submitButton.addEventListener("click", async (event) => {
 
         classId: CURRENT_STUDENT_CLASS_ID,
 
-        title: question
-            .replace(/\s+/g, " ")
-            .split(/[.!?]/)[0]
-            .trim()
-            .slice(0, 60) || "Untitled Doubt",
+        academicYear: academicContext.academicYear,
 
-        topic: topic,
+        semester: academicContext.semester,
+
+        branch: academicContext.branch,
+
+
+        title: title,
+
+        description: description,
+
+        question: description,
+
 
         subject: subject,
 
-        question: question,
+        subjectId: subject,
+
+
+        topicSelections: topicSelections,
+
+        topics: topics,
+
+        subtopics: subtopics,
+
+
+        topicId: firstTopic ? firstTopic.id : null,
+
+        topic: firstTopic ? firstTopic.name : null,
+
+        topicName: firstTopic ? firstTopic.name : null,
+
+        subtopic: firstSubtopic ? firstSubtopic.name : null,
+
+        subtopicName: firstSubtopic ? firstSubtopic.name : null,
+
 
         teacherId: selectedTeacher.id,
 
@@ -870,7 +1384,6 @@ submitButton.addEventListener("click", async (event) => {
 
         teacherRoute: teacherRoute,
 
-        tags: [...tags],
 
         status: "pending",
 
@@ -881,11 +1394,12 @@ submitButton.addEventListener("click", async (event) => {
     };
 
 
-    // --------------------------------------
+    // ======================================
     // SAVE ACTUAL FILES FIRST
-    // --------------------------------------
+    // ======================================
 
     submitButton.disabled = true;
+
 
     try {
 
@@ -900,8 +1414,6 @@ submitButton.addEventListener("click", async (event) => {
         }
 
 
-        // Save doubt information only after its files are safely stored.
-
         doubts.push(newDoubt);
 
         localStorage.setItem(
@@ -911,9 +1423,16 @@ submitButton.addEventListener("click", async (event) => {
 
     } catch (error) {
 
-        console.error("Could not save doubt attachments:", error);
+        console.error(
+            "Could not save doubt attachments:",
+            error
+        );
 
-        alert("Your files could not be saved. Please try again.");
+
+        alert(
+            "Your files could not be saved. Please try again."
+        );
+
 
         submitButton.disabled = false;
 
@@ -922,12 +1441,12 @@ submitButton.addEventListener("click", async (event) => {
     }
 
 
-    // --------------------------------------
+    // ======================================
     // SUCCESS
-    // --------------------------------------
+    // ======================================
 
     alert("Your doubt has been submitted successfully!");
 
     window.location.href = "my-doubts.html";
 
-});
+});s

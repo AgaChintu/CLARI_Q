@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Doubt Details | ClariQ</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Shared Teacher CSS -->
+    <link rel="stylesheet" href="../teacher-css/common.css">
+
+    <!-- Page CSS -->
+    <link rel="stylesheet" href="../teacher-css/doubt-detail.css">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+
+    <!-- Shared Components -->
+    <script src="../teacher-js/components.js" defer></script>
+
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <div id="sidebar-container"></div>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+        <div id="topbar-container"></div>
+
+
+        <div class="detail-page">
+
+
+            <!-- =====================================
+                 PAGE HEADER
+            ====================================== -->
+
+            <div class="page-header">
+
+                <div class="header-left">
+
+                    <a href="doubt-inbox.html" class="back-link">
+                        <i data-lucide="arrow-left"></i>
+                        <span>Back to Doubts Inbox</span>
+                    </a>
+
+                    <h1>Doubt Details</h1>
+
+                </div>
+
+
+
+            </div>
+
+
+
+            <!-- =====================================
+                 STUDENT DOUBT CARD
+            ====================================== -->
+
+            <section class="doubt-detail-card">
+
+
+                <!-- SUBJECT AND CLASS -->
+
+                <div class="doubt-meta">
+
+                    <span class="subject-badge" id="doubtSubject">
+                        PPS
+                    </span>
+
+                    <span class="doubt-class" id="doubtClass">
+
+                        <i data-lucide="graduation-cap"></i>
+
+                        1st Year AI & ML
+
+                    </span>
+
+                </div>
+
+
+
+                <!-- QUESTION -->
+
+                <h2 class="doubt-question" id="doubtQuestion">
+
+                    Why does the loop execute one extra time when I use
+                    this condition?
+
+                </h2>
+
+
+
+                <!-- TOPIC TAGS -->
+
+                <div class="doubt-tags" id="doubtTags">
+
+                    <span class="doubt-tag">Control Flow</span>
+
+                    <span class="doubt-tag">While Loops</span>
+
+                </div>
+
+
+
+                <!-- EXPLANATION -->
+
+                <p class="doubt-description" id="doubtDescription">
+
+                    I am using a while loop, but it seems to execute
+                    one additional time even after the condition
+                    becomes false.
+
+                </p>
+
+
+                <!-- STUDENT ATTACHMENTS -->
+
+                <div class="student-attachments" id="studentAttachments">
+
+                    <!-- IMAGE GALLERY -->
+
+                    <div class="photo-gallery" id="studentPhotoGallery">
+
+                        <!-- Images generated through JavaScript -->
+
+                    </div>
+
+                    <div class="photo-gallery-counter" id="photoCounter"></div>
+
+
+                    <!-- PDF DOCUMENTS -->
+
+                    <div class="student-file-list" id="studentFileList">
+
+                        <!-- PDF capsules generated through JavaScript -->
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+
+            <!-- =====================================
+                 TEACHER RESPONSE
+            ====================================== -->
+
+            <section class="response-card">
+
+
+                <!-- RESPONSE HEADING -->
+
+                <div class="response-heading">
+
+                    <i data-lucide="message-square"></i>
+
+                    <h2>Your Response</h2>
+
+                </div>
+
+
+
+                <!-- EDITOR -->
+
+                <div class="editor-container">
+
+
+                    <!-- TOOLBAR -->
+
+                    <div class="editor-toolbar">
+
+
+                        <div class="toolbar-group">
+
+                            <button type="button" class="toolbar-btn" data-command="bold" title="Bold">
+
+                                <i data-lucide="bold"></i>
+
+                            </button>
+
+
+                            <button type="button" class="toolbar-btn" data-command="italic" title="Italic">
+
+                                <i data-lucide="italic"></i>
+
+                            </button>
+
+
+                            <button type="button" class="toolbar-btn" data-command="underline" title="Underline">
+
+                                <i data-lucide="underline"></i>
+
+                            </button>
+
+                        </div>
+
+
+
+                        <span class="toolbar-divider"></span>
+
+
+
+                        <div class="toolbar-group">
+
+                            <button type="button" class="toolbar-btn" data-command="insertUnorderedList"
+                                title="Bulleted List">
+
+                                <i data-lucide="list"></i>
+
+                            </button>
+
+
+                            <button type="button" class="toolbar-btn" data-command="insertOrderedList"
+                                title="Numbered List">
+
+                                <i data-lucide="list-ordered"></i>
+
+                            </button>
+
+                        </div>
+
+
+
+                        <span class="toolbar-divider"></span>
+
+
+
+                        <div class="toolbar-group">
+
+                            <button type="button" class="toolbar-btn" data-command="createLink" title="Insert Link">
+
+                                <i data-lucide="link"></i>
+
+                            </button>
+
+
+                            <button type="button" class="toolbar-btn" data-command="code" title="Code Block">
+
+                                <i data-lucide="code"></i>
+
+                            </button>
+
+                        </div>
+
+
+
+                        <div class="toolbar-group toolbar-history">
+
+                            <button type="button" class="toolbar-btn" data-command="undo" title="Undo">
+
+                                <i data-lucide="undo-2"></i>
+
+                            </button>
+
+
+                            <button type="button" class="toolbar-btn" data-command="redo" title="Redo">
+
+                                <i data-lucide="redo-2"></i>
+
+                            </button>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- EDITABLE AREA -->
+
+                    <div class="editor-content" id="responseEditor" contenteditable="true"
+                        data-placeholder="Write your explanation for the student...">
+
+                    </div>
+
+
+                </div>
+
+
+
+
+                <!-- =====================================
+                     TEACHER FILE ATTACHMENTS
+                ====================================== -->
+
+                <div class="response-attachments">
+
+
+                    <div class="attachment-heading">
+
+                        <i data-lucide="paperclip"></i>
+
+                        <h3>Attach Files</h3>
+
+                        <span>(Optional)</span>
+
+                    </div>
+
+
+
+                    <!-- UPLOAD BUTTON -->
+
+                    <label for="responseFileInput" class="upload-file-btn">
+
+                        <i data-lucide="plus"></i>
+
+                        <span>Choose Files</span>
+
+                    </label>
+
+
+                    <input type="file" id="responseFileInput" multiple
+                        accept=".pdf,.doc,.docx,.ppt,.pptx,.txt,.png,.jpg,.jpeg" hidden>
+
+
+
+                    <!-- SELECTED FILES -->
+
+                    <!-- SELECTED FILES -->
+                    <div class="response-file-list" id="responseFileList"></div>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- RESPONSE ACTIONS -->
+
+            <div class="response-actions">
+
+                <button type="button" class="save-draft-btn" id="saveDraftBtn">
+                    <i data-lucide="save"></i>
+                    Save as Draft
+                </button>
+
+                <button type="button" class="submit-btn" id="submitResponseBtn">
+                    Submit Response
+                    <i data-lucide="send"></i>
+                </button>
+
+            </div>
+
+
+        </div>
+
+    </main>
+    <script src="../teacher-js/doubt-detail.js"></script>
+
+
+</body>
+
+</html>
