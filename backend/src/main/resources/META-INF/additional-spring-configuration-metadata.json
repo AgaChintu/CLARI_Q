@@ -1,0 +1,9 @@
+{
+    "properties": [
+        {
+            "name": "app.seed-test-data",
+            "type": "java.lang.Boolean",
+            "description": "Enables or disables creation of ClariQ test data."
+        }
+    ]
+}
