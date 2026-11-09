@@ -5,14 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Doubt Details</title>
+    <title>Doubt Details | ClariQ</title>
 
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- CSS -->
     <link rel="stylesheet" href="../student-css/common.css">
     <link rel="stylesheet" href="../student-css/doubt-details.css">
 
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+
+    <!-- JavaScript -->
     <script src="../student-js/common.js" defer></script>
     <script src="../student-js/doubt-details.js" defer></script>
+
 </head>
 
 <body>
@@ -103,11 +117,11 @@
 
     <div class="top-right">
 
-        <button class="notification-btn">
+        <button class="notification-btn" type="button">
             <i data-lucide="bell"></i>
         </button>
 
-        <button class="profile-btn">
+        <button class="profile-btn" type="button">
 
             <span class="avatar">A</span>
             <span>Anushka</span>
@@ -217,7 +231,9 @@
 
 
     <script>
-        lucide.createIcons();
+        if (window.lucide) {
+            lucide.createIcons();
+        }
     </script>
 
 </body>
