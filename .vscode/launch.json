@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "java",
+            "name": "Launch ClariQ Backend",
+            "request": "launch",
+            "mainClass": "com.clariq.backend.BackendApplication",
+            "projectName": "backend"
+        },
+        {
             "type": "editor-browser",
             "request": "launch",
             "name": "Launch Integrated Browser against localhost",
