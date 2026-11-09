@@ -1595,3 +1595,118 @@
     }
 
 }
+
+
+/* =====================================
+   CURRENT ASK-A-DOUBT TOPIC CHIPS
+===================================== */
+
+.selected-topic-tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 17px;
+}
+
+.selected-topic-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+
+    background: #EEF1FF;
+    color: #4965E8;
+
+    border: 1px solid #DCE4FF;
+    border-radius: 20px;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+
+/* =====================================
+   THREE DOT MENU - BOTTOM RIGHT
+===================================== */
+
+.detail-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: 12px;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.detail-actions .doubt-menu-wrapper {
+    position: relative;
+    margin-left: auto;
+}
+
+.doubt-dropdown {
+    top: auto;
+    right: 0;
+    bottom: calc(100% + 7px);
+    left: auto;
+}
+
+
+/* =====================================
+   INFORMATION MODAL HEADING
+===================================== */
+
+.info-popup-heading {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.info-popup-heading .info-heading {
+    flex: 1;
+    margin: 0;
+    padding: 12px 42px 12px 12px;
+}
+
+.info-popup-heading .info-close-btn {
+    position: absolute;
+    top: 50%;
+    right: 7px;
+    transform: translateY(-50%);
+}
+
+
+/* =====================================
+   MODAL POSITIONING
+===================================== */
+
+.detail-sidebar {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+/* =====================================
+   RESPONSIVE TOPIC CHIPS
+===================================== */
+
+@media (max-width: 650px) {
+
+    .selected-topic-tags {
+        gap: 7px;
+        margin-top: 14px;
+    }
+
+    .selected-topic-tag {
+        font-size: 10px;
+        padding: 5px 10px;
+    }
+
+}
