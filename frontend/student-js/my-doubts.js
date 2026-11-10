@@ -572,7 +572,154 @@ sortSelect.addEventListener("change", () => {
 
 
 // ==========================================
-// 16. INITIALIZE
+// 16. INITIALIZE SAMPLE DOUBTS
 // ==========================================
+
+function initializeSampleDoubts() {
+
+    // Only seed when storage has never been initialized.
+    if (localStorage.getItem("clariqDoubts") !== null) {
+        return;
+    }
+
+    const now = Date.now();
+
+    const sampleDoubts = [
+
+        {
+            id: "DEMO001",
+            studentId: CURRENT_STUDENT_ID,
+            classId: "2-AIML",
+            className: "2-AIML",
+
+            question: "What is the use of linked list in stack?",
+
+            description: "I can also implement stack using an array. Is there any use of implementing it using a linked list? What is the difference between both approaches?",
+
+            subject: "DSA",
+            teacherId: "T001",
+            teacherName: "Dr. Dhaka",
+
+            topics: ["Linked Lists"],
+            subtopics: ["Stack Implementation"],
+
+            status: "pending",
+
+            attachments: [],
+
+            createdAt: new Date(now - 3600000).toISOString()
+        },
+
+        {
+            id: "DEMO002",
+            studentId: CURRENT_STUDENT_ID,
+            classId: "2-AIML",
+            className: "2-AIML",
+
+            question: "How does dynamic memory allocation work in C?",
+
+            description: "I understand that malloc and calloc allocate memory dynamically, but I am confused about how the allocated memory is managed and when it should be released.",
+
+            subject: "Python",
+            teacherId: "T002",
+            teacherName: "Prof. Vivek Shukla",
+
+            topics: ["Memory Management"],
+            subtopics: ["Dynamic Allocation"],
+
+            status: "in-progress",
+
+            attachments: [],
+
+            createdAt: new Date(now - 86400000).toISOString()
+        },
+
+        {
+            id: "DEMO003",
+            studentId: CURRENT_STUDENT_ID,
+            classId: "2-AIML",
+            className: "2-AIML",
+
+            question: "What is the difference between logical and physical addresses?",
+
+            description: "I am confused about how the CPU generates a logical address and how the memory management unit converts it into a physical address.",
+
+            subject: "COA",
+            teacherId: "T006",
+            teacherName: "Prof. Kamran",
+
+            topics: ["Memory Organization"],
+            subtopics: ["Address Translation"],
+
+            status: "resolved",
+
+            attachments: [],
+
+            createdAt: new Date(now - 172800000).toISOString()
+        },
+
+        {
+            id: "DEMO004",
+            studentId: CURRENT_STUDENT_ID,
+            classId: "2-AIML",
+            className: "2-AIML",
+
+            question: "How do we calculate the time complexity of nested loops?",
+
+            description: "I understand the basic time complexities of individual loops, but I get confused when one loop is placed inside another or when their conditions depend on each other.",
+
+            subject: "DSA",
+            teacherId: "T001",
+            teacherName: "Dr. Dhaka",
+
+            topics: ["Algorithm Analysis"],
+            subtopics: ["Time Complexity"],
+
+            status: "pending",
+
+            attachments: [],
+
+            createdAt: new Date(now - 259200000).toISOString()
+        },
+
+        {
+            id: "DEMO005",
+            studentId: CURRENT_STUDENT_ID,
+            classId: "2-AIML",
+            className: "2-AIML",
+
+            question: "Why is normalization required in DBMS?",
+
+            description: "I understand that normalization reduces redundancy, but I want to understand how it prevents insertion, deletion and update anomalies in practical database examples.",
+
+            subject: "DBMS",
+            teacherId: "T010",
+            teacherName: "Prof. Nipun Pande",
+
+            topics: ["Database Design"],
+            subtopics: ["Normalization"],
+
+            status: "resolved",
+
+            attachments: [],
+
+            createdAt: new Date(now - 604800000).toISOString()
+        }
+
+    ];
+
+    localStorage.setItem(
+        "clariqDoubts",
+        JSON.stringify(sampleDoubts)
+    );
+
+}
+
+
+// ==========================================
+// 17. INITIALIZE
+// ==========================================
+
+initializeSampleDoubts();
 
 displayDoubts();

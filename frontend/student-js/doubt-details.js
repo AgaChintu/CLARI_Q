@@ -1,2090 +1,704 @@
+/* ==========================================
+   CLARIQ - STUDENT DOUBT DETAILS
+========================================== */
 
-// ==========================================
-// 1. URL PARAMETERS
-// ==========================================
+
+/* ==========================================
+   1. DOM ELEMENTS
+========================================== */
+
+const doubtSubject = document.getElementById("doubtSubject");
+const doubtClass = document.getElementById("doubtClass");
+const doubtQuestion = document.getElementById("doubtQuestion");
+const doubtTags = document.getElementById("doubtTags");
+const doubtDescription = document.getElementById("doubtDescription");
+
+const studentAttachments = document.getElementById("studentAttachments");
+const studentPhotoGallery = document.getElementById("studentPhotoGallery");
+const studentFileList = document.getElementById("studentFileList");
+const photoCounter = document.getElementById("photoCounter");
+
+const editDoubtBtn = document.querySelector(".edit-doubt-btn");
+const deleteDoubtBtn = document.querySelector(".delete-doubt-btn");
+
+
+/* ==========================================
+   2. CURRENT STUDENT
+========================================== */
+
+const CURRENT_STUDENT_ID =
+    localStorage.getItem("clariqStudentId") || "S001";
+
+
+/* ==========================================
+   3. GET DOUBT ID FROM URL
+========================================== */
 
 const params = new URLSearchParams(window.location.search);
+const doubtId = params.get("id");
 
-const doubtId = Number(params.get("id"));
-const source = params.get("source") || "my-doubts";
 
-const isLibrarySource = source === "library";
+/* ==========================================
+   4. LOAD DOUBTS FROM LOCAL STORAGE
+========================================== */
 
-const returnPage = isLibrarySource
-    ? "library.html"
-    : "my-doubts.html";
+function getStoredDoubts() {
+    try {
+        const doubts = JSON.parse(
+            localStorage.getItem("clariqDoubts") || "[]"
+        );
 
+        if (!Array.isArray(doubts)) return [];
 
-// ==========================================
-// 2. HTML ELEMENTS
-// ==========================================
-
-const detailContent =
-    document.getElementById("detailContent");
-
-const detailSidebar =
-    document.getElementById("detailSidebar");
-
-const modalBackdrop =
-    document.getElementById("detailModalBackdrop");
-
-const followupConversation =
-    document.getElementById("followupConversation");
-
-const followupAction =
-    document.getElementById("followupAction");
-
-const backBtn =
-    document.getElementById("backBtn");
-
-const backLink =
-    document.getElementById("backLink");
-
-const detailMain =
-    document.querySelector(".detail-main");
-
-
-// ==========================================
-// 3. STORAGE CONFIGURATION
-// ==========================================
-
-const storageKey = isLibrarySource
-    ? "clariqLibrary"
-    : "clariqDoubts";
-
-let doubts = JSON.parse(
-    localStorage.getItem(storageKey) || "[]"
-);
-
-if (!Array.isArray(doubts)) {
-    doubts = [];
-}
-
-
-// ==========================================
-// 4. INDEXEDDB CONFIGURATION
-// ==========================================
-
-const DB_NAME = "ClariQFiles";
-const DB_VERSION = 1;
-const FILE_STORE = "attachments";
-
-
-// ==========================================
-// 5. NORMALIZE TOPIC DATA
-// ==========================================
-
-function normalizeTopicItem(item) {
-
-    if (!item) return null;
-
-    if (typeof item === "string") {
-
-        return {
-            id: item,
-            name: item
-        };
-
-    }
-
-    const name =
-        item.name ||
-        item.topicName ||
-        item.subtopicName ||
-        "";
-
-    if (!name) return null;
-
-    return {
-        id: String(item.id || item.topicId || name),
-        name
-    };
-
-}
-
-
-function normalizeSubtopicItem(item) {
-
-    if (!item) return null;
-
-    if (typeof item === "string") {
-
-        return {
-            id: item,
-            name: item,
-            topicId: null,
-            topicName: null
-        };
-
-    }
-
-    const name =
-        item.name ||
-        item.subtopicName ||
-        "";
-
-    if (!name) return null;
-
-    return {
-        id: String(item.id || item.subtopicId || name),
-        name,
-        topicId: item.topicId || null,
-        topicName: item.topicName || null
-    };
-
-}
-
-
-// ==========================================
-// 6. MIGRATE OLD DOUBT DATA
-// ==========================================
-
-function normalizeDoubtData(record) {
-
-    const doubt = { ...record };
-
-
-    // SMALL QUESTION
-
-    doubt.title =
-        doubt.title ||
-        doubt.shortQuestion ||
-        "Untitled Doubt";
-
-
-    // DETAILED EXPLANATION
-
-    doubt.description =
-        doubt.description ||
-        doubt.question ||
-        "";
-
-
-    // Keep the old question property synchronized
-    // because other ClariQ pages may still read it.
-
-    doubt.question = doubt.description;
-
-
-    // ======================================
-    // CURRENT TOPIC STRUCTURE
-    // ======================================
-
-    let topics = Array.isArray(doubt.topics)
-        ? doubt.topics.map(normalizeTopicItem).filter(Boolean)
-        : [];
-
-    let subtopics = Array.isArray(doubt.subtopics)
-        ? doubt.subtopics.map(normalizeSubtopicItem).filter(Boolean)
-        : [];
-
-
-    // ======================================
-    // MIGRATE OLD SINGLE TOPIC FIELDS
-    // ======================================
-
-    if (
-        topics.length === 0 &&
-        (doubt.topicName || doubt.topic)
-    ) {
-
-        const oldTopic = normalizeTopicItem({
-            id: doubt.topicId || doubt.topicName || doubt.topic,
-            name: doubt.topicName || doubt.topic
-        });
-
-        if (oldTopic) {
-            topics.push(oldTopic);
-        }
-
-    }
-
-
-    if (
-        subtopics.length === 0 &&
-        (doubt.subtopicName || doubt.subtopic)
-    ) {
-
-        const oldSubtopic = normalizeSubtopicItem({
-            id: doubt.subtopicName || doubt.subtopic,
-            name: doubt.subtopicName || doubt.subtopic,
-            topicId: doubt.topicId || null,
-            topicName: doubt.topicName || doubt.topic || null
-        });
-
-        if (oldSubtopic) {
-            subtopics.push(oldSubtopic);
-        }
-
-    }
-
-
-    // ======================================
-    // MIGRATE OLD TAGS
-    // ======================================
-
-    if (
-        topics.length === 0 &&
-        subtopics.length === 0 &&
-        Array.isArray(doubt.tags)
-    ) {
-
-        topics = doubt.tags
-            .map(normalizeTopicItem)
-            .filter(Boolean);
-
-    }
-
-
-    // ======================================
-    // BUILD TOPIC SELECTIONS
-    // ======================================
-
-    let topicSelections = Array.isArray(doubt.topicSelections)
-        ? doubt.topicSelections
-        : [];
-
-
-    if (topicSelections.length === 0) {
-
-        const topicIds = [
-
-            ...new Set([
-
-                ...topics.map(topic => topic.id),
-
-                ...subtopics
-                    .map(subtopic => subtopic.topicId)
-                    .filter(Boolean)
-
-            ])
-
-        ];
-
-
-        topicSelections = topicIds.map(topicId => {
-
-            const topic = topics.find(
-                item => item.id === topicId
+        return doubts.filter(doubt => {
+            return (
+                !doubt.studentId ||
+                doubt.studentId === CURRENT_STUDENT_ID
             );
-
-            const relatedSubtopics = subtopics
-                .filter(item => item.topicId === topicId)
-                .map(item => ({
-
-                    subtopicId: item.id,
-
-                    subtopicName: item.name
-
-                }));
-
-
-            return {
-
-                topicId,
-
-                topicName:
-                    topic?.name ||
-                    subtopics.find(
-                        item => item.topicId === topicId
-                    )?.topicName ||
-                    topicId,
-
-                subtopics: relatedSubtopics
-
-            };
-
         });
-
+    } catch (error) {
+        console.error("Error loading doubts:", error);
+        return [];
     }
-
-
-    // ======================================
-    // NORMALIZE CURRENT TOPIC SELECTIONS
-    // ======================================
-
-    topicSelections = topicSelections.map(selection => ({
-
-        topicId: selection.topicId,
-
-        topicName: selection.topicName,
-
-        subtopics: Array.isArray(selection.subtopics)
-            ? selection.subtopics.map(item => ({
-
-                subtopicId:
-                    item.subtopicId ||
-                    item.id ||
-                    item.subtopicName,
-
-                subtopicName:
-                    item.subtopicName ||
-                    item.name ||
-                    ""
-
-            })).filter(item => item.subtopicName)
-            : []
-
-    }));
-
-
-    // If the separate arrays are missing,
-    // rebuild them from topicSelections.
-
-    if (topics.length === 0) {
-
-        topics = topicSelections.map(selection => ({
-
-            id: selection.topicId,
-
-            name: selection.topicName
-
-        }));
-
-    }
-
-
-    if (subtopics.length === 0) {
-
-        subtopics = topicSelections.flatMap(selection => {
-
-            return selection.subtopics.map(item => ({
-
-                id: item.subtopicId,
-
-                name: item.subtopicName,
-
-                topicId: selection.topicId,
-
-                topicName: selection.topicName
-
-            }));
-
-        });
-
-    }
-
-
-    // Store the canonical structure.
-
-    doubt.topics = topics;
-    doubt.subtopics = subtopics;
-    doubt.topicSelections = topicSelections;
-
-
-    return doubt;
-
 }
 
 
-// ==========================================
-// 7. MIGRATE STORED RECORDS
-// ==========================================
+/* ==========================================
+   5. GET THE SELECTED DOUBT
+========================================== */
 
-const originalData = JSON.stringify(doubts);
+function getCurrentDoubt() {
+    const doubts = getStoredDoubts();
 
-doubts = doubts.map(normalizeDoubtData);
+    return doubts.find(item => {
+        return String(item.id) === String(doubtId);
+    }) || null;
+}
 
-const migratedData = JSON.stringify(doubts);
+let doubt = getCurrentDoubt();
 
-if (originalData !== migratedData) {
 
+/* ==========================================
+   6. SAVE DOUBTS TO LOCAL STORAGE
+========================================== */
+
+function saveStoredDoubts(doubts) {
     localStorage.setItem(
-        storageKey,
-        migratedData
+        "clariqDoubts",
+        JSON.stringify(doubts)
     );
-
 }
 
 
-const doubt = doubts.find(
-    item => Number(item.id) === doubtId
-);
-
-
-// ==========================================
-// 8. GET DISPLAY CONTENT
-// ==========================================
-
-function getDoubtContent(doubt) {
-
-    return {
-
-        title: doubt.title || "Untitled Doubt",
-
-        description: doubt.description || "",
-
-        topics: Array.isArray(doubt.topics)
-            ? doubt.topics
-            : [],
-
-        subtopics: Array.isArray(doubt.subtopics)
-            ? doubt.subtopics
-            : []
-
-    };
-
-}
-
-
-// ==========================================
-// 9. ESCAPE HTML
-// ==========================================
+/* ==========================================
+   7. ESCAPE HTML
+========================================== */
 
 function escapeHTML(value) {
-
     return String(value ?? "").replace(/[&<>"']/g, character => {
-
         const entities = {
-
             "&": "&amp;",
             "<": "&lt;",
             ">": "&gt;",
             '"': "&quot;",
-            "'": "&#39;"
-
+            "'": "&#039;"
         };
 
         return entities[character];
-
     });
-
 }
 
 
-// ==========================================
-// 10. SIDEBAR ACTIVE STATE
-// ==========================================
+/* ==========================================
+   8. GET TOPICS AND SUBTOPICS
+========================================== */
 
-function setActiveSidebarLink() {
+function getDoubtTags(doubt) {
+    const tags = [];
 
-    const activeHref = isLibrarySource
-        ? "library.html"
-        : "my-doubts.html";
+    if (Array.isArray(doubt.topics)) {
+        doubt.topics.forEach(topic => {
+            const name =
+                typeof topic === "string"
+                    ? topic
+                    : topic?.name;
 
-    document.querySelectorAll(".sidebar a").forEach(link => {
+            if (name) tags.push(name);
+        });
+    }
 
-        link.classList.remove("nav-item-active");
+    if (Array.isArray(doubt.subtopics)) {
+        doubt.subtopics.forEach(subtopic => {
+            const name =
+                typeof subtopic === "string"
+                    ? subtopic
+                    : subtopic?.name;
 
-        if (link.getAttribute("href") === activeHref) {
+            if (name) tags.push(name);
+        });
+    }
 
-            link.classList.add("nav-item-active");
+    // Legacy format
+    if (!tags.length) {
+        if (doubt.topic) tags.push(doubt.topic);
+        if (doubt.subtopic) tags.push(doubt.subtopic);
 
+        if (Array.isArray(doubt.tags)) {
+            tags.push(...doubt.tags);
         }
+    }
 
-    });
-
+    return [...new Set(tags)];
 }
 
 
-// ==========================================
-// 11. INDEXEDDB FUNCTIONS
-// ==========================================
+/* ==========================================
+   9. RENDER DOUBT DETAILS
+========================================== */
 
-function openAttachmentDB() {
+function renderDoubtDetails() {
+    if (!doubt) {
+        showNotFound();
+        return;
+    }
 
+    if (doubtSubject) {
+        doubtSubject.textContent = doubt.subject || "General";
+    }
+
+
+
+    if (doubtQuestion) {
+        doubtQuestion.textContent =
+            doubt.question ||
+            doubt.title ||
+            "No question provided.";
+    }
+
+    if (doubtDescription) {
+        doubtDescription.textContent = doubt.description || "";
+    }
+
+    renderDoubtTags();
+    renderDoubtMeta();
+    
+    renderStudentAttachments();
+
+    if (window.lucide) {
+        window.lucide.createIcons();
+    }
+}
+
+/* ==========================================
+   DOUBT STATUS AND POSTED TIME
+========================================== */
+
+function renderDoubtMeta() {
+    const card = document.querySelector(".doubt-detail-card");
+    if (!card || !doubt) return;
+
+    // STATUS — TOP RIGHT
+
+    let statusBadge = card.querySelector(".detail-status");
+
+    if (!statusBadge) {
+        statusBadge = document.createElement("span");
+        statusBadge.className = "detail-status";
+        card.appendChild(statusBadge);
+    }
+
+    const status = (doubt.status || "pending")
+        .toLowerCase()
+        .replace(/\s+/g, "-");
+
+    const statusLabels = {
+        "pending": "Pending",
+        "in-progress": "In Progress",
+        "resolved": "Resolved"
+    };
+
+    statusBadge.textContent =
+        statusLabels[status] || status;
+
+    statusBadge.className =
+        `detail-status status-${status}`;
+
+
+    // POSTED TIME — BOTTOM RIGHT
+
+    let dateElement = card.querySelector(".doubt-posted-date");
+
+    if (!dateElement) {
+        dateElement = document.createElement("span");
+        dateElement.className = "doubt-posted-date";
+        card.appendChild(dateElement);
+    }
+
+    const dateValue =
+        doubt.createdAt ||
+        doubt.created_at ||
+        doubt.timestamp ||
+        doubt.submittedAt ||
+        doubt.date;
+
+    if (!dateValue) {
+        dateElement.style.display = "none";
+        return;
+    }
+
+    const postedDate = new Date(dateValue);
+
+    if (isNaN(postedDate.getTime())) {
+        dateElement.style.display = "none";
+        return;
+    }
+
+    const seconds = Math.floor(
+        (Date.now() - postedDate.getTime()) / 1000
+    );
+
+    let timeAgo;
+
+    if (seconds < 60) {
+        timeAgo = "Just now";
+    } else if (seconds < 3600) {
+        timeAgo = `${Math.floor(seconds / 60)} minutes ago`;
+    } else if (seconds < 86400) {
+        timeAgo = `${Math.floor(seconds / 3600)} hours ago`;
+    } else if (seconds < 604800) {
+        timeAgo = `${Math.floor(seconds / 86400)} days ago`;
+    } else {
+        timeAgo = postedDate.toLocaleDateString();
+    }
+
+    dateElement.textContent = `Asked ${timeAgo}`;
+    dateElement.style.display = "block";
+}
+
+/* ==========================================
+   10. RENDER TOPICS AND SUBTOPICS
+========================================== */
+
+function renderDoubtTags() {
+    if (!doubtTags) return;
+
+    doubtTags.innerHTML = "";
+
+    const tags = getDoubtTags(doubt);
+
+    tags.forEach(tag => {
+        const span = document.createElement("span");
+        span.className = "doubt-tag";
+        span.textContent = tag;
+        doubtTags.appendChild(span);
+    });
+}
+
+
+/* ==========================================
+   11. INDEXED DB CONFIGURATION
+========================================== */
+
+const DB_NAME = "ClariQFiles";
+const STORE_NAME = "attachments";
+const attachmentObjectURLs = new Map();
+
+
+/* ==========================================
+   12. OPEN INDEXED DB
+========================================== */
+
+function openFilesDatabase() {
     return new Promise((resolve, reject) => {
-
-        const request = indexedDB.open(
-            DB_NAME,
-            DB_VERSION
-        );
-
-        request.onupgradeneeded = () => {
-
-            const db = request.result;
-
-            if (!db.objectStoreNames.contains(FILE_STORE)) {
-
-                db.createObjectStore(FILE_STORE, {
-                    keyPath: "fileId"
-                });
-
-            }
-
-        };
+        const request = indexedDB.open(DB_NAME);
 
         request.onsuccess = () => resolve(request.result);
-
         request.onerror = () => reject(request.error);
-
     });
-
 }
 
 
-async function getAttachment(fileId) {
+/* ==========================================
+   13. GET STORED FILE
+========================================== */
 
-    const db = await openAttachmentDB();
+async function getStoredAttachment(fileId) {
+    if (!fileId) return null;
 
-    return new Promise((resolve, reject) => {
+    try {
+        const db = await openFilesDatabase();
 
-        const transaction = db.transaction(
-            FILE_STORE,
-            "readonly"
-        );
-
-        const store = transaction.objectStore(FILE_STORE);
-
-        const request = store.get(fileId);
-
-
-        request.onsuccess = () => {
-
+        if (!db.objectStoreNames.contains(STORE_NAME)) {
             db.close();
-
-            resolve(request.result || null);
-
-        };
-
-
-        request.onerror = () => {
-
-            db.close();
-
-            reject(request.error);
-
-        };
-
-    });
-
-}
-
-
-// ==========================================
-// 12. DATE FORMATTING
-// ==========================================
-
-function formatDate(dateString) {
-
-    if (!dateString) return "Not available";
-
-    const date = new Date(dateString);
-
-    if (isNaN(date)) return "Not available";
-
-    return date.toLocaleDateString("en-IN", {
-
-        day: "numeric",
-        month: "short",
-        year: "numeric"
-
-    });
-
-}
-
-
-function formatRelativeDate(dateString) {
-
-    if (!dateString) return "Date unavailable";
-
-    const date = new Date(dateString);
-
-    if (isNaN(date)) return "Date unavailable";
-
-    const now = new Date();
-
-    const difference = Math.max(0, now - date);
-
-    const days = Math.floor(
-        difference / (1000 * 60 * 60 * 24)
-    );
-
-
-    if (days === 0) return "Today";
-
-    if (days === 1) return "1 day ago";
-
-    if (days < 7) {
-        return `${days} days ago`;
-    }
-
-
-    const weeks = Math.floor(days / 7);
-
-    if (weeks < 5) {
-
-        return weeks === 1
-            ? "1 week ago"
-            : `${weeks} weeks ago`;
-
-    }
-
-
-    const months = Math.floor(days / 30);
-
-    if (months < 12) {
-
-        return months === 1
-            ? "1 month ago"
-            : `${months} months ago`;
-
-    }
-
-
-    const years = Math.floor(days / 365);
-
-    return years === 1
-        ? "1 year ago"
-        : `${years} years ago`;
-
-}
-
-
-// ==========================================
-// 13. FILE SIZE FORMAT
-// ==========================================
-
-function formatFileSize(bytes) {
-
-    if (!bytes) return "File";
-
-    if (bytes < 1024 * 1024) {
-
-        return `${(bytes / 1024).toFixed(1)} KB`;
-
-    }
-
-    return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
-
-}
-
-
-// ==========================================
-// 14. DISPLAY MAIN DOUBT CARD
-// ==========================================
-
-function displayHeader() {
-
-    const status = statusStyles[doubt.status];
-
-    const content = getDoubtContent(doubt);
-
-
-    detailContent.innerHTML = `
-
-        <div class="detail-header">
-
-            <div class="detail-heading">
-
-                <span class="subject-badge">
-                    ${escapeHTML(doubt.subject || "Subject")}
-                </span>
-
-                <h2 class="detail-title">
-                    ${escapeHTML(content.title)}
-                </h2>
-
-            </div>
-
-
-            <div class="detail-status-area">
-
-                ${!isLibrarySource ? `
-
-                    <div
-                        class="detail-status"
-                        style="
-                            background: ${status.background};
-                            color: ${status.color};
-                        "
-                    >
-                        ${status.label}
-                    </div>
-
-                ` : ""}
-
-            </div>
-
-        </div>
-
-
-        <div class="question-section">
-
-            <p class="question-text">
-                ${escapeHTML(content.description)}
-            </p>
-
-        </div>
-
-
-        ${content.topics.length || content.subtopics.length ? `
-
-            <div class="selected-topic-tags">
-
-                ${content.topics.map(topic => `
-
-                    <span class="selected-topic-tag">
-                        ${escapeHTML(topic.name)}
-                    </span>
-
-                `).join("")}
-
-
-                ${content.subtopics.map(subtopic => `
-
-                    <span class="selected-topic-tag">
-                        ${escapeHTML(subtopic.name)}
-                    </span>
-
-                `).join("")}
-
-            </div>
-
-        ` : ""}
-
-    `;
-
-}
-
-
-// ==========================================
-// 15. DISPLAY DOUBT DATE
-// ==========================================
-
-function displayDoubtDate() {
-
-    const date = document.createElement("p");
-
-    date.className = "detail-date";
-
-    date.textContent = formatRelativeDate(doubt.createdAt);
-
-    detailContent.appendChild(date);
-
-}
-
-
-// ==========================================
-// 16. DISPLAY ATTACHMENTS
-// ==========================================
-
-async function displayAttachments(
-    attachments,
-    container = detailContent
-) {
-
-    if (!attachments || attachments.length === 0) return;
-
-
-    const section = document.createElement("div");
-
-    section.className = "doubt-attachments";
-
-
-    const content = document.createElement("div");
-
-    content.className = "attachment-content";
-
-    section.appendChild(content);
-
-    container.appendChild(section);
-
-
-    const images = [];
-
-
-    for (const attachment of attachments) {
-
-        try {
-
-            const storedFile = await getAttachment(
-                attachment.fileId
-            );
-
-            if (!storedFile || !storedFile.blob) {
-
-                console.warn(
-                    "Attachment not found:",
-                    attachment.fileId
-                );
-
-                continue;
-
-            }
-
-
-            const fileURL = URL.createObjectURL(
-                storedFile.blob
-            );
-
-
-            const fileType =
-                storedFile.type ||
-                attachment.type ||
-                "";
-
-            const fileName =
-                storedFile.name ||
-                attachment.name ||
-                "Attachment";
-
-            const fileSize = formatFileSize(
-                storedFile.size ||
-                attachment.size
-            );
-
-
-            if (fileType.startsWith("image/")) {
-
-                images.push({
-
-                    url: fileURL,
-
-                    name: fileName
-
-                });
-
-            }
-
-            else if (fileType === "application/pdf") {
-
-                const pdfCard = document.createElement("div");
-
-                pdfCard.className = "pdf-preview";
-
-                pdfCard.innerHTML = `
-
-                    <div class="resource-icon">
-                        <i data-lucide="file-text"></i>
-                    </div>
-
-                    <div class="pdf-file-info">
-
-                        <p class="attachment-name">
-                            ${escapeHTML(fileName)}
-                        </p>
-
-                        <p class="attachment-size">
-                            ${fileSize}
-                        </p>
-
-                    </div>
-
-                    <a
-                        class="download-btn"
-                        href="${fileURL}"
-                        target="_blank"
-                        rel="noopener"
-                    >
-                        <i data-lucide="eye"></i>
-                        View PDF
-                    </a>
-
-                `;
-
-                content.appendChild(pdfCard);
-
-            }
-
-        } catch (error) {
-
-            console.error(
-                "Attachment loading failed:",
-                error
-            );
-
+            return null;
         }
 
-    }
+        return await new Promise((resolve, reject) => {
+            const transaction = db.transaction(STORE_NAME, "readonly");
+            const store = transaction.objectStore(STORE_NAME);
+            const request = store.get(fileId);
 
+            request.onsuccess = () => resolve(request.result || null);
+            request.onerror = () => reject(request.error);
 
-    // IMAGE CAROUSEL
-
-    if (images.length > 0) {
-
-        const carousel = document.createElement("div");
-
-        carousel.className = "image-carousel";
-
-        carousel.innerHTML = `
-
-            <div class="image-carousel-stage">
-
-                <img
-                    class="carousel-image"
-                    src="${images[0].url}"
-                    alt="${escapeHTML(images[0].name)}"
-                >
-
-                ${images.length > 1 ? `
-
-                    <button
-                        type="button"
-                        class="carousel-arrow carousel-prev"
-                        aria-label="Previous image"
-                    >
-                        <i data-lucide="chevron-left"></i>
-                    </button>
-
-                    <button
-                        type="button"
-                        class="carousel-arrow carousel-next"
-                        aria-label="Next image"
-                    >
-                        <i data-lucide="chevron-right"></i>
-                    </button>
-
-                ` : ""}
-
-            </div>
-
-
-            ${images.length > 1 ? `
-
-                <div class="image-carousel-footer">
-
-                    <span class="carousel-counter">
-                        1 / ${images.length}
-                    </span>
-
-                </div>
-
-            ` : ""}
-
-        `;
-
-
-        const imageElement =
-            carousel.querySelector(".carousel-image");
-
-        let currentIndex = 0;
-
-
-        function updateCarousel() {
-
-            const currentImage = images[currentIndex];
-
-            imageElement.src = currentImage.url;
-
-            imageElement.alt = currentImage.name;
-
-
-            const counter =
-                carousel.querySelector(".carousel-counter");
-
-            if (counter) {
-
-                counter.textContent =
-                    `${currentIndex + 1} / ${images.length}`;
-
-            }
-
-        }
-
-
-        const previousButton =
-            carousel.querySelector(".carousel-prev");
-
-        if (previousButton) {
-
-            previousButton.addEventListener("click", () => {
-
-                currentIndex =
-                    (currentIndex - 1 + images.length) %
-                    images.length;
-
-                updateCarousel();
-
-            });
-
-        }
-
-
-        const nextButton =
-            carousel.querySelector(".carousel-next");
-
-        if (nextButton) {
-
-            nextButton.addEventListener("click", () => {
-
-                currentIndex =
-                    (currentIndex + 1) % images.length;
-
-                updateCarousel();
-
-            });
-
-        }
-
-
-        imageElement.addEventListener("click", () => {
-
-            openImageLightbox(images[currentIndex].url);
-
+            transaction.oncomplete = () => db.close();
+            transaction.onerror = () => {
+                db.close();
+                reject(transaction.error);
+            };
         });
+    } catch (error) {
+        console.error("Attachment retrieval failed:", error);
+        return null;
+    }
+}
+/* ==========================================
+   14. GET ATTACHMENT URL
+========================================== */
 
+async function getAttachmentURL(file) {
+    if (!file) return null;
 
-        content.insertBefore(
-            carousel,
-            content.firstChild
-        );
+    if (file.url) return file.url;
+    if (file.dataUrl) return file.dataUrl;
+    if (typeof file.data === "string") return file.data;
 
+    const fileId = file.fileId || file.id;
+    if (!fileId) return null;
+
+    if (attachmentObjectURLs.has(fileId)) {
+        return attachmentObjectURLs.get(fileId);
     }
 
+    const storedFile = await getStoredAttachment(fileId);
+    if (!storedFile) return null;
 
-    lucide.createIcons();
+    const blob =
+        storedFile.blob ||
+        storedFile.file ||
+        storedFile;
 
+    if (!(blob instanceof Blob)) return null;
+
+    const objectURL = URL.createObjectURL(blob);
+    attachmentObjectURLs.set(fileId, objectURL);
+
+    return objectURL;
 }
 
 
-// ==========================================
-// 17. IMAGE LIGHTBOX
-// ==========================================
+/* ==========================================
+   15. GET ATTACHMENTS
+========================================== */
 
-function openImageLightbox(imageURL) {
-
-    const overlay = document.createElement("div");
-
-    overlay.className = "image-lightbox";
-
-    overlay.innerHTML = `
-
-        <button
-            type="button"
-            class="lightbox-close"
-            aria-label="Close image preview"
-        >
-            <i data-lucide="x"></i>
-        </button>
-
-        <img
-            src="${imageURL}"
-            alt="Attachment preview"
-        >
-
-    `;
-
-    document.body.appendChild(overlay);
-
-    lucide.createIcons();
-
-
-    overlay.addEventListener("click", event => {
-
-        if (
-            event.target === overlay ||
-            event.target.closest(".lightbox-close")
-        ) {
-
-            overlay.remove();
-
-        }
-
-    });
-
+function getDoubtAttachments() {
+    if (Array.isArray(doubt.attachments)) return doubt.attachments;
+    if (Array.isArray(doubt.files)) return doubt.files;
+    return [];
 }
 
 
-// ==========================================
-// 18. DISPLAY TEACHER ANSWER
-// ==========================================
-
-function displayAnswer() {
-
-    if (doubt.status !== "resolved") return;
-
-
-    const answerSection = document.createElement("div");
-
-    answerSection.className = "answer-section";
-
-    answerSection.innerHTML = `
-
-        <h3 class="section-heading">
-            <i data-lucide="circle-check"></i>
-            Teacher's Answer
-        </h3>
-
-        <p class="answer-text">
-            ${escapeHTML(
-                doubt.teacherResponse ||
-                "Your doubt has been resolved."
-            )}
-        </p>
-
-    `;
-
-    detailContent.appendChild(answerSection);
-
-}
-
-
-// ==========================================
-// 19. DISPLAY TEACHER ATTACHMENTS
-// ==========================================
-
-async function displayTeacherAttachments() {
-
-    if (doubt.status !== "resolved") return;
-
-    const attachments =
-        doubt.teacherAttachments ||
-        doubt.answerAttachments ||
-        [];
-
-    await displayAttachments(attachments);
-
-}
-
-
-// ==========================================
-// 20. DISPLAY LEGACY RESOURCES
-// ==========================================
-
-function displayResources() {
-
-    if (!doubt.resources || doubt.resources.length === 0) {
-        return;
-    }
-
-
-    const section = document.createElement("div");
-
-    section.className = "resources-section";
-
-
-    doubt.resources.forEach(resource => {
-
-        const item = document.createElement("div");
-
-        item.className = "resource-item";
-
-        item.innerHTML = `
-
-            <div class="resource-info">
-
-                <div class="resource-icon">
-                    <i data-lucide="file-text"></i>
-                </div>
-
-                <div>
-
-                    <p class="resource-name">
-                        ${escapeHTML(resource.name)}
-                    </p>
-
-                    <p class="resource-size">
-                        ${escapeHTML(resource.size || "Resource")}
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            ${resource.url ? `
-
-                <a
-                    href="${escapeHTML(resource.url)}"
-                    class="download-btn"
-                    target="_blank"
-                    rel="noopener"
-                    download
-                >
-                    <i data-lucide="download"></i>
-                    Download
-                </a>
-
-            ` : ""}
-
-        `;
-
-        section.appendChild(item);
-
-    });
-
-
-    detailContent.appendChild(section);
-
-}
-
-
-// ==========================================
-// 21. DISPLAY FOLLOW-UP DISCUSSION
-// ==========================================
-
-function displayFollowUps() {
-
-    followupConversation.innerHTML = "";
-
-    if (isLibrarySource) return;
-
-    if (doubt.status !== "resolved") return;
-
-
-    if (!Array.isArray(doubt.followUps)) {
-        doubt.followUps = [];
-    }
-
-    if (doubt.followUps.length === 0) return;
-
-
-    const heading = document.createElement("div");
-
-    heading.className = "followup-section-heading";
-
-    heading.innerHTML = `
-
-        <div>
-
-            <h3>Follow-up Discussion</h3>
-
-            <p>
-                Continue the conversation about your doubt.
-            </p>
-
-        </div>
-
-    `;
-
-    followupConversation.appendChild(heading);
-
-
-    const section = document.createElement("div");
-
-    section.className = "followup-list";
-
-    section.id = "followupList";
-
-    followupConversation.appendChild(section);
-
-    renderFollowUpList();
-
-}
-
-
-// ==========================================
-// 22. CHECK FOLLOW-UP PERMISSION
-// ==========================================
-
-function canAskFollowUp() {
-
-    if (isLibrarySource) return false;
-
-    if (doubt.status !== "resolved") return false;
-
-
-    const followUps = doubt.followUps || [];
-
-    if (followUps.length === 0) return true;
-
-
-    const latestFollowUp =
-        followUps[followUps.length - 1];
+/* ==========================================
+   16. CHECK IMAGE FILE
+========================================== */
+
+function isImageAttachment(file) {
+    const type = String(file.type || "").toLowerCase();
+    const name = String(file.name || "").toLowerCase();
 
     return (
-
-        latestFollowUp.status === "answered" ||
-
-        Boolean(latestFollowUp.teacherResponse)
-
+        type.startsWith("image/") ||
+        /\.(png|jpg|jpeg|gif|webp)$/i.test(name)
     );
-
 }
 
 
-// ==========================================
-// 23. OPEN FOLLOW-UP FORM
-// ==========================================
+/* ==========================================
+   17. RENDER STUDENT ATTACHMENTS
+========================================== */
 
-function openFollowUpForm() {
+async function renderStudentAttachments() {
+    if (!studentAttachments) return;
 
-    if (isLibrarySource) return;
+    const attachments = getDoubtAttachments();
+    const photos = attachments.filter(isImageAttachment);
+    const documents = attachments.filter(file => !isImageAttachment(file));
 
-    if (document.getElementById("followupFormSection")) return;
-
-    if (!canAskFollowUp()) return;
-
-
-    const sidebarButton =
-        document.getElementById("sidebarFollowupBtn");
-
-    if (sidebarButton) {
-        sidebarButton.remove();
-    }
-
-
-    const formSection = document.createElement("div");
-
-    formSection.className = "followup-form-section";
-
-    formSection.id = "followupFormSection";
-
-    formSection.innerHTML = `
-
-        <div class="followup-form-heading">
-
-            <h3>
-                <i data-lucide="message-circle-question"></i>
-                Follow-up Question
-            </h3>
-
-            <button
-                type="button"
-                class="followup-cancel-btn"
-                id="cancelFollowup"
-                aria-label="Cancel follow-up"
-            >
-                <i data-lucide="x"></i>
-            </button>
-
-        </div>
-
-
-        <form id="followupForm">
-
-            <textarea
-                id="followupInput"
-                maxlength="1000"
-                placeholder="Ask your follow-up question..."
-                required
-            ></textarea>
-
-            <button
-                type="submit"
-                class="followup-submit"
-            >
-                <i data-lucide="send"></i>
-                Submit Follow-up
-            </button>
-
-        </form>
-
-    `;
-
-
-    followupConversation.insertBefore(
-        formSection,
-        followupConversation.firstChild
-    );
-
-
-    document.getElementById("followupForm")
-        .addEventListener("submit", submitFollowUp);
-
-    document.getElementById("cancelFollowup")
-        .addEventListener("click", cancelFollowUp);
-
-
-    lucide.createIcons();
-
-    document.getElementById("followupInput").focus();
-
-}
-
-
-// ==========================================
-// 24. CANCEL FOLLOW-UP FORM
-// ==========================================
-
-function cancelFollowUp() {
-
-    const formSection =
-        document.getElementById("followupFormSection");
-
-    if (formSection) {
-        formSection.remove();
-    }
-
-    displaySidebarFollowupButton();
-
-}
-
-
-// ==========================================
-// 25. SUBMIT FOLLOW-UP
-// ==========================================
-
-function submitFollowUp(event) {
-
-    event.preventDefault();
-
-    if (isLibrarySource) return;
-
-
-    const input =
-        document.getElementById("followupInput");
-
-    const question = input.value.trim();
-
-
-    if (!question) {
-
-        alert("Please enter your follow-up question.");
-
+    if (!attachments.length) {
+        studentAttachments.style.display = "none";
         return;
-
     }
 
+    studentAttachments.style.display = "flex";
 
-    if (!Array.isArray(doubt.followUps)) {
-        doubt.followUps = [];
+    if (photos.length) {
+        await renderStudentPhotos(photos);
+    } else {
+        if (studentPhotoGallery) studentPhotoGallery.innerHTML = "";
+        if (photoCounter) photoCounter.style.display = "none";
     }
 
-
-    doubt.followUps.push({
-
-        id: Date.now(),
-
-        question,
-
-        createdAt: new Date().toISOString(),
-
-        status: "awaiting-response",
-
-        teacherResponse: "",
-
-        respondedAt: null,
-
-        reason: ""
-
-    });
-
-
-    saveDoubtData();
-
-    document.getElementById("followupFormSection").remove();
-
-    displayFollowUps();
-
-    alert("Your follow-up question has been submitted!");
-
+    if (documents.length) {
+        await renderStudentDocuments(documents);
+    } else if (studentFileList) {
+        studentFileList.innerHTML = "";
+    }
 }
 
 
-// ==========================================
-// 26. RENDER FOLLOW-UP LIST
-// ==========================================
+/* ==========================================
+   18. PHOTO GALLERY STATE
+========================================== */
 
-function renderFollowUpList() {
-
-    if (isLibrarySource) return;
-
-
-    const list = document.getElementById("followupList");
-
-    if (!list) return;
+let currentPhotoIndex = 0;
+let currentPhotoURLs = [];
 
 
-    const followUps = doubt.followUps || [];
+/* ==========================================
+   19. RENDER STUDENT PHOTOS
+========================================== */
 
+async function renderStudentPhotos(photos) {
+    if (!studentPhotoGallery) return;
 
-    if (followUps.length === 0) {
+    studentPhotoGallery.innerHTML = "";
+    currentPhotoIndex = 0;
+    currentPhotoURLs = [];
 
-        list.innerHTML = "";
+    for (const photo of photos) {
+        const url = await getAttachmentURL(photo);
+        if (url) currentPhotoURLs.push(url);
+    }
 
+    if (!currentPhotoURLs.length) {
+        if (photoCounter) photoCounter.style.display = "none";
         return;
-
     }
 
-
-    list.innerHTML = followUps.map(followUp => {
-
-        const isAnswered =
-            followUp.status === "answered" ||
-            Boolean(followUp.teacherResponse);
-
-        const isNotRequired =
-            followUp.status === "not-required";
-
-
-        return `
-
-            <div
-                class="followup-item"
-                data-followup-id="${followUp.id}"
-            >
-
-                <div class="followup-card-heading">
-
-                    <h3>
-                        <i data-lucide="message-circle-question"></i>
-                        Follow-up Question
-                    </h3>
-
-                    <div class="followup-menu-wrapper">
-
-                        <button
-                            class="followup-menu-btn"
-                            type="button"
-                            aria-label="Follow-up options"
-                            data-menu-id="${followUp.id}"
-                        >
-                            <i data-lucide="ellipsis"></i>
-                        </button>
-
-                        <div
-                            class="followup-dropdown"
-                            id="followupMenu-${followUp.id}"
-                        >
-
-                            <button
-                                type="button"
-                                data-action="edit"
-                                data-id="${followUp.id}"
-                            >
-                                <i data-lucide="pencil"></i>
-                                Edit
-                            </button>
-
-                            <button
-                                type="button"
-                                data-action="delete"
-                                data-id="${followUp.id}"
-                            >
-                                <i data-lucide="trash-2"></i>
-                                Delete
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div
-                    class="followup-question-content"
-                    id="followupQuestion-${followUp.id}"
-                >
-
-                    <p class="followup-question">
-                        ${escapeHTML(followUp.question)}
-                    </p>
-
-                    <span class="followup-date">
-                        ${formatDate(followUp.createdAt)}
-                    </span>
-
-                </div>
-
-
-                ${isAnswered ? `
-
-                    <div class="followup-response">
-
-                        <div class="followup-response-heading">
-
-                            <i data-lucide="user-round"></i>
-
-                            <strong>Teacher's Response</strong>
-
-                            <span>
-                                ${formatDate(
-                                    followUp.respondedAt ||
-                                    followUp.createdAt
-                                )}
-                            </span>
-
-                        </div>
-
-                        <p>
-                            ${escapeHTML(followUp.teacherResponse)}
-                        </p>
-
-                    </div>
-
-                ` : ""}
-
-
-                ${isNotRequired && followUp.reason ? `
-
-                    <p class="followup-reason">
-                        Reason: ${escapeHTML(followUp.reason)}
-                    </p>
-
-                ` : ""}
-
-            </div>
-
-        `;
-
-    }).join("");
-
-
-    list.querySelectorAll(".followup-menu-btn")
-        .forEach(button => {
-
-            button.addEventListener("click", event => {
-
-                event.stopPropagation();
-
-                const id = button.dataset.menuId;
-
-                const menu =
-                    document.getElementById(`followupMenu-${id}`);
-
-
-                document.querySelectorAll(".followup-dropdown")
-                    .forEach(item => {
-
-                        if (item !== menu) {
-                            item.classList.remove("show");
-                        }
-
-                    });
-
-
-                menu.classList.toggle("show");
-
-            });
-
-        });
-
-
-    list.querySelectorAll(".followup-dropdown button")
-        .forEach(button => {
-
-            button.addEventListener("click", () => {
-
-                const id = Number(button.dataset.id);
-
-                const action = button.dataset.action;
-
-
-                if (action === "edit") {
-                    editFollowUp(id);
-                }
-
-                if (action === "delete") {
-                    deleteFollowUp(id);
-                }
-
-            });
-
-        });
-
-
-    lucide.createIcons();
-
-}
-
-
-// ==========================================
-// 27. EDIT FOLLOW-UP
-// ==========================================
-
-function editFollowUp(id) {
-
-    if (isLibrarySource) return;
-
-
-    const followUp = doubt.followUps.find(item => {
-
-        return Number(item.id) === Number(id);
-
+    const image = document.createElement("img");
+    image.className = "photo-item";
+    image.src = currentPhotoURLs[0];
+    image.alt = "Student uploaded attachment";
+
+    image.addEventListener("click", () => {
+        openPhotoLightbox(currentPhotoURLs[currentPhotoIndex]);
     });
 
-    if (!followUp) return;
-
-
-    const questionContainer =
-        document.getElementById(`followupQuestion-${id}`);
-
-    if (!questionContainer) return;
-
-
-    questionContainer.innerHTML = `
-
-        <textarea
-            class="followup-edit-input"
-            id="editFollowup-${id}"
-            maxlength="1000"
-        >${escapeHTML(followUp.question)}</textarea>
-
-        <div class="followup-edit-actions">
-
-            <button
-                type="button"
-                class="followup-edit-cancel"
-                id="cancelFollowupEdit-${id}"
-            >
-                Cancel
-            </button>
-
-            <button
-                type="button"
-                class="followup-edit-save"
-                id="saveFollowupEdit-${id}"
-            >
-                Save Changes
-            </button>
-
-        </div>
-
-    `;
-
-
-    document.getElementById(`cancelFollowupEdit-${id}`)
-        .addEventListener("click", renderFollowUpList);
-
-
-    document.getElementById(`saveFollowupEdit-${id}`)
-        .addEventListener("click", () => {
-
-            const newQuestion = document
-                .getElementById(`editFollowup-${id}`)
-                .value.trim();
-
-
-            if (!newQuestion) {
-
-                alert("Please enter your follow-up question.");
-
-                return;
-
-            }
-
-
-            followUp.question = newQuestion;
-
-            saveDoubtData();
-
-            renderFollowUpList();
-
-        });
-
-}
-
-
-// ==========================================
-// 28. DELETE FOLLOW-UP
-// ==========================================
-
-function deleteFollowUp(id) {
-
-    if (isLibrarySource) return;
-
-
-    const confirmDelete = confirm(
-        "Are you sure you want to delete this follow-up question?"
-    );
-
-    if (!confirmDelete) return;
-
-
-    doubt.followUps = doubt.followUps.filter(item => {
-
-        return Number(item.id) !== Number(id);
-
-    });
-
-
-    saveDoubtData();
-
-    renderFollowUpList();
-
-    displaySidebarFollowupButton();
-
-}
-
-
-// ==========================================
-// 29. FOLLOW-UP ACTION BUTTON
-// ==========================================
-
-function displaySidebarFollowupButton() {
-
-    followupAction.innerHTML = "";
-
-    if (isLibrarySource) return;
-
-    if (!canAskFollowUp()) return;
-
-    if (document.getElementById("followupFormSection")) return;
-
-
-    const button = document.createElement("button");
-
-    button.type = "button";
-
-    button.id = "sidebarFollowupBtn";
-
-    button.className = "sidebar-followup-btn";
-
-    button.innerHTML = `
-
-        <i data-lucide="message-circle"></i>
-        Ask a Follow-up Question
-
-    `;
-
-
-    followupAction.appendChild(button);
-
-    button.addEventListener("click", openFollowUpForm);
-
-    lucide.createIcons();
-
-}
-
-
-// ==========================================
-// 30. SAVE DOUBT DATA
-// ==========================================
-
-function saveDoubtData() {
-
-    const index = doubts.findIndex(item => {
-
-        return Number(item.id) === doubtId;
-
-    });
-
-    if (index === -1) return;
-
-
-    // Always save using the current data structure.
-
-    doubt.description = doubt.description || "";
-
-    doubt.question = doubt.description;
-
-    doubt.topics = Array.isArray(doubt.topics)
-        ? doubt.topics
-        : [];
-
-    doubt.subtopics = Array.isArray(doubt.subtopics)
-        ? doubt.subtopics
-        : [];
-
-    doubt.topicSelections = Array.isArray(doubt.topicSelections)
-        ? doubt.topicSelections
-        : [];
-
-
-    doubts[index] = doubt;
-
-
-    localStorage.setItem(
-        storageKey,
-        JSON.stringify(doubts)
-    );
-
-}
-
-
-// ==========================================
-// 31. THREE-DOT ACTION MENU
-// ==========================================
-
-function displayActions() {
-
-    const actionRow = document.createElement("div");
-
-    actionRow.className = "detail-actions";
-
-
-    const canEditDelete =
-        source === "my-doubts" &&
-        doubt.status === "pending";
-
-
-    actionRow.innerHTML = `
-
-        ${isLibrarySource ? `
-
-            <button
-                type="button"
-                class="save-library-btn"
-                id="saveBtn"
-            >
-                <i data-lucide="bookmark"></i>
-                Save to Saves
-            </button>
-
-        ` : ""}
-
-
-        <div class="doubt-menu-wrapper">
-
-            <button
-                type="button"
-                class="doubt-menu-btn"
-                id="doubtMenuBtn"
-                aria-label="Doubt options"
-                aria-expanded="false"
-            >
-                <i data-lucide="ellipsis"></i>
-            </button>
-
-
-            <div class="doubt-dropdown" id="doubtDropdown">
-
-                ${canEditDelete ? `
-
-                    <button
-                        type="button"
-                        data-action="edit"
-                    >
-                        Edit
-                    </button>
-
-                    <button
-                        type="button"
-                        data-action="delete"
-                    >
-                        Delete
-                    </button>
-
-                ` : ""}
-
-
-                <button
-                    type="button"
-                    data-action="info"
-                >
-                    Info
-                </button>
-
-            </div>
-
-        </div>
-
-    `;
-
-
-    // Keep the existing three-dot menu.
-    // Move it to the bottom-right corner.
-
-    actionRow.style.display = "flex";
-
-    actionRow.style.width = "100%";
-
-    actionRow.style.justifyContent = "flex-end";
-
-    actionRow.style.alignItems = "center";
-
-    actionRow.style.boxSizing = "border-box";
-
-
-    detailContent.insertAdjacentElement(
-        "afterend",
-        actionRow
-    );
-
-
-    const menuButton =
-        actionRow.querySelector("#doubtMenuBtn");
-
-    const dropdown =
-        actionRow.querySelector("#doubtDropdown");
-
-
-    menuButton.addEventListener("click", event => {
-
-        event.stopPropagation();
-
-        dropdown.classList.toggle("show");
-
-        menuButton.setAttribute(
-            "aria-expanded",
-            dropdown.classList.contains("show")
-        );
-
-    });
-
-
-    dropdown.querySelectorAll("button")
-        .forEach(button => {
-
-            button.addEventListener("click", () => {
-
-                const action = button.dataset.action;
-
-                dropdown.classList.remove("show");
-
-                menuButton.setAttribute(
-                    "aria-expanded",
-                    "false"
-                );
-
-
-                if (action === "edit") {
-                    displayEditForm();
-                }
-
-                if (action === "delete") {
-                    deleteDoubt();
-                }
-
-                if (action === "info") {
-                    openDoubtInformation();
-                }
-
-            });
-
-        });
-
-
-    const saveBtn =
-        actionRow.querySelector("#saveBtn");
-
-    if (saveBtn) {
-        saveBtn.addEventListener("click", saveToSaves);
+    studentPhotoGallery.appendChild(image);
+
+    if (currentPhotoURLs.length > 1) {
+        const previousButton = document.createElement("button");
+        previousButton.className =
+            "photo-gallery-arrow photo-gallery-prev";
+        previousButton.type = "button";
+        previousButton.innerHTML =
+            `<i data-lucide="chevron-left"></i>`;
+        previousButton.setAttribute("aria-label", "Previous photo");
+        previousButton.addEventListener("click", () => changePhoto(-1));
+
+        const nextButton = document.createElement("button");
+        nextButton.className =
+            "photo-gallery-arrow photo-gallery-next";
+        nextButton.type = "button";
+        nextButton.innerHTML =
+            `<i data-lucide="chevron-right"></i>`;
+        nextButton.setAttribute("aria-label", "Next photo");
+        nextButton.addEventListener("click", () => changePhoto(1));
+
+        studentPhotoGallery.appendChild(previousButton);
+        studentPhotoGallery.appendChild(nextButton);
     }
 
+    updatePhotoCounter();
 
-    lucide.createIcons();
-
+    if (window.lucide) {
+        window.lucide.createIcons();
+    }
 }
 
 
-// ==========================================
-// 32. EDIT DOUBT
-// ==========================================
+/* ==========================================
+   20. CHANGE PHOTO
+========================================== */
+
+function changePhoto(direction) {
+    if (currentPhotoURLs.length <= 1) return;
+
+    currentPhotoIndex += direction;
+
+    if (currentPhotoIndex < 0) {
+        currentPhotoIndex = currentPhotoURLs.length - 1;
+    }
+
+    if (currentPhotoIndex >= currentPhotoURLs.length) {
+        currentPhotoIndex = 0;
+    }
+
+    const image = studentPhotoGallery.querySelector(".photo-item");
+
+    if (image) {
+        image.src = currentPhotoURLs[currentPhotoIndex];
+    }
+
+    updatePhotoCounter();
+}
+
+
+/* ==========================================
+   21. UPDATE PHOTO COUNTER
+========================================== */
+
+function updatePhotoCounter() {
+    if (!photoCounter) return;
+
+    if (currentPhotoURLs.length <= 1) {
+        photoCounter.style.display = "none";
+        return;
+    }
+
+    photoCounter.style.display = "block";
+    photoCounter.textContent =
+        `${currentPhotoIndex + 1} / ${currentPhotoURLs.length}`;
+}
+
+
+/* ==========================================
+   22. PHOTO LIGHTBOX
+========================================== */
+
+function openPhotoLightbox(imageURL) {
+    const existingLightbox =
+        document.querySelector(".photo-lightbox");
+
+    if (existingLightbox) existingLightbox.remove();
+
+    const lightbox = document.createElement("div");
+    lightbox.className = "photo-lightbox";
+
+    const closeButton = document.createElement("button");
+    closeButton.className = "photo-lightbox-close";
+    closeButton.type = "button";
+    closeButton.setAttribute("aria-label", "Close image");
+    closeButton.innerHTML = `<i data-lucide="x"></i>`;
+
+    const image = document.createElement("img");
+    image.src = imageURL;
+    image.alt = "Full-size student attachment";
+
+    lightbox.appendChild(closeButton);
+    lightbox.appendChild(image);
+    document.body.appendChild(lightbox);
+
+    if (window.lucide) {
+        window.lucide.createIcons();
+    }
+
+    function closeLightbox() {
+        lightbox.remove();
+        document.removeEventListener("keydown", handleEscape);
+    }
+
+    closeButton.addEventListener("click", closeLightbox);
+
+    lightbox.addEventListener("click", event => {
+        if (event.target === lightbox) closeLightbox();
+    });
+
+    function handleEscape(event) {
+        if (event.key === "Escape") closeLightbox();
+    }
+
+    document.addEventListener("keydown", handleEscape);
+}
+
+
+/* ==========================================
+   23. RENDER STUDENT DOCUMENTS
+========================================== */
+
+async function renderStudentDocuments(documents) {
+    if (!studentFileList) return;
+
+    studentFileList.innerHTML = "";
+
+    for (const documentFile of documents) {
+        const fileURL = await getAttachmentURL(documentFile);
+
+        const fileLink = document.createElement("a");
+        fileLink.className = "attachment-file";
+
+        if (fileURL) {
+            fileLink.href = fileURL;
+            fileLink.target = "_blank";
+            fileLink.rel = "noopener noreferrer";
+        } else {
+            fileLink.href = "#";
+            fileLink.addEventListener("click", event => {
+                event.preventDefault();
+                alert("This attachment could not be opened.");
+            });
+        }
+
+        const icon = document.createElement("i");
+        icon.setAttribute("data-lucide", "file-text");
+
+        const fileInfo = document.createElement("div");
+        fileInfo.className = "attachment-file-info";
+
+        const fileName = document.createElement("span");
+        fileName.className = "attachment-file-name";
+        fileName.textContent = documentFile.name || "Attachment";
+
+        const fileSize = document.createElement("span");
+        fileSize.className = "attachment-file-size";
+        fileSize.textContent = documentFile.size || "";
+
+        const viewIcon = document.createElement("i");
+        viewIcon.setAttribute("data-lucide", "external-link");
+
+        fileInfo.appendChild(fileName);
+        fileInfo.appendChild(fileSize);
+        fileLink.appendChild(icon);
+        fileLink.appendChild(fileInfo);
+        fileLink.appendChild(viewIcon);
+
+        studentFileList.appendChild(fileLink);
+    }
+
+    if (window.lucide) {
+        window.lucide.createIcons();
+    }
+}
+/* ==========================================
+   24. EDIT DOUBT FORM
+========================================== */
 
 function displayEditForm() {
-
-    if (
-        source !== "my-doubts" ||
-        doubt.status !== "pending"
-    ) {
-        return;
-    }
-
-
     if (document.getElementById("editForm")) return;
-
+    if (!doubt) return;
 
     const form = document.createElement("div");
-
     form.id = "editForm";
-
     form.className = "edit-form";
 
     form.innerHTML = `
+        <h3 class="section-heading">Edit Your Doubt</h3>
 
-        <h3 class="section-heading">
-            Edit Your Doubt
-        </h3>
-
-
-        <label for="editTitle">
-            Small Question
-        </label>
-
+        <label for="editQuestion">Question</label>
         <input
             type="text"
-            id="editTitle"
+            id="editQuestion"
             maxlength="60"
             required
         >
 
-
-        <label for="editDescription">
-            Explanation
-        </label>
-
+        <label for="editDescription">Explanation</label>
         <textarea
             id="editDescription"
             required
         ></textarea>
 
-
         <div class="edit-form-actions">
-
             <button
                 type="button"
                 class="cancel-edit-btn"
@@ -2100,643 +714,188 @@ function displayEditForm() {
             >
                 Save Changes
             </button>
-
         </div>
-
     `;
 
+    const detailCard = document.querySelector(".doubt-detail-card");
 
-    detailContent.appendChild(form);
+    if (!detailCard) {
+        console.error("Could not find .doubt-detail-card.");
+        return;
+    }
 
+    detailCard.insertAdjacentElement("afterend", form);
 
-    document.getElementById("editTitle").value =
-        doubt.title || "";
-
+    document.getElementById("editQuestion").value =
+        doubt.question || doubt.title || "";
 
     document.getElementById("editDescription").value =
         doubt.description || "";
 
+    document.getElementById("cancelEdit").addEventListener("click", () => {
+        form.remove();
+    });
 
-    document.getElementById("cancelEdit")
-        .addEventListener("click", () => {
-
-            form.remove();
-
-        });
-
-
-    document.getElementById("saveEdit")
-        .addEventListener("click", saveEdit);
-
+    document.getElementById("saveEdit").addEventListener("click", saveEdit);
 }
 
-
-// ==========================================
-// 33. SAVE EDITED DOUBT
-// ==========================================
 
 function saveEdit() {
+    const questionInput = document.getElementById("editQuestion");
+    const descriptionInput = document.getElementById("editDescription");
 
-    const newTitle =
-        document.getElementById("editTitle")
-            .value.trim();
+    if (!questionInput || !descriptionInput) return;
 
-    const newDescription =
-        document.getElementById("editDescription")
-            .value.trim();
+    const newQuestion = questionInput.value.trim();
+    const newDescription = descriptionInput.value.trim();
 
-
-    if (!newTitle || !newDescription) {
-
-        alert(
-            "Please fill in both the small question and explanation."
-        );
-
+    if (!newQuestion || !newDescription) {
+        alert("Please fill in both fields.");
         return;
-
     }
 
+    // Load the complete array, not the student-filtered subset.
+    // This preserves other students' records in localStorage.
+    let allDoubts;
 
-    doubt.title = newTitle;
-
-    doubt.description = newDescription;
-
-    doubt.question = newDescription;
-
-
-    saveDoubtData();
-
-
-    alert("Your doubt has been updated!");
-
-    renderDetails();
-
-}
-
-
-// ==========================================
-// 34. DELETE DOUBT
-// ==========================================
-
-function deleteDoubt() {
-
-    const confirmDelete = confirm(
-        "Are you sure you want to delete this doubt?"
-    );
-
-    if (!confirmDelete) return;
-
-
-    const updatedDoubts = doubts.filter(item => {
-
-        return Number(item.id) !== doubtId;
-
-    });
-
-
-    localStorage.setItem(
-        storageKey,
-        JSON.stringify(updatedDoubts)
-    );
-
-
-    alert("Your doubt has been deleted!");
-
-    window.location.href = returnPage;
-
-}
-
-
-// ==========================================
-// 35. SAVE TO SAVES
-// ==========================================
-
-function saveToSaves() {
-
-    const savedItems = JSON.parse(
-        localStorage.getItem("clariqSaves") || "[]"
-    );
-
-
-    const alreadySaved = savedItems.some(item => {
-
-        return (
-
-            Number(item.id) === doubtId &&
-
-            item.source === "library"
-
+    try {
+        allDoubts = JSON.parse(
+            localStorage.getItem("clariqDoubts") || "[]"
         );
-
-    });
-
-
-    if (alreadySaved) {
-
-        alert("This doubt is already saved!");
-
+    } catch (error) {
+        console.error("Could not read doubts from localStorage:", error);
+        alert("Your doubt could not be saved. Please try again.");
         return;
-
     }
 
+    if (!Array.isArray(allDoubts)) {
+        alert("Your doubt data could not be read.");
+        return;
+    }
 
-    savedItems.push({
-
-        ...doubt,
-
-        source: "library"
-
+    const index = allDoubts.findIndex(item => {
+        return String(item.id) === String(doubtId);
     });
 
+    if (index === -1) {
+        alert("Could not find this doubt.");
+        return;
+    }
 
-    localStorage.setItem(
-        "clariqSaves",
-        JSON.stringify(savedItems)
-    );
+    // Update only the two editable fields.
+    allDoubts[index].question = newQuestion;
+    allDoubts[index].description = newDescription;
 
+    saveStoredDoubts(allDoubts);
 
-    alert("Doubt saved successfully!");
+    // Update the in-memory record and refresh the visible content.
+    doubt = allDoubts[index];
+    renderDoubtDetails();
 
+    // Close the edit form after saving.
+    const form = document.getElementById("editForm");
+    if (form) form.remove();
+
+    alert("Your doubt has been updated successfully!");
 }
 
 
-// ==========================================
-// 36. DISPLAY INFORMATION MODAL
-// ==========================================
-
-function displayInformation() {
-
-    const status = statusStyles[doubt.status];
+if (editDoubtBtn) {
+    editDoubtBtn.addEventListener("click", displayEditForm);
+}
 
 
-    detailSidebar.innerHTML = `
+/* ==========================================
+   25. DELETE DOUBT
+========================================== */
 
-        <div class="info-popup-heading">
+if (deleteDoubtBtn) {
+    deleteDoubtBtn.addEventListener("click", () => {
+        if (!doubt) return;
 
-            <h3 class="info-heading" id="infoModalTitle">
-                <i data-lucide="info"></i>
-                Doubt Information
-            </h3>
-
-            <button
-                type="button"
-                class="info-close-btn"
-                id="infoCloseBtn"
-                aria-label="Close information"
-            >
-                <i data-lucide="x"></i>
-            </button>
-
-        </div>
-
-
-        <div class="info-row">
-
-            <span class="info-label">
-                <i data-lucide="book-open"></i>
-                Subject
-            </span>
-
-            <span class="info-value">
-                ${escapeHTML(doubt.subject || "Not available")}
-            </span>
-
-        </div>
-
-
-        ${!isLibrarySource ? `
-
-            <div class="info-row">
-
-                <span class="info-label">
-                    <i data-lucide="tag"></i>
-                    Status
-                </span>
-
-                <span
-                    class="detail-status"
-                    style="
-                        background: ${status.background};
-                        color: ${status.color};
-                    "
-                >
-                    ${status.label}
-                </span>
-
-            </div>
-
-        ` : ""}
-
-
-        <div class="info-row">
-
-            <span class="info-label">
-                <i data-lucide="calendar"></i>
-                Submitted On
-            </span>
-
-            <span class="info-value">
-                ${formatDate(doubt.createdAt)}
-            </span>
-
-        </div>
-
-
-        ${doubt.status === "resolved" ? `
-
-            <div class="info-row">
-
-                <span class="info-label">
-                    <i data-lucide="calendar-check"></i>
-                    Resolved On
-                </span>
-
-                <span class="info-value">
-                    ${formatDate(
-                        doubt.resolvedAt || doubt.createdAt
-                    )}
-                </span>
-
-            </div>
-
-
-            <div class="info-row teacher-info">
-
-                <span class="info-label">
-                    <i data-lucide="user"></i>
-                    Answered By
-                </span>
-
-                <span class="info-value">
-                    ${escapeHTML(
-                        doubt.answeredBy ||
-                        doubt.teacherName ||
-                        "Subject Teacher"
-                    )}
-                </span>
-
-            </div>
-
-        ` : ""}
-
-    `;
-
-
-    document.getElementById("infoCloseBtn")
-        .addEventListener(
-            "click",
-            closeDoubtInformation
+        const confirmDelete = confirm(
+            "Are you sure you want to delete this doubt?"
         );
 
+        if (!confirmDelete) return;
 
-    lucide.createIcons();
+        const allDoubts = JSON.parse(
+            localStorage.getItem("clariqDoubts") || "[]"
+        );
 
-}
+        const updatedDoubts = allDoubts.filter(item => {
+            return String(item.id) !== String(doubtId);
+        });
 
-
-// ==========================================
-// 37. POSITION INFORMATION MODAL
-// ==========================================
-
-function positionInformationModal() {
-
-    if (!detailSidebar || !detailMain) return;
-
-
-    const mainRect = detailMain.getBoundingClientRect();
-
-
-    // Calculate the centre of the main content area.
-    // The sidebar is outside this area.
-
-    const centreX =
-        mainRect.left + (mainRect.width / 2);
-
-    const centreY =
-        window.innerHeight / 2;
-
-
-    detailSidebar.style.position = "fixed";
-
-    detailSidebar.style.left = `${centreX}px`;
-
-    detailSidebar.style.top = `${centreY}px`;
-
-    detailSidebar.style.right = "auto";
-
-    detailSidebar.style.bottom = "auto";
-
-    detailSidebar.style.transform =
-        "translate(-50%, -50%)";
-
-}
-
-
-function openDoubtInformation() {
-
-    positionInformationModal();
-
-    detailSidebar.classList.add("show");
-
-
-    if (modalBackdrop) {
-        modalBackdrop.classList.add("show");
-    }
-
-
-    document.body.classList.add("modal-open");
-
-}
-
-
-function closeDoubtInformation() {
-
-    detailSidebar.classList.remove("show");
-
-
-    if (modalBackdrop) {
-        modalBackdrop.classList.remove("show");
-    }
-
-
-    document.body.classList.remove("modal-open");
-
-}
-
-
-// ==========================================
-// 38. MODAL EVENT LISTENERS
-// ==========================================
-
-if (modalBackdrop) {
-
-    modalBackdrop.addEventListener(
-        "click",
-        closeDoubtInformation
-    );
-
-}
-
-
-document.addEventListener("keydown", event => {
-
-    if (event.key === "Escape") {
-
-        closeDoubtInformation();
-
-    }
-
-});
-
-
-window.addEventListener("resize", () => {
-
-    if (detailSidebar.classList.contains("show")) {
-
-        positionInformationModal();
-
-    }
-
-});
-
-
-// ==========================================
-// 39. BACK NAVIGATION
-// ==========================================
-
-if (backBtn) {
-
-    backBtn.addEventListener("click", () => {
-
-        if (
-            document.referrer &&
-            new URL(document.referrer).origin === window.location.origin
-        ) {
-
-            window.history.back();
-
-        } else {
-
-            window.location.href = returnPage;
-
+        if (updatedDoubts.length === allDoubts.length) {
+            alert("Doubt not found.");
+            return;
         }
 
+        saveStoredDoubts(updatedDoubts);
+
+        alert("Doubt deleted successfully!");
+        window.location.href = "my-doubts.html";
     });
-
 }
 
 
-if (backLink) {
+/* ==========================================
+   26. NOT FOUND STATE
+========================================== */
 
-    backLink.href = returnPage;
+function showNotFound() {
+    const detailPage = document.querySelector(".detail-page");
+    if (!detailPage) return;
 
-    backLink.textContent = isLibrarySource
-        ? "Library"
-        : "My Doubts";
+    detailPage.innerHTML = `
+        <div class="not-found-state">
+            <div class="not-found-icon">
+                <i data-lucide="file-question"></i>
+            </div>
 
-}
+            <h2>Doubt Not Found</h2>
 
+            <p>
+                The doubt you're looking for doesn't exist
+                or may have been removed.
+            </p>
 
-if (backBtn) {
-
-    backBtn.innerHTML = `
-
-        <i data-lucide="arrow-left"></i>
-
-        Back to ${isLibrarySource ? "Library" : "My Doubts"}
-
+            <a href="my-doubts.html" class="back-btn">
+                <i data-lucide="arrow-left"></i>
+                Back to My Doubts
+            </a>
+        </div>
     `;
 
+    if (window.lucide) {
+        window.lucide.createIcons();
+    }
 }
 
 
-// ==========================================
-// 40. CLOSE MENUS WHEN CLICKING OUTSIDE
-// ==========================================
+/* ==========================================
+   27. CLEAN UP OBJECT URLS
+========================================== */
 
-document.addEventListener("click", event => {
-
-    if (!event.target.closest(".followup-menu-wrapper")) {
-
-        document.querySelectorAll(".followup-dropdown")
-            .forEach(menu => {
-
-                menu.classList.remove("show");
-
-            });
-
-    }
-
-
-    if (!event.target.closest(".doubt-menu-wrapper")) {
-
-        document.querySelectorAll(".doubt-dropdown")
-            .forEach(menu => {
-
-                menu.classList.remove("show");
-
-            });
-
-
-        document.querySelectorAll(".doubt-menu-btn")
-            .forEach(button => {
-
-                button.setAttribute(
-                    "aria-expanded",
-                    "false"
-                );
-
-            });
-
-    }
-
+window.addEventListener("beforeunload", () => {
+    attachmentObjectURLs.forEach(url => {
+        URL.revokeObjectURL(url);
+    });
 });
 
 
-// ==========================================
-// 41. MAIN RENDER FUNCTION
-// ==========================================
+/* ==========================================
+   28. INITIALIZE PAGE
+========================================== */
 
-async function renderDetails() {
-
-
-    // DOUBT NOT FOUND
-
-    if (!doubt) {
-
-        detailContent.innerHTML = `
-
-            <div class="detail-error">
-
-                <i data-lucide="file-question"></i>
-
-                <h3>Doubt not found</h3>
-
-                <p>
-                    The requested doubt could not be found.
-                </p>
-
-            </div>
-
-        `;
-
-
-        detailSidebar.innerHTML = "";
-
-        followupConversation.innerHTML = "";
-
-        followupAction.innerHTML = "";
-
-
-        lucide.createIcons();
-
+function initializePage() {
+    if (!doubtId || !doubt) {
+        showNotFound();
         return;
-
     }
 
-
-    // INVALID STATUS
-
-    if (!statusStyles[doubt.status]) {
-
-        detailContent.innerHTML = `
-
-            <div class="detail-error">
-
-                <h3>Invalid doubt status</h3>
-
-                <p>
-                    Please check the doubt information.
-                </p>
-
-            </div>
-
-        `;
-
-
-        detailSidebar.innerHTML = "";
-
-        followupConversation.innerHTML = "";
-
-        followupAction.innerHTML = "";
-
-
-        lucide.createIcons();
-
-        return;
-
-    }
-
-
-    // RESET PAGE
-
-    detailContent.innerHTML = "";
-
-    detailSidebar.innerHTML = "";
-
-    followupConversation.innerHTML = "";
-
-    followupAction.innerHTML = "";
-
-
-    const previousActionRow =
-        document.querySelector(".detail-actions");
-
-    if (previousActionRow) {
-        previousActionRow.remove();
-    }
-
-
-    // INITIALISE
-
-    setActiveSidebarLink();
-
-    displayHeader();
-
-
-    // STUDENT ATTACHMENTS
-
-    await displayAttachments(doubt.attachments);
-
-
-    // DATE
-
-    displayDoubtDate();
-
-
-    // TEACHER RESPONSE
-
-    displayAnswer();
-
-    await displayTeacherAttachments();
-
-    displayResources();
-
-
-    // ACTION MENU BELOW THE CARD
-
-    displayActions();
-
-
-    // FOLLOW-UP DISCUSSION
-
-    displayFollowUps();
-
-    displaySidebarFollowupButton();
-
-
-    // INFORMATION MODAL CONTENT
-
-    displayInformation();
-
-
-    lucide.createIcons();
-
+    renderDoubtDetails();
 }
 
-
-// ==========================================
-// 42. INITIALISE PAGE
-// ==========================================
-
-renderDetails();
+initializePage();
