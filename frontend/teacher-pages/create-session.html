@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Session | ClariQ</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Shared CSS -->
+    <link rel="stylesheet" href="../teacher-css/common.css">
+
+    <!-- Page CSS -->
+    <link rel="stylesheet" href="../teacher-css/create-session.css">
+
+    <!-- Lucide -->
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+
+    <!-- Shared Components -->
+    <script src="../teacher-js/components.js" defer></script>
+
+    <!-- Central Syllabus Data -->
+    <script src="../student-js/syllabus-data.js" defer></script>
+
+    <!-- Page JS -->
+    <script src="../teacher-js/create-session.js" defer></script>
+
+</head>
+
+<body>
+
+    <!-- SHARED SIDEBAR -->
+    <div id="sidebar-container"></div>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- SHARED TOPBAR -->
+        <div id="topbar-container"></div>
+
+
+        <!-- PAGE CONTENT -->
+        <section class="create-session-page">
+
+            <!-- BACK NAVIGATION -->
+            <a href="doubt-sessions.html" class="back-link">
+                <i data-lucide="arrow-left"></i>
+                Back to Doubt Sessions
+            </a>
+
+
+            <!-- PAGE HEADING -->
+            <div class="page-heading">
+
+                <div>
+                    <h1>Create Doubt Session</h1>
+
+                    <p>
+                        Set up a doubt session for one of your assigned classes.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <form id="createSessionForm">
+
+
+                <!-- =====================================
+                     1. SESSION INFORMATION
+                ====================================== -->
+
+                <section class="form-section">
+
+                    <div class="section-heading">
+
+                        <div class="section-icon">
+                            <i data-lucide="calendar-plus"></i>
+                        </div>
+
+                        <div>
+                            <h2>Session Information</h2>
+                            <p>Provide the basic details of your session.</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-fields">
+
+                        <!-- SESSION TITLE -->
+                        <div class="form-group full-width">
+
+                            <label for="sessionTitle">
+                                Session Title
+                                <span class="required">*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="sessionTitle"
+                                name="sessionTitle"
+                                placeholder="e.g. Programming Fundamentals Doubt Session"
+                                required>
+
+                        </div>
+
+
+                        <!-- ASSIGNED CLASS & SUBJECT -->
+                        <div class="form-group full-width">
+
+                            <label for="classSubject">
+                                Assigned Class & Subject
+                                <span class="required">*</span>
+                            </label>
+
+                            <select id="classSubject" name="classSubject" required>
+
+                                <option value="" disabled selected>
+                                    Select an assigned class and subject
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =====================================
+                     2. TOPIC SELECTION
+                ====================================== -->
+
+                <section class="form-section">
+
+                    <div class="section-heading">
+
+                        <div class="section-icon">
+                            <i data-lucide="book-open"></i>
+                        </div>
+
+                        <div>
+                            <h2>Select Topics</h2>
+
+                            <p>
+                                Choose complete units or individual topics
+                                to include in this session.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <!-- TOPIC SELECTION AREA -->
+                    <div class="topic-selection-container">
+
+                        <div class="topic-selection-header">
+
+                            <div>
+                                <h3>Available Syllabus</h3>
+
+                                <p>
+                                    Select the topics students can ask doubts about.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <!-- DYNAMIC UNIT LIST -->
+                        <div id="unitList" class="unit-list">
+
+                            <div class="empty-topic-state">
+
+                                <div class="empty-topic-icon">
+                                    <i data-lucide="book-open-check"></i>
+                                </div>
+
+                                <h3>No syllabus loaded</h3>
+
+                                <p>
+                                    Select an assigned class and subject above
+                                    to view its available units and topics.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- SELECTED TOPICS SUMMARY -->
+                    <div class="selected-topics-container">
+
+                        <div class="selected-topics-heading">
+
+                            <i data-lucide="list-checks"></i>
+
+                            <h3>Selected Topics</h3>
+
+                        </div>
+
+                        <div id="selectedTopicsSummary" class="selected-topics-summary">
+
+                            <span class="summary-placeholder">
+                                Your selected topics will appear here.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =====================================
+                     3. SUBMISSION PERIOD
+                ====================================== -->
+
+                <section class="form-section">
+
+                    <div class="section-heading">
+
+                        <div class="section-icon">
+                            <i data-lucide="clipboard-list"></i>
+                        </div>
+
+                        <div>
+                            <h2>Submission Period</h2>
+
+                            <p>
+                                Set the dates during which students can
+                                submit their doubts.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-fields">
+
+                        <!-- SUBMISSION OPENING DATE -->
+                        <div class="form-group">
+
+                            <label for="submissionStart">
+                                Submission Opens
+                                <span class="required">*</span>
+                            </label>
+
+                            <input
+                                type="date"
+                                id="submissionStart"
+                                name="submissionStart"
+                                required>
+
+                        </div>
+
+
+                        <!-- SUBMISSION DEADLINE -->
+                        <div class="form-group">
+
+                            <label for="submissionDeadline">
+                                Submission Deadline
+                                <span class="required">*</span>
+                            </label>
+
+                            <input
+                                type="date"
+                                id="submissionDeadline"
+                                name="submissionDeadline"
+                                required>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =====================================
+                     4. SESSION SCHEDULE
+                ====================================== -->
+
+                <section class="form-section">
+
+                    <div class="section-heading">
+
+                        <div class="section-icon">
+                            <i data-lucide="clock"></i>
+                        </div>
+
+                        <div>
+                            <h2>Session Schedule</h2>
+
+                            <p>
+                                Set the date and starting time of the doubt session.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-fields">
+
+                        <!-- SESSION DATE -->
+                        <div class="form-group full-width">
+
+                            <label for="sessionDate">
+                                Session Date
+                                <span class="required">*</span>
+                            </label>
+
+                            <input
+                                type="date"
+                                id="sessionDate"
+                                name="sessionDate"
+                                required>
+
+                        </div>
+
+
+                        <!-- SESSION START TIME -->
+                        <div class="form-group">
+
+                            <label for="sessionStartTime">
+                                Start Time
+                                <span class="required">*</span>
+                            </label>
+
+                            <input
+                                type="time"
+                                id="sessionStartTime"
+                                name="sessionStartTime"
+                                required>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =====================================
+                     FORM ACTIONS
+                ====================================== -->
+
+                <div class="form-actions">
+
+                    <button
+                        type="submit"
+                        id="sessionSubmitButton"
+                        class="create-button">
+
+                        Create Session
+
+                        <i data-lucide="arrow-right"></i>
+
+                    </button>
+
+                </div>
+
+
+            </form>
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>

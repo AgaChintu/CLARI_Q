@@ -11,7 +11,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap"
         rel="stylesheet">
 
     <!-- Shared CSS -->
@@ -20,14 +21,16 @@
     <!-- Page CSS -->
     <link rel="stylesheet" href="../teacher-css/doubt-sessions.css">
 
-    <!-- Lucide Icons -->
+    <!-- Lucide -->
     <script src="https://unpkg.com/lucide@latest" defer></script>
 
     <!-- Shared Components -->
     <script src="../teacher-js/components.js" defer></script>
 
-</head>
+    <!-- Page JS -->
+    <script src="../teacher-js/doubt-sessions.js" defer></script>
 
+</head>
 
 <body>
 
@@ -42,7 +45,6 @@
         <div id="topbar-container"></div>
 
 
-        <!-- DOUBT SESSIONS PAGE -->
         <section class="sessions-page">
 
 
@@ -63,7 +65,10 @@
                 </div>
 
 
-                <button class="primary-btn" id="create-session-btn">
+                <button
+                    class="primary-btn"
+                    id="create-session-btn"
+                    type="button">
 
                     <i data-lucide="plus"></i>
 
@@ -81,138 +86,40 @@
 
             <section class="active-section">
 
-
                 <div class="section-heading">
 
                     <div class="section-label">
 
                         <span class="blue-dot"></span>
 
-                        <h2>ACTIVE SESSIONS (02)</h2>
+                        <h2 id="active-session-heading">
+                            ACTIVE SESSIONS (00)
+                        </h2>
 
                     </div>
 
                 </div>
 
 
-
-                <!-- ACTIVE SESSION CAROUSEL -->
-
                 <div class="active-carousel">
 
-
-                    <div class="active-session-card">
-
-
-                        <div class="live-badge">
-
-                            <span></span>
-
-                            LIVE NOW
-
-                        </div>
-
-
-
-                        <div class="active-session-content">
-
-
-                            <span class="class-label">
-                                1st Year AIML
-                            </span>
-
-
-                            <h3>
-                                PPS — Programming for Problem Solving in C
-                            </h3>
-
-
-
-                            <div class="topics-row">
-
-                                <span class="topics-label">
-                                    Topics:
-                                </span>
-
-                                <span class="topic-tag">
-                                    Pointers
-                                </span>
-
-                                <span class="topic-tag">
-                                    Arrays
-                                </span>
-
-                                <span class="topic-tag">
-                                    Functions
-                                </span>
-
-                            </div>
-
-
-
-                            <div class="active-session-footer">
-
-
-                                <div class="active-session-meta">
-
-                                    <span>
-
-                                        <i data-lucide="clock"></i>
-
-                                        Started: 11:00 AM
-
-                                    </span>
-
-
-                                    <span class="meta-divider"></span>
-
-
-                                    <span>
-
-                                        <i data-lucide="messages-square"></i>
-
-                                        18 Questions
-
-                                    </span>
-
-                                </div>
-
-
-
-                                <button class="manage-session-btn">
-
-                                    Manage Session
-
-                                    <i data-lucide="arrow-right"></i>
-
-                                </button>
-
-
-                            </div>
-
-
-                        </div>
-
+                    <div
+                        class="active-carousel-track"
+                        id="active-session-track"
+                        style="display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;scroll-behavior:smooth;">
 
                     </div>
 
 
-
-                    <!-- CAROUSEL INDICATORS -->
-
-                    <div class="carousel-indicators">
-
-                        <span class="indicator active"></span>
-
-                        <span class="indicator"></span>
+                    <div
+                        class="carousel-indicators"
+                        id="carousel-indicators">
 
                     </div>
-
 
                 </div>
 
             </section>
-
 
 
 
@@ -222,344 +129,29 @@
 
             <section class="content-section upcoming-section">
 
-
                 <div class="section-heading">
 
                     <div class="section-label">
 
                         <i data-lucide="calendar-days"></i>
 
-                        <h2>UPCOMING SESSIONS (04)</h2>
+                        <h2 id="upcoming-session-heading">
+                            UPCOMING SESSIONS (00)
+                        </h2>
 
                     </div>
 
                 </div>
 
 
-
-                <div class="upcoming-grid" id="upcoming-list">
-
-
-
-                    <!-- SESSION 1 -->
-
-                    <article class="session-card">
-
-
-                        <div class="session-card-top">
-
-                            <span class="subject-pill">
-                                DSA
-                            </span>
-
-                            <span class="class-text">
-                                1st Year AIML
-                            </span>
-
-                        </div>
-
-
-
-                        <h3>
-                            Programming for Problem Solving in C
-                        </h3>
-
-
-
-                        <div class="session-details">
-
-
-                            <div class="detail-row">
-
-                                <i data-lucide="calendar-days"></i>
-
-                                <span>
-                                    22 Nov 2026 &nbsp;•&nbsp; 10:00 AM
-                                </span>
-
-                            </div>
-
-
-
-                            <div class="detail-row deadline-row">
-
-                                <i data-lucide="clock"></i>
-
-                                <div>
-
-                                    <span>Submission deadline:</span>
-
-                                    <span>
-                                        20 Nov 2026, 10:00 AM
-                                    </span>
-
-                                </div>
-
-                            </div>
-
-
-                        </div>
-
-
-
-                        <div class="session-card-actions">
-
-                            <button class="edit-session-btn">
-
-                                <i data-lucide="pencil"></i>
-
-                                Edit Session
-
-                            </button>
-
-                        </div>
-
-
-                    </article>
-
-
-
-
-                    <!-- SESSION 2 -->
-
-                    <article class="session-card">
-
-
-                        <div class="session-card-top">
-
-                            <span class="subject-pill">
-                                DBMS
-                            </span>
-
-                            <span class="class-text">
-                                1st Year CS
-                            </span>
-
-                        </div>
-
-
-
-                        <h3>
-                            Database Management Systems
-                        </h3>
-
-
-
-                        <div class="session-details">
-
-
-                            <div class="detail-row">
-
-                                <i data-lucide="calendar-days"></i>
-
-                                <span>
-                                    23 Nov 2026 &nbsp;•&nbsp; 10:00 AM
-                                </span>
-
-                            </div>
-
-
-
-                            <div class="detail-row deadline-row">
-
-                                <i data-lucide="clock"></i>
-
-                                <div>
-
-                                    <span>Submission deadline:</span>
-
-                                    <span>
-                                        21 Nov 2026, 11:00 AM
-                                    </span>
-
-                                </div>
-
-                            </div>
-
-
-                        </div>
-
-
-
-                        <div class="session-card-actions">
-
-                            <button class="edit-session-btn">
-
-                                <i data-lucide="pencil"></i>
-
-                                Edit Session
-
-                            </button>
-
-                        </div>
-
-
-                    </article>
-
-
-
-
-                    <!-- SESSION 3 -->
-
-                    <article class="session-card">
-
-
-                        <div class="session-card-top">
-
-                            <span class="subject-pill">
-                                Python
-                            </span>
-
-                            <span class="class-text">
-                                2nd Year CS
-                            </span>
-
-                        </div>
-
-
-
-                        <h3>
-                            Python Programming
-                        </h3>
-
-
-
-                        <div class="session-details">
-
-
-                            <div class="detail-row">
-
-                                <i data-lucide="calendar-days"></i>
-
-                                <span>
-                                    25 Nov 2026 &nbsp;•&nbsp; 10:00 AM
-                                </span>
-
-                            </div>
-
-
-
-                            <div class="detail-row deadline-row">
-
-                                <i data-lucide="clock"></i>
-
-                                <div>
-
-                                    <span>Submission deadline:</span>
-
-                                    <span>
-                                        23 Nov 2026, 10:00 AM
-                                    </span>
-
-                                </div>
-
-                            </div>
-
-
-                        </div>
-
-
-
-                        <div class="session-card-actions">
-
-                            <button class="edit-session-btn">
-
-                                <i data-lucide="pencil"></i>
-
-                                Edit Session
-
-                            </button>
-
-                        </div>
-
-
-                    </article>
-
-
-
-
-                    <!-- SESSION 4 -->
-
-                    <article class="session-card">
-
-
-                        <div class="session-card-top">
-
-                            <span class="subject-pill">
-                                COA
-                            </span>
-
-                            <span class="class-text">
-                                1st Year CS
-                            </span>
-
-                        </div>
-
-
-
-                        <h3>
-                            Computer Organization and Architecture
-                        </h3>
-
-
-
-                        <div class="session-details">
-
-
-                            <div class="detail-row">
-
-                                <i data-lucide="calendar-days"></i>
-
-                                <span>
-                                    26 Nov 2026 &nbsp;•&nbsp; 11:00 AM
-                                </span>
-
-                            </div>
-
-
-
-                            <div class="detail-row deadline-row">
-
-                                <i data-lucide="clock"></i>
-
-                                <div>
-
-                                    <span>Submission deadline:</span>
-
-                                    <span>
-                                        24 Nov 2026, 11:00 AM
-                                    </span>
-
-                                </div>
-
-                            </div>
-
-
-                        </div>
-
-
-
-                        <div class="session-card-actions">
-
-                            <button class="edit-session-btn">
-
-                                <i data-lucide="pencil"></i>
-
-                                Edit Session
-
-                            </button>
-
-                        </div>
-
-
-                    </article>
-
+                <!-- Upcoming cards are rendered dynamically by JS -->
+                <div
+                    class="upcoming-grid"
+                    id="upcoming-list">
 
                 </div>
 
-
             </section>
-
 
 
 
@@ -568,7 +160,6 @@
             ====================================== -->
 
             <section class="content-section past-section">
-
 
                 <div class="section-heading">
 
@@ -581,8 +172,9 @@
                     </div>
 
 
-
-                    <button class="view-all-btn">
+                    <button
+                        class="view-all-btn"
+                        type="button">
 
                         View All
 
@@ -593,38 +185,30 @@
                 </div>
 
 
-
-
                 <div class="past-grid" id="past-list">
 
 
-
                     <!-- PAST SESSION 1 -->
-
                     <article class="past-session-card">
 
-
                         <div class="past-session-content">
-
 
                             <div class="session-card-top">
 
                                 <span class="subject-pill">
-                                    Maths
+                                    PPS
                                 </span>
 
                                 <span class="class-text">
-                                    1st Year AIML
+                                    1st Year · AIML
                                 </span>
 
                             </div>
 
 
-
                             <h3>
-                                Matrices, Determinants
+                                Programming Fundamentals
                             </h3>
-
 
 
                             <div class="past-session-footer">
@@ -646,41 +230,33 @@
 
                             </div>
 
-
                         </div>
-
 
                     </article>
 
 
 
-
                     <!-- PAST SESSION 2 -->
-
                     <article class="past-session-card">
 
-
                         <div class="past-session-content">
-
 
                             <div class="session-card-top">
 
                                 <span class="subject-pill">
-                                    DSA
+                                    Python
                                 </span>
 
                                 <span class="class-text">
-                                    1st Year CS
+                                    2nd Year · CS
                                 </span>
 
                             </div>
 
 
-
                             <h3>
-                                Recursion, Backtracking
+                                Python Functions and Modules
                             </h3>
-
 
 
                             <div class="past-session-footer">
@@ -702,15 +278,12 @@
 
                             </div>
 
-
                         </div>
-
 
                     </article>
 
 
                 </div>
-
 
             </section>
 
@@ -718,7 +291,6 @@
         </section>
 
     </main>
-
 
 </body>
 

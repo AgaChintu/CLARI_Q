@@ -6,7 +6,6 @@
     display: flex;
     flex-direction: column;
     gap: 27px;
-
     padding-top: 12px;
 }
 
@@ -46,7 +45,6 @@
     align-items: center;
     justify-content: center;
     gap: 9px;
-
     padding: 11px 18px;
 
     background: linear-gradient(
@@ -56,7 +54,6 @@
     );
 
     color: white;
-
     border-radius: 18px;
 
     font-family: 'Poppins', sans-serif;
@@ -83,7 +80,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     margin-bottom: 12px;
 }
 
@@ -112,9 +108,7 @@
 .blue-dot {
     width: 13px;
     height: 13px;
-
     border-radius: 50%;
-
     background-color: #465EFF;
 }
 
@@ -135,11 +129,9 @@
     overflow: hidden;
 
     min-height: 225px;
-
     padding: 28px 25px 21px;
 
     box-sizing: border-box;
-
     border-radius: 17px;
 
     background: linear-gradient(
@@ -169,7 +161,6 @@
     bottom: -200px;
 
     border-radius: 50%;
-
     background-color: rgba(255, 255, 255, 0.10);
 
     pointer-events: none;
@@ -191,7 +182,6 @@
     padding: 7px 14px;
 
     background-color: #42D0BD;
-
     color: white;
 
     border-radius: 25px;
@@ -207,7 +197,6 @@
     height: 9px;
 
     background-color: white;
-
     border-radius: 50%;
 }
 
@@ -242,14 +231,12 @@
 
 .active-session-content h3 {
     font-family: 'Inter', sans-serif;
-
     font-size: 21px;
     font-weight: 700;
 
     color: white;
 
     margin-top: 10px;
-
     line-height: 1.35;
 }
 
@@ -278,7 +265,6 @@
     border-radius: 25px;
 
     color: white;
-
     font-size: 12px;
 }
 
@@ -339,7 +325,6 @@
     padding: 11px 19px;
 
     background-color: white;
-
     color: #2948DB;
 
     border-radius: 30px;
@@ -349,7 +334,6 @@
     font-weight: 500;
 
     white-space: nowrap;
-
     cursor: pointer;
 }
 
@@ -375,7 +359,6 @@
     height: 12px;
 
     border-radius: 50%;
-
     background-color: #CDD2F8;
 
     cursor: pointer;
@@ -398,42 +381,33 @@
     margin-bottom: 12px;
 }
 
-
-/* GRID */
-
 .upcoming-grid {
     display: grid;
-
     grid-template-columns: repeat(2, minmax(0, 1fr));
-
     gap: 12px;
 }
 
 
-/* SESSION CARD */
+/* UPCOMING SESSION CARD */
 
 .session-card {
     display: flex;
     flex-direction: column;
 
     min-width: 0;
-    min-height: 255px;
+    min-height: 300px;
 
-    padding: 20px 23px 13px;
+    padding: 20px 23px 16px;
 
     box-sizing: border-box;
 
-    background-color: white;
+    background-color: #FFFFFF;
 
     border: 1px solid #E2E6FF;
-
     border-radius: 16px;
 
     box-shadow: 0 3px 9px rgba(72, 86, 170, 0.035);
 }
-
-
-/* SUBJECT AND CLASS */
 
 .session-card-top {
     display: flex;
@@ -443,7 +417,11 @@
 }
 
 
-/* SUBJECT PILL */
+/* ==========================================
+   UNIFIED SUBJECT COLOUR SYSTEM
+========================================== */
+
+/* ALL SUBJECT BADGES — SAME BLUE */
 
 .subject-pill {
     display: inline-flex;
@@ -451,16 +429,10 @@
     justify-content: center;
 
     padding: 7px 14px;
-
     min-width: 58px;
 
-    background: linear-gradient(
-        120deg,
-        #4D69FF,
-        #557DFF
-    );
-
-    color: white;
+    background: #536CFF;
+    color: #FFFFFF;
 
     border-radius: 25px;
 
@@ -468,12 +440,25 @@
     font-weight: 500;
 }
 
+/* Every subject theme uses the same blue. */
+
+.subject-theme-pps,
+.subject-theme-python,
+.subject-theme-coa,
+.subject-theme-dstl,
+.subject-theme-de,
+.subject-theme-tc,
+.subject-theme-dsa,
+.subject-theme-default {
+    background: #536CFF;
+    color: #FFFFFF;
+}
+
 
 /* CLASS TEXT */
 
 .class-text {
     color: #626B9C;
-
     font-size: 13px;
     font-weight: 400;
 }
@@ -483,37 +468,99 @@
 
 .session-card > h3 {
     font-family: 'Inter', sans-serif;
-
     font-size: 19px;
     font-weight: 700;
 
     color: #101A91;
 
     line-height: 1.4;
-
-    margin-top: 12px;
+    margin-top: 13px;
 
     max-width: 95%;
 }
 
 
-/* SESSION DETAILS */
+/* ==========================================
+   TOPICS
+========================================== */
+
+.session-topics {
+    margin-top: 15px;
+}
+
+.topics-heading {
+    margin-bottom: 8px;
+
+    color: #626B9C;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.topic-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 7px;
+}
+
+
+/* ALL SUBJECT TOPIC PILLS — SAME BLUE */
+
+.topic-pill {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 6px 11px;
+
+    background: #EEF0FF;
+    color: #4058D8;
+
+    border-radius: 20px;
+
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.35;
+}
+
+
+/* All theme classes use the exact same topic styling. */
+
+.topic-list.theme-pps .topic-pill,
+.topic-list.theme-python .topic-pill,
+.topic-list.theme-coa .topic-pill,
+.topic-list.theme-dstl .topic-pill,
+.topic-list.theme-de .topic-pill,
+.topic-list.theme-tc .topic-pill,
+.topic-list.theme-dsa .topic-pill,
+.topic-list.theme-default .topic-pill {
+    background: #EEF0FF;
+    color: #4058D8;
+}
+
+.no-topics {
+    color: #9299B8;
+    font-size: 12px;
+}
+
+
+/* ==========================================
+   SESSION DETAILS
+   Deliberately no divider lines or filled containers.
+========================================== */
 
 .session-details {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 11px;
 
-    margin-top: 24px;
+    margin-top: 18px;
 }
-
-
-/* DETAIL ROW */
 
 .detail-row {
     display: flex;
-    align-items: flex-start;
-    gap: 12px;
+    align-items: center;
+    gap: 10px;
 
     color: #3443B8;
 
@@ -522,36 +569,54 @@
 }
 
 .detail-row > svg {
-    width: 19px;
-    height: 19px;
+    width: 18px;
+    height: 18px;
 
     flex-shrink: 0;
 
-    margin-top: 1px;
+    color: #536CFF;
 }
 
-
-/* DEADLINE */
-
-.deadline-row > div {
+.submission-window-row > span {
     display: flex;
-    flex-direction: column;
-    gap: 1px;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 7px;
+}
+
+.date-label {
+    color: #69719F;
+    font-size: 12px;
+}
+
+.date-value {
+    color: #3443B8;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.session-date-row .date-value {
+    color: #101A91;
+
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+}
+
+.date-separator {
+    padding: 0 3px;
+    color: #8B92B8;
 }
 
 
-/* CARD ACTIONS */
+/* SESSION CARD ACTIONS */
 
 .session-card-actions {
     display: flex;
     justify-content: flex-end;
 
     margin-top: auto;
-    padding-top: 10px;
+    padding-top: 14px;
 }
-
-
-/* EDIT BUTTON */
 
 .edit-session-btn {
     display: flex;
@@ -562,18 +627,15 @@
     padding: 9px 16px;
 
     border: 1px solid #CCD2FF;
-
     border-radius: 25px;
 
     color: #294AFF;
-
     background-color: white;
 
     font-family: 'Poppins', sans-serif;
     font-size: 12px;
 
     cursor: pointer;
-
     white-space: nowrap;
 }
 
@@ -602,11 +664,9 @@
     padding: 8px 14px;
 
     border: 1px solid #DCE1FF;
-
     border-radius: 25px;
 
     background-color: white;
-
     color: #294AFF;
 
     font-family: 'Poppins', sans-serif;
@@ -625,9 +685,7 @@
 
 .past-grid {
     display: grid;
-
     grid-template-columns: repeat(2, minmax(0, 1fr));
-
     gap: 12px;
 }
 
@@ -640,7 +698,6 @@
     background-color: white;
 
     border: 1px solid #E2E6FF;
-
     border-radius: 16px;
 
     box-shadow: 0 3px 9px rgba(72, 86, 170, 0.035);
@@ -653,7 +710,6 @@
 
 .past-session-content h3 {
     font-family: 'Inter', sans-serif;
-
     font-size: 16px;
     font-weight: 700;
 
@@ -687,7 +743,6 @@
     border-radius: 25px;
 
     background-color: #DDF7EB;
-
     color: #079B68;
 
     font-size: 12px;
