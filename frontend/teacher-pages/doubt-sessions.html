@@ -7,223 +7,291 @@
 
     <title>Doubt Sessions | ClariQ</title>
 
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Shared CSS -->
     <link rel="stylesheet" href="../teacher-css/common.css">
+
+    <!-- Page CSS -->
     <link rel="stylesheet" href="../teacher-css/doubt-sessions.css">
 
+    <!-- Lucide -->
     <script src="https://unpkg.com/lucide@latest" defer></script>
+
+    <!-- Shared Components -->
     <script src="../teacher-js/components.js" defer></script>
+
+    <!-- Page JS -->
     <script src="../teacher-js/doubt-sessions.js" defer></script>
+
 </head>
 
 <body>
 
-    <!-- SIDEBAR -->
+    <!-- SHARED SIDEBAR -->
     <div id="sidebar-container"></div>
 
-    <!-- TOPBAR -->
-    <div id="topbar-container"></div>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- SHARED TOPBAR -->
+        <div id="topbar-container"></div>
 
 
-    <main class="sessions-page">
+        <section class="sessions-page">
 
 
-        <!-- PAGE HEADER -->
+            <!-- =====================================
+                 PAGE HEADER
+            ====================================== -->
 
-        <section class="page-title">
+            <div class="page-header">
 
-            <div>
-                <h1>Doubt Sessions</h1>
+                <div class="page-heading">
 
-                <p>
-                    Plan, organise and manage your doubt-clearing sessions.
-                </p>
-            </div>
+                    <h1>Doubt Sessions</h1>
 
-            <button class="primary-btn" id="create-session-btn">
-                <i data-lucide="plus"></i>
-                Create Session
-            </button>
-
-        </section>
-
-
-
-        <!-- STATISTICS -->
-
-        <section class="stats-grid">
-
-            <article class="stat-card">
-
-                <div class="stat-icon upcoming-icon">
-                    <i data-lucide="calendar-days"></i>
-                </div>
-
-                <div>
-                    <h2 id="upcoming-count">03</h2>
-                    <p>Upcoming Sessions</p>
-                </div>
-
-            </article>
-
-
-            <article class="stat-card">
-
-                <div class="stat-icon draft-icon">
-                    <i data-lucide="file-pen-line"></i>
-                </div>
-
-                <div>
-                    <h2 id="draft-count">02</h2>
-                    <p>Active Drafts</p>
-                </div>
-
-            </article>
-
-
-            <article class="stat-card">
-
-                <div class="stat-icon completed-icon">
-                    <i data-lucide="circle-check"></i>
-                </div>
-
-                <div>
-                    <h2 id="completed-count">08</h2>
-                    <p>Completed Sessions</p>
-                </div>
-
-            </article>
-
-
-            <article class="stat-card">
-
-                <div class="stat-icon doubts-icon">
-                    <i data-lucide="message-circle-question"></i>
-                </div>
-
-                <div>
-                    <h2 id="draft-doubts-count">14</h2>
-                    <p>Doubts in Drafts</p>
-                </div>
-
-            </article>
-
-        </section>
-
-
-
-        <!-- UPCOMING SESSIONS -->
-
-        <section class="content-section">
-
-            <div class="section-heading">
-
-                <div class="section-title">
-
-                    <i data-lucide="calendar-days"></i>
-
-                    <div>
-                        <h2>Upcoming Sessions</h2>
-                        <p>Your scheduled doubt-clearing sessions.</p>
-                    </div>
+                    <p>
+                        Manage your academic doubt-solving sessions.
+                    </p>
 
                 </div>
 
-                <button class="view-all-btn" data-action="view-all-upcoming">
-                    View All
-                    <i data-lucide="arrow-right"></i>
+
+                <button
+                    class="primary-btn"
+                    id="create-session-btn"
+                    type="button">
+
+                    <i data-lucide="plus"></i>
+
+                    Schedule a Session
+
                 </button>
 
             </div>
 
 
-            <div class="horizontal-scroll-wrapper">
 
-                <div class="upcoming-list" id="upcoming-list">
+            <!-- =====================================
+                 ACTIVE SESSIONS
+            ====================================== -->
 
-                    <!-- Generated using JS -->
+            <section class="active-section">
 
-                </div>
+                <div class="section-heading">
 
-            </div>
+                    <div class="section-label">
 
-        </section>
+                        <span class="blue-dot"></span>
 
+                        <h2 id="active-session-heading">
+                            ACTIVE SESSIONS (00)
+                        </h2>
 
-
-        <!-- SESSION DRAFTS -->
-
-        <section class="content-section drafts-section">
-
-            <div class="section-heading">
-
-                <div class="section-title">
-
-                    <i data-lucide="file-text"></i>
-
-                    <div>
-                        <h2>Session Drafts</h2>
-                        <p>
-                            Organise doubts collected from your Doubt Inbox before scheduling a session.
-                        </p>
                     </div>
 
                 </div>
 
-                <button class="view-all-btn" data-action="view-all-drafts">
-                    View All
-                    <i data-lucide="arrow-right"></i>
-                </button>
 
-            </div>
+                <div class="active-carousel">
 
+                    <div
+                        class="active-carousel-track"
+                        id="active-session-track"
+                        style="display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;scroll-behavior:smooth;">
 
-            <div class="draft-list" id="draft-list">
-
-                <!-- Generated using JS -->
-
-            </div>
-
-        </section>
+                    </div>
 
 
+                    <div
+                        class="carousel-indicators"
+                        id="carousel-indicators">
 
-        <!-- PAST SESSIONS -->
-
-        <section class="content-section past-section">
-
-            <div class="section-heading">
-
-                <div class="section-title">
-
-                    <i data-lucide="circle-check"></i>
-
-                    <div>
-                        <h2>Past Sessions</h2>
-                        <p>
-                            Review previously conducted doubt-clearing sessions and their summaries.
-                        </p>
                     </div>
 
                 </div>
 
-                <button class="view-all-btn" data-action="view-all-past">
-                    View All
-                    <i data-lucide="arrow-right"></i>
-                </button>
-
-            </div>
+            </section>
 
 
-            <div class="past-list" id="past-list">
 
-                <!-- Generated using JS -->
+            <!-- =====================================
+                 UPCOMING SESSIONS
+            ====================================== -->
 
-            </div>
+            <section class="content-section upcoming-section">
+
+                <div class="section-heading">
+
+                    <div class="section-label">
+
+                        <i data-lucide="calendar-days"></i>
+
+                        <h2 id="upcoming-session-heading">
+                            UPCOMING SESSIONS (00)
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Upcoming cards are rendered dynamically by JS -->
+                <div
+                    class="upcoming-grid"
+                    id="upcoming-list">
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =====================================
+                 PAST SESSIONS
+            ====================================== -->
+
+            <section class="content-section past-section">
+
+                <div class="section-heading">
+
+                    <div class="section-label">
+
+                        <i data-lucide="clock"></i>
+
+                        <h2>PAST SESSIONS</h2>
+
+                    </div>
+
+
+                    <button
+                        class="view-all-btn"
+                        type="button">
+
+                        View All
+
+                        <i data-lucide="arrow-right"></i>
+
+                    </button>
+
+                </div>
+
+
+                <div class="past-grid" id="past-list">
+
+
+                    <!-- PAST SESSION 1 -->
+                    <article class="past-session-card">
+
+                        <div class="past-session-content">
+
+                            <div class="session-card-top">
+
+                                <span class="subject-pill">
+                                    PPS
+                                </span>
+
+                                <span class="class-text">
+                                    1st Year · AIML
+                                </span>
+
+                            </div>
+
+
+                            <h3>
+                                Programming Fundamentals
+                            </h3>
+
+
+                            <div class="past-session-footer">
+
+                                <div class="detail-row">
+
+                                    <i data-lucide="calendar-days"></i>
+
+                                    <span>
+                                        15 Nov 2026
+                                    </span>
+
+                                </div>
+
+
+                                <span class="completed-badge">
+                                    Completed
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- PAST SESSION 2 -->
+                    <article class="past-session-card">
+
+                        <div class="past-session-content">
+
+                            <div class="session-card-top">
+
+                                <span class="subject-pill">
+                                    Python
+                                </span>
+
+                                <span class="class-text">
+                                    2nd Year · CS
+                                </span>
+
+                            </div>
+
+
+                            <h3>
+                                Python Functions and Modules
+                            </h3>
+
+
+                            <div class="past-session-footer">
+
+                                <div class="detail-row">
+
+                                    <i data-lucide="calendar-days"></i>
+
+                                    <span>
+                                        10 Nov 2026
+                                    </span>
+
+                                </div>
+
+
+                                <span class="completed-badge">
+                                    Completed
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                </div>
+
+            </section>
+
 
         </section>
-
 
     </main>
 
 </body>
+
 </html>

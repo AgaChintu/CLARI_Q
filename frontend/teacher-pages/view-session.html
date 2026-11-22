@@ -1,0 +1,280 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>View Session | ClariQ</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Shared CSS -->
+    <link rel="stylesheet" href="../teacher-css/common.css">
+
+    <!-- Page CSS -->
+    <link rel="stylesheet" href="../teacher-css/view-session.css">
+
+    <!-- Lucide -->
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+
+    <!-- Shared Components -->
+    <script src="../teacher-js/components.js" defer></script>
+
+    <!-- Demo Analysis Data -->
+    <script src="../teacher-js/session-analysis-demo.js" defer></script>
+
+    <!-- Page JS -->
+    <script src="../teacher-js/view-session.js" defer></script>
+
+</head>
+
+<body>
+
+    <!-- SHARED SIDEBAR -->
+    <div id="sidebar-container"></div>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- SHARED TOPBAR -->
+        <div id="topbar-container"></div>
+
+
+        <section class="view-session-page">
+            <!-- =====================================
+     SESSION OVERVIEW CARD
+====================================== -->
+
+            <div class="session-overview-card">
+
+                <!-- PAGE HEADER -->
+
+                <header class="page-header">
+
+                    <a href="doubt-sessions.html" class="back-link">
+                        <i data-lucide="arrow-left"></i>
+                        Back to Doubt Sessions
+                    </a>
+
+                    <div class="title-row">
+
+                        <div>
+                            <h1 id="session-title">
+                                Loading session...
+                            </h1>
+
+                            <p id="session-meta"></p>
+                        </div>
+
+                        <div class="session-status" id="session-status">
+                            <span></span>
+                            Collecting Doubts
+                        </div>
+
+                    </div>
+
+                </header>
+
+
+                <!-- SYLLABUS COVERAGE -->
+
+                <section class="coverage-section">
+
+                    <div class="section-heading">
+
+                        <div class="heading-icon">
+                            <i data-lucide="book-open"></i>
+                        </div>
+
+                        <div>
+                            <h2>Syllabus Coverage</h2>
+
+                            <p>
+                                Topics selected for this doubt-solving session.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="coverage-content" id="coverage-content">
+
+                        <p class="coverage-empty">
+                            Loading syllabus coverage...
+                        </p>
+
+                    </div>
+
+                </section>
+
+            </div>
+            <!-- =====================================
+                 SESSION STATISTICS
+            ====================================== -->
+
+            <section class="stats-grid">
+
+
+                <article class="stat-card">
+
+                    <div class="stat-icon blue">
+                        <i data-lucide="message-circle"></i>
+                    </div>
+
+                    <div>
+                        <span>Total Doubts</span>
+                        <strong id="total-doubts">0</strong>
+                    </div>
+
+                </article>
+
+
+
+                <article class="stat-card">
+
+                    <div class="stat-icon purple">
+                        <i data-lucide="users"></i>
+                    </div>
+
+                    <div>
+                        <span>Participants</span>
+                        <strong id="total-participants">0</strong>
+                    </div>
+
+                </article>
+
+
+
+                <article class="stat-card">
+
+                    <div class="stat-icon green">
+                        <i data-lucide="layers"></i>
+                    </div>
+
+                    <div>
+                        <span>Doubt Groups</span>
+                        <strong id="total-groups">0</strong>
+                    </div>
+
+                </article>
+
+
+
+                <article class="stat-card">
+
+                    <div class="stat-icon orange">
+                        <i data-lucide="book-marked"></i>
+                    </div>
+
+                    <div>
+                        <span>Topics</span>
+                        <strong id="total-topics">0</strong>
+                    </div>
+
+                </article>
+
+
+            </section>
+
+
+
+            <!-- =====================================
+                 DOUBT ANALYSIS + AI SUMMARY
+            ====================================== -->
+
+            <section class="analysis-layout">
+
+
+                <!-- LEFT: DOUBT GROUPS -->
+
+                <div class="analysis-main">
+
+                    <div class="section-heading analysis-heading">
+
+                        <div>
+                            <h2>Doubt Analysis</h2>
+
+                            <p>
+                                Similar doubts grouped by common concepts
+                                and confusion areas.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="doubt-groups" id="doubt-groups">
+
+                        <div class="loading-state">
+                            Loading doubt analysis...
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- RIGHT: OVERALL AI SUMMARY -->
+
+                <aside class="summary-card">
+
+                    <div class="summary-header">
+
+                        <div class="summary-icon">
+                            <i data-lucide="sparkles"></i>
+                        </div>
+
+                        <div>
+                            <h2>AI Summary</h2>
+
+                            <span>
+                                Overall session overview
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="summary-body" id="summary-body">
+
+                        <p>
+                            Generating session summary...
+                        </p>
+
+                    </div>
+
+
+                    <div class="summary-footer">
+
+                        <i data-lucide="info"></i>
+
+                        <span>
+                            AI-generated analysis is intended to assist
+                            teacher review. Original student doubts
+                            remain unchanged.
+                        </span>
+
+                    </div>
+
+                </aside>
+
+
+            </section>
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>
+```

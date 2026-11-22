@@ -6,14 +6,23 @@ const sampleLibraryDoubts = [
 
     {
         id: 101,
+
         title: "Understanding Binary Search Trees",
+
         question: "How does insertion work in a Binary Search Tree, and what happens when we insert duplicate values?",
+
         subject: "DSA",
+
         teacherName: "Dr. Dhaka",
+
         status: "resolved",
+
         publishedToLibrary: true,
+
         isDemo: true,
+
         tags: ["Trees", "BST", "Data Structures"],
+
         teacherResources: [
             {
                 name: "BST Notes.pdf",
@@ -25,35 +34,57 @@ const sampleLibraryDoubts = [
                 url: "https://example.com"
             }
         ],
+
         createdAt: "2026-11-05",
+
         resolvedAt: "2026-11-07"
     },
 
     {
         id: 102,
+
         title: "Understanding Cache Memory",
+
         question: "What is the difference between direct mapping and associative mapping in cache memory?",
+
         subject: "COA",
+
         teacherName: "Prof. Kamran",
+
         status: "resolved",
+
         publishedToLibrary: true,
+
         isDemo: true,
+
         tags: ["Cache Memory", "Mapping"],
+
         teacherResources: [],
+
         createdAt: "2026-11-04",
+
         resolvedAt: "2026-11-06"
     },
 
     {
         id: 103,
+
         title: "First Order Differential Equations",
+
         question: "How do we identify whether a differential equation is exact or linear, and which method should we apply?",
+
         subject: "DSTL",
+
         teacherName: "Prof. Kamlendra",
+
         status: "resolved",
+
         publishedToLibrary: true,
+
         isDemo: true,
+
         tags: ["Differential Equations", "Mathematics"],
+
         teacherResources: [
             {
                 name: "Differential Equations Notes.pdf",
@@ -61,20 +92,31 @@ const sampleLibraryDoubts = [
                 url: "#"
             }
         ],
+
         createdAt: "2026-11-03",
+
         resolvedAt: "2026-11-05"
     },
 
     {
         id: 104,
+
         title: "Python Decorators Explained",
+
         question: "What exactly happens when a decorator is applied to a function, and how does the wrapper function work?",
+
         subject: "Python",
+
         teacherName: "Prof. Vivek Shukla",
+
         status: "resolved",
+
         publishedToLibrary: true,
+
         isDemo: true,
+
         tags: ["Decorators", "Functions", "Python"],
+
         teacherResources: [
             {
                 name: "Python Decorators Guide.pdf",
@@ -86,35 +128,57 @@ const sampleLibraryDoubts = [
                 url: "https://docs.python.org/3/"
             }
         ],
+
         createdAt: "2026-11-02",
+
         resolvedAt: "2026-11-04"
     },
 
     {
         id: 105,
+
         title: "Introduction to Database Normalization",
+
         question: "Why do we use normalization in relational databases, and how do 1NF, 2NF and 3NF differ?",
+
         subject: "DE",
+
         teacherName: "Prof. Nipun Pande",
+
         status: "resolved",
+
         publishedToLibrary: true,
+
         isDemo: true,
+
         tags: ["Normalization", "DBMS", "SQL"],
+
         teacherResources: [],
+
         createdAt: "2026-11-01",
+
         resolvedAt: "2026-11-03"
     },
 
     {
         id: 106,
+
         title: "Understanding Context-Free Grammars",
+
         question: "How can we determine whether a grammar is ambiguous, and what role do parse trees play in this?",
+
         subject: "TC",
+
         teacherName: "Dr. Ruchi Shah",
+
         status: "resolved",
+
         publishedToLibrary: true,
+
         isDemo: true,
+
         tags: ["CFG", "Grammars", "Parse Trees"],
+
         teacherResources: [
             {
                 name: "CFG Reference Notes.pdf",
@@ -122,7 +186,9 @@ const sampleLibraryDoubts = [
                 url: "#"
             }
         ],
+
         createdAt: "2026-10-30",
+
         resolvedAt: "2026-11-02"
     }
 
@@ -167,7 +233,9 @@ function loadLibraryData() {
     return library.filter(doubt => {
 
         return (
+
             doubt.status === "resolved" &&
+
             (
                 doubt.publishedToLibrary === true ||
                 doubt.isPublished === true ||
@@ -175,6 +243,7 @@ function loadLibraryData() {
                 doubt.published === true ||
                 doubt.visibility === "published"
             )
+
         );
 
     });
@@ -186,13 +255,17 @@ function loadLibraryData() {
 // 4. GET HTML ELEMENTS
 // ==========================================
 
-const searchInput = document.getElementById("searchInput");
+const searchInput =
+    document.getElementById("searchInput");
 
-const subjectFilter = document.getElementById("subjectSelect");
+const subjectFilter =
+    document.getElementById("subjectSelect");
 
-const libraryList = document.getElementById("libraryList");
+const libraryList =
+    document.getElementById("libraryList");
 
-const noResults = document.getElementById("noResults");
+const noResults =
+    document.getElementById("noResults");
 
 
 // ==========================================
@@ -266,11 +339,13 @@ function escapeHTML(value) {
     return String(value ?? "").replace(/[&<>"']/g, character => {
 
         const entities = {
+
             "&": "&amp;",
             "<": "&lt;",
             ">": "&gt;",
             '"': "&quot;",
             "'": "&#39;"
+
         };
 
         return entities[character];
@@ -288,13 +363,17 @@ function getResourceCount(doubt) {
 
     const resources = [
 
-        ...(Array.isArray(doubt.teacherResources) ? doubt.teacherResources : []),
+        ...(Array.isArray(doubt.teacherResources)
+            ? doubt.teacherResources : []),
 
-        ...(Array.isArray(doubt.teacherAttachments) ? doubt.teacherAttachments : []),
+        ...(Array.isArray(doubt.teacherAttachments)
+            ? doubt.teacherAttachments : []),
 
-        ...(Array.isArray(doubt.answerAttachments) ? doubt.answerAttachments : []),
+        ...(Array.isArray(doubt.answerAttachments)
+            ? doubt.answerAttachments : []),
 
-        ...(Array.isArray(doubt.resources) ? doubt.resources : [])
+        ...(Array.isArray(doubt.resources)
+            ? doubt.resources : [])
 
     ];
 
@@ -308,7 +387,9 @@ function getResourceCount(doubt) {
             resource.name;
 
         if (identifier) {
+
             uniqueResources.set(identifier, resource);
+
         }
 
     });
@@ -328,34 +409,59 @@ function createLibraryCard(doubt) {
 
     card.className = "library-card";
 
-    const subject = subjectStyles[doubt.subject] || {};
+    card.tabIndex = 0;
 
-    const subjectIcon = subject.icon || "";
+    card.setAttribute("role", "button");
 
-    const resourceCount = getResourceCount(doubt);
+
+    // SUBJECT
+
+    const subject = escapeHTML(
+        doubt.subject || "General"
+    );
+
+
+    // QUESTION
+
+    const question = escapeHTML(
+        doubt.question ||
+        doubt.description ||
+        doubt.title ||
+        "No question provided."
+    );
+
+
+    // TAGS
 
     const tags = Array.isArray(doubt.tags)
         ? doubt.tags
         : [];
 
+
     const tagsHTML = tags.length
 
         ? `
-            <div class="doubt-tags">
+
+            <div class="library-tags">
 
                 ${tags.map(tag => `
-                    <span class="doubt-tag">
+
+                    <span class="library-tag">
+
                         ${escapeHTML(tag)}
+
                     </span>
+
                 `).join("")}
 
             </div>
+
         `
 
         : "";
 
 
-    // Teacher information
+    // TEACHER INFORMATION
 
     const teacherHTML = `
 
@@ -364,18 +470,24 @@ function createLibraryCard(doubt) {
             <i data-lucide="user-round"></i>
 
             <span class="teacher-name">
+
                 ${escapeHTML(
                     doubt.answeredBy ||
                     doubt.teacherName ||
                     "Teacher"
                 )}
+
             </span>
 
             <span class="doubt-date">
-                ${formatRelativeDate(
-                    doubt.resolvedAt ||
-                    doubt.createdAt
+
+                ${escapeHTML(
+                    formatRelativeDate(
+                        doubt.resolvedAt ||
+                        doubt.createdAt
+                    )
                 )}
+
             </span>
 
         </div>
@@ -383,11 +495,14 @@ function createLibraryCard(doubt) {
     `;
 
 
-    // Resource indicator
+    // RESOURCE INDICATOR
+
+    const resourceCount = getResourceCount(doubt);
 
     const resourceHTML = resourceCount > 0
 
         ? `
+
             <div class="resource-indicator">
 
                 <i data-lucide="link"></i>
@@ -395,66 +510,82 @@ function createLibraryCard(doubt) {
                 <span>${resourceCount}</span>
 
             </div>
+
         `
 
         : "";
 
 
-    // Card HTML
+    // CARD HTML
 
     card.innerHTML = `
 
-        <div class="doubt-icon">
+        <!-- TOP ROW -->
 
-            ${subjectIcon
-                ? `<img src="${escapeHTML(subjectIcon)}"
-                        alt="${escapeHTML(doubt.subject)}">`
-                : `<span>${escapeHTML(doubt.subject)}</span>`
-            }
+        <div class="library-card-top">
+
+            <span class="subject-badge">
+
+                ${subject}
+
+            </span>
 
         </div>
 
 
-        <div class="doubt-info">
+        <!-- QUESTION -->
 
-            <div class="doubt-meta">
+        <p class="library-question">
 
-                <span class="doubt-title">
-                    ${escapeHTML(doubt.title || "Untitled Doubt")}
-                </span>
+            ${question}
 
-                <span class="separator">•</span>
-
-                <span class="doubt-subject">
-                    ${escapeHTML(doubt.subject)}
-                </span>
-
-            </div>
+        </p>
 
 
-            <p class="doubt-ques">
-                ${escapeHTML(doubt.question)}
-            </p>
+        <!-- TAGS -->
+
+        ${tagsHTML}
 
 
-            ${tagsHTML}
+        <!-- BOTTOM ROW -->
+
+        <div class="library-card-bottom">
 
             ${teacherHTML}
 
+            ${resourceHTML}
+
         </div>
-
-
-        ${resourceHTML}
 
     `;
 
 
-    // Open doubt details
+    // OPEN DOUBT DETAILS
 
-    card.addEventListener("click", function() {
+    function openDoubt() {
 
         window.location.href =
+
             `doubt-details.html?source=library&id=${encodeURIComponent(doubt.id)}`;
+
+    }
+
+
+    card.addEventListener("click", openDoubt);
+
+
+    card.addEventListener("keydown", event => {
+
+        if (
+            event.key === "Enter" ||
+            event.key === " "
+        ) {
+
+            event.preventDefault();
+
+            openDoubt();
+
+        }
 
     });
 
@@ -482,6 +613,7 @@ function displayLibrary(doubtsToDisplay) {
 
     noResults.hidden = true;
 
+
     doubtsToDisplay.forEach(doubt => {
 
         libraryList.appendChild(
@@ -490,8 +622,13 @@ function displayLibrary(doubtsToDisplay) {
 
     });
 
+
+    // RENDER LUCIDE ICONS
+
     if (window.lucide) {
+
         lucide.createIcons();
+
     }
 
 }
@@ -516,6 +653,7 @@ function filterLibrary() {
             ? doubt.tags
             : [];
 
+
         const searchableContent = [
 
             doubt.title,
@@ -524,6 +662,7 @@ function filterLibrary() {
             doubt.subject,
             doubt.teacherName,
             doubt.answeredBy,
+
             ...tags
 
         ].join(" ").toLowerCase();
@@ -552,14 +691,20 @@ function filterLibrary() {
 // 12. SEARCH EVENT
 // ==========================================
 
-searchInput.addEventListener("input", filterLibrary);
+searchInput.addEventListener(
+    "input",
+    filterLibrary
+);
 
 
 // ==========================================
 // 13. SUBJECT FILTER EVENT
 // ==========================================
 
-subjectFilter.addEventListener("change", filterLibrary);
+subjectFilter.addEventListener(
+    "change",
+    filterLibrary
+);
 
 
 // ==========================================

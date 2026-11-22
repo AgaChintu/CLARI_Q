@@ -1,1 +1,19 @@
-backend.zip
+# Python virtual environments
+backend-python/venv/
+venv/
+
+# Environment variables
+backend-python/.env
+.env
+
+# Python generated files
+__pycache__/
+*.pyc
+
+# Editor files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
