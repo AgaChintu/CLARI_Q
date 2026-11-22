@@ -22,7 +22,7 @@
 
 .page-title h1 {
     font-size: 28px;
-    color: #0f2658;
+    color: #0F2658;
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
 }
@@ -55,13 +55,12 @@
     margin-bottom: 18px;
 }
 
-
 .search-box {
     display: flex;
     align-items: center;
     gap: 12px;
 
-    border: 1px solid #c9d0df;
+    border: 1px solid #C9D0DF;
     border-radius: 6px;
 
     padding: 4px 8px;
@@ -70,20 +69,17 @@
     min-width: 0;
 }
 
-
 .search-box svg {
     width: 18px;
     height: 18px;
     color: #8493AE;
 }
 
-
 .search-box input::placeholder {
     color: #667085;
     font-size: 14px;
     font-family: 'Poppins', sans-serif;
 }
-
 
 .search-card input {
     flex: 1;
@@ -98,14 +94,16 @@
 }
 
 
-/* SUBJECT SELECT */
+/* ==========================================
+   SUBJECT SELECT
+========================================== */
 
 .select-wrapper {
     display: flex;
     gap: 12px;
     align-items: center;
 
-    border: 1px solid #c9d0df;
+    border: 1px solid #C9D0DF;
     border-radius: 8px;
 
     padding: 4px 14px;
@@ -114,11 +112,9 @@
     cursor: pointer;
 }
 
-
 .select-subj {
     height: 30px;
     border: none;
-
     appearance: none;
 
     width: 100%;
@@ -133,13 +129,11 @@
     font-family: 'Poppins', sans-serif;
 }
 
-
 .select-subj option {
     font-size: 14px;
     color: #667085;
     font-family: 'Poppins', sans-serif;
 }
-
 
 .select-wrapper svg {
     width: 18px;
@@ -174,16 +168,13 @@
     white-space: nowrap;
     cursor: pointer;
 
-    transition: background-color 0.2s ease,
-                transform 0.2s ease;
+    transition: 0.2s ease;
 }
-
 
 .ask-doubt-btn:hover {
-    background: #3456ed;
+    background: #3456ED;
     transform: translateY(-1px);
 }
-
 
 .ask-doubt-btn svg {
     width: 18px;
@@ -192,154 +183,118 @@
 
 
 /* ==========================================
-   SORT CONTROLS
+   LIBRARY LIST
 ========================================== */
 
-.doubt-controls {
+.library-list {
     display: flex;
-    align-items: center;
-    justify-content: flex-end;
-
-    background-color: white;
-    border-radius: 10px;
-
-    height: 40px;
-    padding: 6px 12px;
-
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-
-    margin-bottom: 14px;
-}
-
-
-.sort-controls {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-
-    margin-left: auto;
-    padding: 4px 6px;
-
-    width: auto;
-}
-
-
-.sort-controls select {
-    appearance: none;
-    border: none;
-    outline: none;
-
-    color: #667085;
-
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-
-    cursor: pointer;
-    background: transparent;
-}
-
-
-.sort-controls svg {
-    height: 18px;
-    width: 18px;
-    color: #8493AE;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
 }
 
 
 /* ==========================================
-   LIBRARY CARDS
+   LIBRARY CARD
 ========================================== */
 
 .library-card {
     display: flex;
-    align-items: center;
-    gap: 28px;
+    flex-direction: column;
+    align-items: stretch;
 
-    border-radius: 12px;
+    width: 100%;
+    min-height: auto;
 
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+    padding: 20px 30px;
 
-    padding: 12px 16px;
+    background: #FFFFFF;
 
-    min-height: 90px;
+    border: 1px solid #DCE6FF;
+    border-radius: 15px;
 
-    margin-bottom: 12px;
-
-    background: linear-gradient(110deg, #ffffff, #fafbff);
-
-    border: 1px solid #e3ebff;
+    box-shadow: none;
 
     cursor: pointer;
 
-    transition: border-color 0.2s ease,
-                background-color 0.2s ease;
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
 }
-
 
 .library-card:hover {
-    background: #f8faff;
-    border-color: #bdceff;
+    transform: translateY(-2px);
+
+    background: #F3F6FF;
+
+    border-color: #CCD5F2;
+
+    box-shadow: 0 5px 18px rgba(73, 101, 232, 0.07);
+}
+
+.library-card:focus-visible {
+    outline: 2px solid #4965E8;
+    outline-offset: 3px;
 }
 
 
 /* ==========================================
-   SUBJECT ICON
+   CARD TOP ROW
 ========================================== */
 
-.doubt-icon {
+.library-card-top {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
 
-}
+    gap: 15px;
 
-
-.doubt-icon svg {
-    height: 32px;
-    width: 32px;
-
+    margin-bottom: 12px;
 }
 
 
 /* ==========================================
-   DOUBT INFORMATION
+   SUBJECT BADGE
 ========================================== */
 
-.doubt-info {
-    width: 70%;
-    min-width: 0;
-    flex: 1;
-}
-
-
-.doubt-meta {
-    display: flex;
+.subject-badge {
+    display: inline-flex;
     align-items: center;
-    gap: 6px;
+
+    padding: 6px 13px;
+
+    background: #4965E8;
+    color: #FFFFFF;
+
+    border-radius: 7px;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+
+    letter-spacing: 0.2px;
 }
 
 
-.doubt-title {
+/* ==========================================
+   QUESTION
+========================================== */
+
+.library-question {
+    margin: 0 0 14px;
+
     font-family: 'Inter', sans-serif;
-}
 
+    font-size: 15px;
+    font-weight: 600;
 
-.separator {
-    color: #667085;
-}
+    line-height: 1.65;
 
+    color: #0F2658;
 
-.doubt-subject {
-    color: #667085;
-    font-family: 'Inter', sans-serif;
-}
-
-
-.doubt-ques {
-    color: #667085;
-    font-size: 14px;
-
-    margin-top: 8px;
+    letter-spacing: -0.15px;
 }
 
 
@@ -347,30 +302,49 @@
    TAGS
 ========================================== */
 
-.doubt-tags {
+.library-tags {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
+    flex-wrap: wrap;
 
-    gap: 8px;
+    gap: 9px;
 
-    margin-top: 12px;
+    margin: 0 0 17px;
 }
 
-
-.doubt-tag {
+.library-tag {
     display: inline-flex;
     align-items: center;
 
-    background-color: #EEF2FF;
-    color: #4965E8;
-
     padding: 5px 10px;
 
+    border: none;
     border-radius: 14px;
+
+    background: #EEF2FF;
+    color: #4965E8;
+
+    font-family: 'Poppins', sans-serif;
 
     font-size: 11px;
     font-weight: 500;
+
+    line-height: 1.4;
+}
+
+
+/* ==========================================
+   CARD BOTTOM
+========================================== */
+
+.library-card-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    width: 100%;
 }
 
 
@@ -384,28 +358,30 @@
 
     gap: 7px;
 
-    margin-top: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
 
-    color: #70788A;
-    font-size: 13px;
+    color: #64748B;
 }
 
-
 .teacher-meta svg {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
+
+    stroke-width: 1.8;
+
+    flex-shrink: 0;
 
     color: #8493AE;
 }
 
-
 .teacher-name {
-    color: #64718C;
+    font-weight: 500;
+    color: #0F2658;
 }
 
-
 .doubt-date {
-    color: #929BB1;
+    color: #8998B3;
     margin-left: 4px;
 }
 
@@ -415,9 +391,6 @@
 ========================================== */
 
 .resource-indicator {
-    width: fit-content;
-    flex-shrink: 0;
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -425,7 +398,6 @@
     gap: 6px;
 
     margin-left: auto;
-    padding: 6px 24px;
 
     color: #4965E8;
 
@@ -434,7 +406,6 @@
 
     white-space: nowrap;
 }
-
 
 .resource-indicator svg {
     height: 18px;
@@ -450,9 +421,11 @@
 
 .no-results {
     text-align: center;
+
     padding: 30px;
 
     color: #70788A;
+
     font-size: 14px;
 }
 
@@ -476,12 +449,7 @@
     }
 
     .library-card {
-        gap: 16px;
-        padding: 13px;
-    }
-
-    .resource-indicator {
-        padding: 6px 12px;
+        padding: 18px 20px;
     }
 
 }
@@ -530,45 +498,23 @@
     }
 
     .library-card {
-        gap: 12px;
-        padding: 12px;
-        align-items: flex-start;
+        padding: 16px;
     }
 
-    .doubt-icon {
-        height: 42px;
-        width: 42px;
-    }
-
-    .doubt-info {
-        width: auto;
-    }
-
-    .doubt-title {
+    .library-question {
         font-size: 14px;
     }
 
-    .doubt-ques {
-        font-size: 12px;
+    .library-tags {
+        gap: 6px;
     }
 
-    .resource-indicator {
-        padding: 4px;
-        font-size: 12px;
+    .library-tag {
+        font-size: 10px;
     }
 
-    .resource-indicator svg {
-        height: 16px;
-        width: 16px;
-    }
-
-    .doubt-tags {
-        gap: 5px;
-    }
-
-    .doubt-tag {
-        font-size: 9px;
-        padding: 5px 9px;
+    .library-card-bottom {
+        flex-wrap: wrap;
     }
 
 }
