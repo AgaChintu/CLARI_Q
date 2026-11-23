@@ -2,13 +2,9 @@
    CLARIQ LOGIN
 ========================================== */
 
-
-/* ==========================================
-   DOM ELEMENTS
-========================================== */
+const API_BASE_URL = "http://127.0.0.1:8000";
 
 const collegeId = document.getElementById("collegeId");
-
 const password = document.getElementById("password");
 
 const togglePassword = document.getElementById("togglePassword");
@@ -16,7 +12,6 @@ const togglePassword = document.getElementById("togglePassword");
 const loginForm = document.getElementById("loginForm");
 
 const loginBtn = document.getElementById("loginBtn");
-
 const loginBtnText = document.getElementById("loginBtnText");
 
 
@@ -26,17 +21,17 @@ const loginBtnText = document.getElementById("loginBtnText");
 
 togglePassword.addEventListener("click", function () {
 
-    const isPasswordHidden = password.type === "password";
+    const hidden = password.type === "password";
 
-    password.type = isPasswordHidden ? "text" : "password";
+    password.type = hidden ? "text" : "password";
 
-    togglePassword.innerHTML = isPasswordHidden
+    togglePassword.innerHTML = hidden
         ? '<i data-lucide="eye-off"></i>'
         : '<i data-lucide="eye"></i>';
 
     togglePassword.setAttribute(
         "aria-label",
-        isPasswordHidden ? "Hide password" : "Show password"
+        hidden ? "Hide password" : "Show password"
     );
 
     lucide.createIcons();
@@ -45,7 +40,7 @@ togglePassword.addEventListener("click", function () {
 
 
 /* ==========================================
-   VALIDATION HELPERS
+   ERROR HANDLING
 ========================================== */
 
 function showError(input, message) {
@@ -76,96 +71,100 @@ function clearErrors() {
 
 
 /* ==========================================
-   FORM VALIDATION
+   VALIDATION
 ========================================== */
 
 function validateForm() {
 
     clearErrors();
 
-    let isValid = true;
+    let valid = true;
 
-    const enteredId = collegeId.value.trim();
-
-    const enteredPassword = password.value;
-
-    if (enteredId === "") {
+    if (!collegeId.value.trim()) {
 
         showError(collegeId, "Please enter your College ID.");
 
-        isValid = false;
+        valid = false;
 
     }
 
-    if (enteredPassword.trim() === "") {
+    if (!password.value.trim()) {
 
         showError(password, "Please enter your password.");
 
-        isValid = false;
+        valid = false;
 
     }
 
-    return isValid;
+    return valid;
 
 }
 
 
 /* ==========================================
-   CLEAR ERRORS WHILE TYPING
-========================================== */
-
-collegeId.addEventListener("input", function () {
-
-    collegeId.classList.remove("input-error");
-
-    const error = collegeId.closest(".form-group")
-        .querySelector(".field-error");
-
-    if (error) error.remove();
-
-});
-
-
-password.addEventListener("input", function () {
-
-    password.classList.remove("input-error");
-
-    const error = password.closest(".form-group")
-        .querySelector(".field-error");
-
-    if (error) error.remove();
-
-});
-
-
-/* ==========================================
-   LOGIN FORM SUBMISSION
+   LOGIN
 ========================================== */
 
 loginForm.addEventListener("submit", async function (event) {
 
     event.preventDefault();
 
-    if (!validateForm()) {
-        return;
-    }
+    if (!validateForm()) return;
 
     loginBtn.disabled = true;
-
     loginBtnText.textContent = "Signing in...";
 
     try {
 
-        /*
-         * BACKEND AUTHENTICATION WILL BE CONNECTED HERE.
-         *
-         * collegeId.value = entered College ID
-         * password.value = entered password
-         */
+        const response = await fetch(
+            `${API_BASE_URL}/api/auth/login`,
+            {
+                method: "POST",
 
-        console.log("College ID:", collegeId.value.trim());
+                headers: {
+                    "Content-Type": "application/json"
+                },
 
-        alert("Frontend validation successful! Backend authentication is not connected yet.");
+                body: JSON.stringify({
+                    college_id: collegeId.value.trim(),
+                    password: password.value
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.detail || "Login failed.");
+        }
+
+        // Store the token for the current browser tab.
+        sessionStorage.setItem("clariqToken", data.access_token);
+
+        sessionStorage.setItem(
+            "clariqUser",
+            JSON.stringify({
+                id: data.user_id,
+                collegeId: data.college_id,
+                name: data.name,
+                role: data.role
+            })
+        );
+
+        // Redirect according to the role returned by the backend.
+        if (data.role === "STUDENT") {
+
+            window.location.href = "dashboard.html";
+
+        } else if (data.role === "TEACHER") {
+
+            window.location.href = "../teacher-pages/dashboard.html";
+
+        } else {
+
+            throw new Error("Unknown account role.");
+
+        }
 
     }
 
@@ -173,16 +172,35 @@ loginForm.addEventListener("submit", async function (event) {
 
         console.error("Login error:", error);
 
-        alert("Something went wrong. Please try again.");
+        alert(error.message || "Unable to connect to the server.");
 
     }
 
     finally {
 
         loginBtn.disabled = false;
-
         loginBtnText.textContent = "Login";
 
     }
+
+});
+
+
+/* ==========================================
+   CLEAR ERRORS WHILE TYPING
+========================================== */
+
+[collegeId, password].forEach(input => {
+
+    input.addEventListener("input", function () {
+
+        input.classList.remove("input-error");
+
+        const error = input.closest(".form-group")
+            .querySelector(".field-error");
+
+        if (error) error.remove();
+
+    });
 
 });

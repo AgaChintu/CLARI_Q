@@ -12,6 +12,7 @@ Seeds:
 - Year 2 theory subjects and offerings
 - Teacher records
 - Teacher assignments
+- Python syllabus units and topics
 
 Digital Electronics:
 - AKTU Subject Code: BOE310
@@ -33,8 +34,14 @@ from app.models import (
     SubjectOffering,
     Teacher,
     TeacherAssignment,
+    SyllabusUnit,
+    SyllabusTopic,
 )
 
+
+# ==================================================
+# HELPER: GET OR CREATE
+# ==================================================
 
 def get_or_create(db, model, lookup, defaults=None):
     item = db.query(model).filter_by(**lookup).first()
@@ -54,7 +61,129 @@ def get_or_create(db, model, lookup, defaults=None):
     return item, True
 
 
+# ==================================================
+# PYTHON SYLLABUS
+# ==================================================
+
+def seed_python_syllabus(db, python_subject):
+
+    syllabus = {
+        1: {
+            "name": "Introduction to Python",
+            "lectures": 8,
+            "topics": [
+                "Introduction to Python and its features",
+                "Python variables and identifiers",
+                "Basic operators and expressions",
+                "Python data types: int, float, complex, bool and strings",
+                "Numeric data types and their usage",
+                "Python blocks and indentation",
+            ],
+        },
+
+        2: {
+            "name": "Program Flow Control",
+            "lectures": 8,
+            "topics": [
+                "Conditional statements: if, else and elif",
+                "For loops and range() function",
+                "While loops",
+                "Loop control statements: break, continue and pass",
+                "Loop else clause",
+                "Programs using conditional and looping statements",
+            ],
+        },
+
+        3: {
+            "name": "Complex Data Types and Functions",
+            "lectures": 8,
+            "topics": [
+                "String operations and manipulation",
+                "Lists and list slicing",
+                "Tuples and tuple operations",
+                "Dictionaries and dictionary operations",
+                "Built-in functions for strings, lists and dictionaries",
+                "Defining and calling Python functions",
+                "Modular programming and code reuse",
+            ],
+        },
+
+        4: {
+            "name": "File Handling",
+            "lectures": 8,
+            "topics": [
+                "Introduction to file handling",
+                "Opening and closing files",
+                "Reading files using read(), readline() and readlines()",
+                "Writing files using write() and writelines()",
+                "File modes and file operations",
+                "File pointer manipulation using seek()",
+                "Programs using file operations",
+            ],
+        },
+
+        5: {
+            "name": "Packages and GUI",
+            "lectures": 8,
+            "topics": [
+                "Introduction to Python modules and packages",
+                "NumPy package and its applications",
+                "Pandas package and its applications",
+                "Matplotlib package and data visualization",
+                "Introduction to GUI programming using Tkinter",
+                "Tkinter widgets and their applications",
+                "Python IDEs and development environments",
+            ],
+        },
+    }
+
+    inserted_units = 0
+    inserted_topics = 0
+
+    for unit_number, unit_data in syllabus.items():
+
+        unit, created = get_or_create(
+            db,
+            SyllabusUnit,
+            {
+                "subject_id": python_subject.id,
+                "unit_number": unit_number,
+            },
+            {
+                "unit_name": unit_data["name"],
+                "proposed_lectures": unit_data["lectures"],
+            },
+        )
+
+        inserted_units += int(created)
+
+        for order, topic_name in enumerate(
+            unit_data["topics"], start=1
+        ):
+
+            _, topic_created = get_or_create(
+                db,
+                SyllabusTopic,
+                {
+                    "unit_id": unit.id,
+                    "name": topic_name,
+                },
+                {
+                    "display_order": order,
+                },
+            )
+
+            inserted_topics += int(topic_created)
+
+    return inserted_units, inserted_topics
+
+
+# ==================================================
+# MAIN SEED FUNCTION
+# ==================================================
+
 def seed():
+
     db = SessionLocal()
     counts = {}
 
@@ -68,6 +197,7 @@ def seed():
         years = {}
 
         for number in (1, 2):
+
             year, created = get_or_create(
                 db,
                 AcademicYear,
@@ -93,6 +223,7 @@ def seed():
         for year_number, semester_numbers in semester_map.items():
 
             for number in semester_numbers:
+
                 semester, created = get_or_create(
                     db,
                     Semester,
@@ -121,6 +252,7 @@ def seed():
         for year_number, codes in section_codes_by_year.items():
 
             for code in codes:
+
                 section, created = get_or_create(
                     db,
                     Section,
@@ -244,6 +376,7 @@ def seed():
         subjects = {}
 
         # First-year subjects
+
         for name in first_year_names:
 
             subject, created = get_or_create(
@@ -279,6 +412,7 @@ def seed():
             db.flush()
 
         # Year 2 subjects with actual subject codes
+
         for code, name, subject_type in coded_subjects:
 
             subject, created = get_or_create(
@@ -297,17 +431,6 @@ def seed():
         # ==================================================
         # 6. SUBJECT OFFERINGS
         # ==================================================
-
-        # Semester 1:
-        # CS sections receive Physics/Electrical combination.
-        # AIML/IT/DS receive Chemistry/Electronics combination.
-        #
-        # Semester 2:
-        # The combinations switch between the two groups.
-        #
-        # Semester 3:
-        # All Year 2 sections share the same subjects.
-        # BOE310 Digital Electronics is included here.
 
         cs_sem1 = (
             "Applied Physics",
@@ -424,10 +547,6 @@ def seed():
         # ==================================================
 
         # Assignments are for Year 2, Semester 3, AIML.
-        #
-        # There is no primary/alternative teacher distinction.
-        # Each assignment represents:
-        # teacher + semester + section + subject.
 
         aiml_year2 = section_records[(2, "AIML")]
         semester_3 = semesters[3]
@@ -465,7 +584,22 @@ def seed():
             counts["teacher_assignments"] += int(created)
 
         # ==================================================
-        # 9. COMMIT
+        # 9. SYLLABUS UNITS AND TOPICS
+        # ==================================================
+
+        python_subject = subjects["BCC302"]
+
+        inserted_units, inserted_topics = seed_python_syllabus(
+            db,
+            python_subject,
+        )
+
+        print("\nPython syllabus:")
+        print(f"  New units inserted: {inserted_units}")
+        print(f"  New topics inserted: {inserted_topics}")
+
+        # ==================================================
+        # 10. COMMIT
         # ==================================================
 
         db.commit()
@@ -475,6 +609,10 @@ def seed():
 
         for table, count in counts.items():
             print(f"  {table}: {count}")
+
+        print("\nPython syllabus seeded successfully.")
+        print("  BCC302: 5 units")
+        print("  Topics: 33")
 
         print("\nSemester 3 subjects:")
 
@@ -491,11 +629,6 @@ def seed():
         print(
             "\nExisting records were kept. "
             "No rows were deleted."
-        )
-
-        print(
-            "\nSyllabus units/topics and student accounts "
-            "have not been fabricated."
         )
 
     except Exception:

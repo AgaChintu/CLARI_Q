@@ -1,3 +1,4 @@
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
@@ -6,6 +7,7 @@ from app.database import engine, Base
 import app.models  # noqa: F401 - registers all models with Base.metadata
 
 from app.routers.auth import router as auth_router
+from app.routers.student_sessions import router as student_sessions_router
 
 
 app = FastAPI(title="ClariQ API")
@@ -30,10 +32,11 @@ app.add_middleware(
 
 
 # ==========================================
-# AUTHENTICATION ROUTER
+# ROUTERS
 # ==========================================
 
 app.include_router(auth_router)
+app.include_router(student_sessions_router)
 
 
 # ==========================================
